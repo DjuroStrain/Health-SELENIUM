@@ -60,5 +60,4 @@ public class PrijavaTests extends SeleniumTestWrapper {
         loggerClass.endTestLog(PrijavaTests.class.getSimpleName());
     }
 
-
 }
