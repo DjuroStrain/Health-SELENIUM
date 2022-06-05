@@ -1,20 +1,24 @@
 package hr.vuv.health.pageobject.registracija;
 
-import hr.vuv.health.base.BaseClass;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
+import io.qameta.allure.Step;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import selenium.Pages;
 
-public class RegistracijaPage extends BaseClass {
+import java.rmi.Remote;
+
+public class RegistracijaPage extends Pages {
 
     public RegistracijaPage(WebDriver driver) {
-        super();
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
-    private CommonHealthElements healthElements = new CommonHealthElements();
+    private CommonHealthElements healthElements = new CommonHealthElements(driver);
 
     @FindBy(id = "username")
     private WebElement txtKorisnickoIme;
@@ -49,6 +53,7 @@ public class RegistracijaPage extends BaseClass {
     @FindBy(xpath = "//a[@class='text-primary ml-2']")
     private WebElement btnPrijava2;
 
+    @Step("Registracija korisnika kao pacijenta.")
     public void registracijaKorisnikaKaoPacijenta(String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
                                                   String sAdresa, String sDatumRodenja, String sOMeni, String sLozinka) throws InterruptedException {
         healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
@@ -68,6 +73,7 @@ public class RegistracijaPage extends BaseClass {
     @FindBy(xpath = "//select")
     private WebElement ddVrstaKorisnika;
 
+    @Step("Registracija korisnika kao doktora.")
     public void registracijaKorisnikaKaoDoktora(String sDoktor, String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
                                                   String sAdresa, String sDatumRodenja, String sOMeni,
                                                 String sLozinka) throws InterruptedException {

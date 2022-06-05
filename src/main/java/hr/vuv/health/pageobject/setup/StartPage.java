@@ -1,16 +1,20 @@
 package hr.vuv.health.pageobject.setup;
 
-import hr.vuv.health.base.BaseClass;
+import io.qameta.allure.Step;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import selenium.Pages;
 
-public class StartPage extends BaseClass {
+public class StartPage extends Pages {
 
-    public StartPage(){
-        PageFactory.initElements(getDriver(), this);
+    public StartPage(final WebDriver driver) {
+        super(driver);
     }
 
     public void startApplication() {
-        loadConfig();
-        startAppliaction("chrome");
+        super.open();
     }
+
 }

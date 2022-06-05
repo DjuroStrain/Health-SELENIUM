@@ -1,26 +1,35 @@
 package hr.vuv.health.testcases.registracija;
 
-import hr.vuv.health.base.BaseClass;
 import hr.vuv.health.content.RegistracijaContent;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.registracija.RegistracijaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
 import io.qameta.allure.Description;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import listeners.TestListener;
+import org.junit.*;
+import org.openqa.selenium.devtools.v85.page.Page;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.PageFactory;
+import selenium.Pages;
+import selenium.SeleniumTestWrapper;
+import utility.LoggerClass;
 
-public class RegistracijaTests extends BaseClass {
+public class RegistracijaTests extends SeleniumTestWrapper {
 
-    private static StartPage startPage = new StartPage();
-    private RegistracijaPage registracijaPage = new RegistracijaPage(getDriver());
-    private CommonHealthElements healthElements = new CommonHealthElements();
-    private IzbornikPage izbornikPage = new IzbornikPage(getDriver());
+    private StartPage startPage = PageFactory.initElements(getDriver(), StartPage.class);
+    private RegistracijaPage registracijaPage = PageFactory.initElements(getDriver(), RegistracijaPage.class);
+    private CommonHealthElements healthElements = PageFactory.initElements(getDriver(), CommonHealthElements.class);
+    private IzbornikPage izbornikPage = PageFactory.initElements(getDriver(), IzbornikPage.class);
 
-    @BeforeClass
-    public static void setup(){
+    static LoggerClass loggerClass = new LoggerClass();
+
+    @Rule
+    public TestListener testListener = new TestListener();
+
+    @Before
+    public void setup(){
+        loggerClass.startTestLog(RegistracijaTests.class.getSimpleName());
         startPage.startApplication();
     }
 
@@ -56,8 +65,8 @@ public class RegistracijaTests extends BaseClass {
         //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());
     }
 
-    @AfterClass
-    public static void testEnd() {
-        getDriver().quit();
+    @After
+    public void testEnd() {
+        loggerClass.endTestLog(RegistracijaTests.class.getSimpleName());
     }
 }

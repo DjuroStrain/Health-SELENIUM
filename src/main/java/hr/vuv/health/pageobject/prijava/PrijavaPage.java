@@ -1,25 +1,25 @@
 package hr.vuv.health.pageobject.prijava;
 
-import hr.vuv.health.base.BaseClass;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import selenium.Pages;
 
 import java.time.Duration;
 
-public class PrijavaPage extends BaseClass {
-
+public class PrijavaPage extends Pages {
     public PrijavaPage(WebDriver driver){
-        super();
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
-    private CommonHealthElements healthElements = new CommonHealthElements();
+    private CommonHealthElements healthElements = new CommonHealthElements(driver);
 
     @FindBy(id = "username")
     private WebElement txtKorisnickoIme;
@@ -30,13 +30,13 @@ public class PrijavaPage extends BaseClass {
     @FindBy(xpath = "//span[contains(text(), 'Prijavi')]//parent::button")
     private WebElement btnPrijaviSe;
 
-    @Step("Prijava page")
+    @Step("Prijava korisnika u aplikaciju i provjera je li se uspješno prijavio.")
     public void prijavaKorisnika(String sKorisnickoIme, String sLozinka) {
         healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
         healthElements.insertText(txtLozinka, sLozinka);
         healthElements.waitForElementToBeClickable(btnPrijaviSe);
 
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.invisibilityOf(btnPrijaviSe));
     }
 }
