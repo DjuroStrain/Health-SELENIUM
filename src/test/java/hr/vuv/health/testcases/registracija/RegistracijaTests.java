@@ -5,15 +5,16 @@ import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.registracija.RegistracijaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
-import listeners.TestListener;
 import org.junit.*;
-import org.openqa.selenium.devtools.v85.page.Page;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.PageFactory;
-import selenium.Pages;
 import selenium.SeleniumTestWrapper;
 import utility.LoggerClass;
+
+import java.io.ByteArrayInputStream;
 
 public class RegistracijaTests extends SeleniumTestWrapper {
 
@@ -23,9 +24,6 @@ public class RegistracijaTests extends SeleniumTestWrapper {
     private IzbornikPage izbornikPage = PageFactory.initElements(getDriver(), IzbornikPage.class);
 
     static LoggerClass loggerClass = new LoggerClass();
-
-    @Rule
-    public TestListener testListener = new TestListener();
 
     @Before
     public void setup(){
@@ -47,10 +45,11 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
         Assert.assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
         //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());
+        Allure.addAttachment("Snimka zaslona kada test nije prošao:", new ByteArrayInputStream(((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES)));
     }
 
     @Test
-    @Description("Registracija novog korisnika sa rolom - Pacijent")
+    @Description("Registracija novog korisnika sa rolom - Doktor")
     public void Registriraj_Korisnika_Kao_Doktora() throws InterruptedException {
         izbornikPage.klikniIzbornikRegistracija();
 

@@ -13,6 +13,7 @@ public class StartPage extends Pages {
         super(driver);
     }
 
+    @Step("Pokretanje aplikacije")
     public void startApplication() {
         super.open();
     }

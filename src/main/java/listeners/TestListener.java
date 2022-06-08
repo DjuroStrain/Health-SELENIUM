@@ -1,21 +1,15 @@
 package listeners;
 
-import io.qameta.allure.Allure;
-import junit.runner.TestRunListener;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import utility.ScreenshotClass;
-
-import java.io.ByteArrayInputStream;
+import utils2.ScreenshotClass;
 
 public class TestListener extends TestWatcher {
-
+/*
     public static WebDriver driver;
 
-    public ScreenshotClass screenshotClass = new ScreenshotClass(driver);
+    public ScreenshotClass screenshotClass = new ScreenshotClass(driver);*/
 
     /*public TestListener (WebDriver driver) {
         this.driver = driver;
@@ -28,9 +22,9 @@ public class TestListener extends TestWatcher {
             screenshotClass.quit();
         }
     }*/
-
+    /*
     @Override
     protected void failed(Throwable e, Description description) {
         screenshotClass.takeScreenShotWhenTestFails();
-    }
+    }*/
 }

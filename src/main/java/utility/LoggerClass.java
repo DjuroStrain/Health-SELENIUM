@@ -1,6 +1,5 @@
 package utility;
 
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +17,7 @@ public class LoggerClass {
 
     public static void endTestLog(String sTestClassName) {
         log.info("================================================================================");
-        log.info("---------------------------------- TEST END ----------------------------------");
+        log.info("---------------------------------- TEST END ------------------------------------");
         log.info("--------------------------------------------------------------------------------");
         log.info("--------------------------- Test: "+sTestClassName+" ---------------------------");
         log.info("================================================================================");
