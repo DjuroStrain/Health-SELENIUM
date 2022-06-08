@@ -66,6 +66,7 @@ public class RegistracijaPage extends Pages {
         healthElements.insertText(txtLozinka, sLozinka);
         healthElements.scrollToElement();
         healthElements.waitForElementToBeVisible(btnPrijava2);
+        Thread.sleep(1000);
         healthElements.waitForElementToBeClickable(btnKreirajRacun);
         healthElements.waitForElementToBeVisible(btnPrijaviSe);
     }

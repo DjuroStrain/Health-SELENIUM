@@ -35,17 +35,10 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
     @Description("Prijava korisnika u aplikaciju")
     @Test
-    public void Prijava_Korisnika() {
+    public void Prijava_Korisnika_Kao_Doktora() {
         izbornikPage.klikniIzbornikPrijava();
-        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME, PrijavaContent.LOZINKA);
+        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
         log.info("Korisnik se je uspjesno prijavio u aplikaciju.");
-    }
-
-    @Test
-    public void test() throws InterruptedException {
-        Thread.sleep(4000);
-        izbornikPage.klikniIzbornikPrijava();
-        getDriver().findElement(By.xpath("asdasd")).click();
     }
 
     @After

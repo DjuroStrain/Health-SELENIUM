@@ -33,13 +33,13 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
     @Test
     @Description("Registracija novog korisnika sa rolom - Pacijent")
-    public void Registriraj_Korisnika_Kao_Pacijenta() throws InterruptedException {
+    public void Registriraj_Korisnika_Kao_Pacijenta() throws InterruptedException, ClassNotFoundException{
         izbornikPage.klikniIzbornikRegistracija();
 
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
-        registracijaPage.registracijaKorisnikaKaoPacijenta(RegistracijaContent.KORISNICKO_IME, RegistracijaContent.IME,
-                RegistracijaContent.PREZIME, RegistracijaContent.EMAIL, RegistracijaContent.ADRESA, RegistracijaContent.DATUM_RODENJA,
-                RegistracijaContent.O_MENI, RegistracijaContent.LOZINKA);
+        registracijaPage.registracijaKorisnikaKaoPacijenta(RegistracijaContent.KORISNICKO_IME_PACIJENT, RegistracijaContent.IME_PACIJENT,
+                RegistracijaContent.PREZIME_PACIJENT, RegistracijaContent.EMAIL_PACIJENT, RegistracijaContent.ADRESA_PACIJENT, RegistracijaContent.DATUM_RODENJA_PACIJENT,
+                RegistracijaContent.O_MENI_PACIJENT, RegistracijaContent.LOZINKA_PACIJENT);
         Thread.sleep(4000);
         int nBrojKorisnikaNakonRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
 
@@ -50,13 +50,13 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
     @Test
     @Description("Registracija novog korisnika sa rolom - Doktor")
-    public void Registriraj_Korisnika_Kao_Doktora() throws InterruptedException {
+    public void Registriraj_Korisnika_Kao_Doktora() throws InterruptedException, ClassNotFoundException {
         izbornikPage.klikniIzbornikRegistracija();
 
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
-        registracijaPage.registracijaKorisnikaKaoDoktora("Doctor", RegistracijaContent.KORISNICKO_IME, RegistracijaContent.IME,
-                RegistracijaContent.PREZIME, RegistracijaContent.EMAIL, RegistracijaContent.ADRESA, RegistracijaContent.DATUM_RODENJA,
-                RegistracijaContent.O_MENI, RegistracijaContent.LOZINKA);
+        registracijaPage.registracijaKorisnikaKaoDoktora(RegistracijaContent.DOKTOR, RegistracijaContent.KORISNICKO_IME_DOKTOR, RegistracijaContent.IME_DOKTOR,
+                RegistracijaContent.PREZIME_DOKTOR, RegistracijaContent.EMAIL_DOKTOR, RegistracijaContent.ADRESA_DOKTOR, RegistracijaContent.DATUM_RODENJA_DOKTOR,
+                RegistracijaContent.O_MENI_DOKTOR, RegistracijaContent.LOZINKA_DOKTOR);
         Thread.sleep(4000);
         int nBrojKorisnikaNakonRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
 

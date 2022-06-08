@@ -29,6 +29,8 @@ public class IzbornikPage extends Pages {
         healthElements.waitForElementToBeClickable(tabPocetna);
     }
 
+    //Liječnici
+
     @FindBy(xpath = "//a[normalize-space()='Lječnici']")
     private WebElement tabLijecnici;
 
@@ -36,6 +38,8 @@ public class IzbornikPage extends Pages {
     public void klikniIzbornikLijecnici() {
         healthElements.waitForElementToBeClickable(tabLijecnici);
     }
+
+    //Prijava
 
     @FindBy(xpath = "//a[normalize-space()='Prijava']")
     private WebElement tabPrijava;
@@ -45,12 +49,46 @@ public class IzbornikPage extends Pages {
         healthElements.waitForElementToBeClickable(tabPrijava);
     }
 
+    //Registracija
+
     @FindBy(xpath = "//a[normalize-space()='Registracija']")
     private WebElement tabRegistracija;
 
     @Step("U izborniku klikni na 'Registracija'.")
     public void klikniIzbornikRegistracija() {
         healthElements.waitForElementToBeClickable(tabRegistracija);
+    }
+
+
+    /*
+    * Nakon prijava
+    * */
+
+    //Kontrolna ploča
+
+    @FindBy(xpath = "//a[normalize-space()='Kontrolna ploča']")
+    private WebElement tabKontrolanPloca;
+
+    public void klikniIzbornikKontrolnaPloca() {
+        healthElements.waitForElementToBeClickable(tabKontrolanPloca);
+    }
+
+    //Moj profil
+
+    @FindBy(xpath = "//a[normalize-space()='Moj profil']")
+    private WebElement tabMojProfil;
+
+    public void klikniIzbornikMojProfil() {
+        healthElements.waitForElementToBeClickable(tabMojProfil);
+    }
+
+    //Odjava
+
+    @FindBy(xpath = "//a[normalize-space()='Odjava']")
+    private WebElement tabOdjava;
+
+    public void klikniIzbornikOdjava() {
+        healthElements.waitForElementToBeClickable(tabOdjava);
     }
 
 }

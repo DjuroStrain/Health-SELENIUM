@@ -79,14 +79,14 @@ public class CommonHealthElements extends Pages {
     * Vrati broj registriraih korisnika u bazi
     * */
     @Step("Dohvati broj registriranih korisnika u bazi podataka.")
-    public int vratiBrojRegistriranihKorisnika() {
+    public int vratiBrojRegistriranihKorisnika() throws ClassNotFoundException{
         return databaseCalls.dohvatiBrojKorisnika();
     }
 
     /*
     * Vrati zadnje registriranog korisnika
     * */
-    public String vratiPosljedenjeDodanogKorisnika() {
+    public String vratiPosljedenjeDodanogKorisnika() throws ClassNotFoundException{
         return  databaseCalls.dohvatiPosljednjeRegistriranogKorisnika();
     }
 }
