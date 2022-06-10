@@ -2,12 +2,9 @@ package hr.vuv.health.pageobject.registracija;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import selenium.Pages;
 
 import java.rmi.Remote;
@@ -41,6 +38,9 @@ public class RegistracijaPage extends Pages {
     @FindBy(id = "aboutme")
     private WebElement txtOMeni;
 
+    @FindBy(id = "number")
+    private WebElement txtMobitel;
+
     @FindBy(id = "password")
     private WebElement txtLozinka;
 
@@ -55,14 +55,12 @@ public class RegistracijaPage extends Pages {
 
     @Step("Registracija korisnika kao pacijenta.")
     public void registracijaKorisnikaKaoPacijenta(String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
-                                                  String sAdresa, String sDatumRodenja, String sOMeni, String sLozinka) throws InterruptedException {
+                                                  String sMobitel, String sLozinka) throws InterruptedException {
         healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
         healthElements.insertText(txtIme, sIme);
         healthElements.insertText(txtPrezime, sPrezime);
         healthElements.insertText(txtEmail, sEmail);
-        healthElements.insertText(txtAdresa, sAdresa);
-        healthElements.insertText(txtDatumRodenja, sDatumRodenja);
-        healthElements.insertText(txtOMeni, sOMeni);
+        healthElements.insertText(txtMobitel, sMobitel);
         healthElements.insertText(txtLozinka, sLozinka);
         healthElements.scrollToElement();
         healthElements.waitForElementToBeVisible(btnPrijava2);
@@ -75,17 +73,14 @@ public class RegistracijaPage extends Pages {
     private WebElement ddVrstaKorisnika;
 
     @Step("Registracija korisnika kao doktora.")
-    public void registracijaKorisnikaKaoDoktora(String sDoktor, String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
-                                                  String sAdresa, String sDatumRodenja, String sOMeni,
+    public void registracijaKorisnikaKaoDoktora(String sDoktor, String sKorisnickoIme, String sIme, String sPrezime, String sEmail, String sMobitel,
                                                 String sLozinka) throws InterruptedException {
         healthElements.selectFromDropdown(ddVrstaKorisnika, sDoktor);
         healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
         healthElements.insertText(txtIme, sIme);
         healthElements.insertText(txtPrezime, sPrezime);
         healthElements.insertText(txtEmail, sEmail);
-        healthElements.insertText(txtAdresa, sAdresa);
-        healthElements.insertText(txtDatumRodenja, sDatumRodenja);
-        healthElements.insertText(txtOMeni, sOMeni);
+        healthElements.insertText(txtMobitel, sMobitel);
         healthElements.insertText(txtLozinka, sLozinka);
         healthElements.scrollToElement();
         healthElements.waitForElementToBeVisible(btnPrijava2);

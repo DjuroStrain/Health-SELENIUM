@@ -7,6 +7,7 @@ import hr.vuv.health.pageobject.mojprofil.MojProfilDoktorPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
 import jdk.jfr.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +32,8 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
     static LoggerClass loggerClass = new LoggerClass();
 
+    SoftAssertions softAssertions = new SoftAssertions();
+
     @Before
     public void setup() {
         loggerClass.startTestLog(this.getClass().getSimpleName());
@@ -42,15 +45,28 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
     @Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu.")
     @Test
-    public void Provjera_Ispravnosti_Prikaza_Podatka_Na_Profilu_Doktora() {
-        assertEquals(MojProfilContent.PROFIL_IME, mojProfilDoktorPage.vratiVrijednostPoljaIme());
-        log.info("Podatak 'Ime' se ispravno pokazuje.");
-        assertEquals(MojProfilContent.PROFIL_PREZIME, mojProfilDoktorPage.vratiVrijednostPoljaPrezime());
-        log.info("Podatak 'Prezime' se ispravno pokazuje.");
-        assertEquals(MojProfilContent.PROFIL_GRAD_MJESTO, mojProfilDoktorPage.vratiVrijednostPoljaGradMjesto());
-        log.info("Podatak 'Grad/Mjesto' se ispravno pokazuje.");
-        assertEquals(MojProfilContent.PROFIL_EMAIL, mojProfilDoktorPage.vratiVrijednostPoljaEmail());
-        log.info("Podatak 'Email' se ispravno pokazuje.");
+    public void Provjera_Ispravnosti_Prikaza_Podatka_Na_Profilu_Doktora() throws InterruptedException {
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaIme()).isEqualTo(MojProfilContent.PROFIL_IME);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaPrezime()).isEqualTo(MojProfilContent.PROFIL_PREZIME);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaTitula()).isEqualTo(MojProfilContent.PROFIL_TITULA);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaUlica()).isEqualTo(MojProfilContent.PROFIL_ULICA);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaKucniBroj()).isEqualTo(MojProfilContent.PROFIL_KUCNI_BROJ);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaPostanskiBroj()).isEqualTo(MojProfilContent.PROFIL_POSTANSKI_BROJ);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaGradMjesto()).isEqualTo(MojProfilContent.PROFIL_GRAD_MJESTO);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaDrzava()).isEqualTo(MojProfilContent.PROFIL_DRZAVA);
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaEmail()).isEqualTo(MojProfilContent.PROFIL_EMAIL);
+
+        softAssertions.assertAll();
+
+        log.info("Podaci o doktoru se prikazuju ispravno.");
     }
 
     @After

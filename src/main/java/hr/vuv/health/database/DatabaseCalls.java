@@ -131,4 +131,17 @@ public class DatabaseCalls {
             e.printStackTrace();
         }
     }
+
+    public void obrisiKorisnika(String sUserName) throws ClassNotFoundException{
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL =
+                    "DELETE FROM AspNetUsers WHERE UserName='"+sUserName+"'";
+
+            stmt.execute(SQL);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

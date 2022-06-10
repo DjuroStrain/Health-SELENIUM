@@ -1,52 +1,53 @@
-package hr.vuv.health.testcases.prijava;
+package hr.vuv.health.testcases.odjava;
 
 import hr.vuv.health.content.PrijavaContent;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
+import hr.vuv.health.pageobject.odjava.OdjavaPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
-import io.qameta.allure.Description;
-import org.junit.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import jdk.jfr.Description;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import selenium.SeleniumTestWrapper;
 import utility.LoggerClass;
 
-import java.io.ByteArrayInputStream;
-
 import static org.junit.Assert.assertTrue;
 
-public class PrijavaTests extends SeleniumTestWrapper {
+public class OdjavaTests extends SeleniumTestWrapper {
 
-    private final static Logger log = LoggerFactory.getLogger(PrijavaTests.class);
+    private final static Logger log = LoggerFactory.getLogger(OdjavaTests.class);
 
     private StartPage startPage = PageFactory.initElements(getDriver(), StartPage.class);
+
     private PrijavaPage prijavaPage = PageFactory.initElements(getDriver(), PrijavaPage.class);
+
+    private OdjavaPage odjavaPage = PageFactory.initElements(getDriver(), OdjavaPage.class);
     private IzbornikPage izbornikPage = PageFactory.initElements(getDriver(), IzbornikPage.class);
 
-    static LoggerClass loggerClass = new LoggerClass();
+    LoggerClass loggerClass = new LoggerClass();
 
     @Before
     public void setup() {
-        loggerClass.startTestLog(PrijavaTests.class.getSimpleName());
+        loggerClass.startTestLog(this.getClass().getSimpleName());
         startPage.startApplication();
+        izbornikPage.klikniIzbornikPrijava();
     }
 
-    @Description("Prijava korisnika u aplikaciju")
+    @Description("Odjava korisnika iz aplikacije i provjera uspješnosti odjave")
     @Test
-    public void Prijava_Korisnika_Kao_Doktora() {
-        izbornikPage.klikniIzbornikPrijava();
+    public void Odjava_Korisnika() {
         prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
-        assertTrue(prijavaPage.tabMojProfilIsDisplayed());
-        log.info("Korisnik se je uspjesno prijavio u aplikaciju.");
+
+        assertTrue(odjavaPage.odjavaKorisnikaIzAplikacije());
+        log.info("Korisnik se je uspješno odjavio iz aplikacije");
     }
 
     @After
     public void testEnd() {
-        loggerClass.endTestLog(PrijavaTests.class.getSimpleName());
+        loggerClass.endTestLog(this.getClass().getSimpleName());
     }
-
 }

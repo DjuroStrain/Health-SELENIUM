@@ -38,10 +38,11 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
         registracijaPage.registracijaKorisnikaKaoPacijenta(RegistracijaContent.KORISNICKO_IME_PACIJENT, RegistracijaContent.IME_PACIJENT,
-                RegistracijaContent.PREZIME_PACIJENT, RegistracijaContent.EMAIL_PACIJENT, RegistracijaContent.ADRESA_PACIJENT, RegistracijaContent.DATUM_RODENJA_PACIJENT,
-                RegistracijaContent.O_MENI_PACIJENT, RegistracijaContent.LOZINKA_PACIJENT);
+                RegistracijaContent.PREZIME_PACIJENT, RegistracijaContent.EMAIL_PACIJENT, RegistracijaContent.MOBITEL_PACIJENT, RegistracijaContent.LOZINKA_PACIJENT);
         Thread.sleep(4000);
         int nBrojKorisnikaNakonRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
+
+        healthElements.obrisiKorisnikaPoKorisnickomImenu(RegistracijaContent.KORISNICKO_IME_PACIJENT);
 
         Assert.assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
         //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());
@@ -55,10 +56,11 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
         registracijaPage.registracijaKorisnikaKaoDoktora(RegistracijaContent.DOKTOR, RegistracijaContent.KORISNICKO_IME_DOKTOR, RegistracijaContent.IME_DOKTOR,
-                RegistracijaContent.PREZIME_DOKTOR, RegistracijaContent.EMAIL_DOKTOR, RegistracijaContent.ADRESA_DOKTOR, RegistracijaContent.DATUM_RODENJA_DOKTOR,
-                RegistracijaContent.O_MENI_DOKTOR, RegistracijaContent.LOZINKA_DOKTOR);
+                RegistracijaContent.PREZIME_DOKTOR, RegistracijaContent.EMAIL_DOKTOR, RegistracijaContent.MOBITEL_DOKTOR, RegistracijaContent.LOZINKA_DOKTOR);
         Thread.sleep(4000);
         int nBrojKorisnikaNakonRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
+
+        healthElements.obrisiKorisnikaPoKorisnickomImenu(RegistracijaContent.KORISNICKO_IME_DOKTOR);
 
         Assert.assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
         //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());

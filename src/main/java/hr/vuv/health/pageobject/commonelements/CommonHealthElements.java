@@ -3,11 +3,8 @@ package hr.vuv.health.pageobject.commonelements;
 import hr.vuv.health.database.DatabaseCalls;
 import io.qameta.allure.Step;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -88,5 +85,13 @@ public class CommonHealthElements extends Pages {
     * */
     public String vratiPosljedenjeDodanogKorisnika() throws ClassNotFoundException{
         return  databaseCalls.dohvatiPosljednjeRegistriranogKorisnika();
+    }
+
+    /*
+    * Obrisi korisnika
+    * */
+
+    public void obrisiKorisnikaPoKorisnickomImenu(String sUserName) throws ClassNotFoundException {
+        databaseCalls.obrisiKorisnika(sUserName);
     }
 }

@@ -30,6 +30,9 @@ public class PrijavaPage extends Pages {
     @FindBy(xpath = "//span[contains(text(), 'Prijavi')]//parent::button")
     private WebElement btnPrijaviSe;
 
+    @FindBy(xpath = "//a[normalize-space()='Moj profil']")
+    private WebElement tabMojProfil;
+
     @Step("Prijava korisnika u aplikaciju i provjera je li se uspješno prijavio.")
     public void prijavaKorisnika(String sKorisnickoIme, String sLozinka) {
         healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
@@ -38,5 +41,10 @@ public class PrijavaPage extends Pages {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.invisibilityOf(btnPrijaviSe));
+    }
+
+    public boolean tabMojProfilIsDisplayed() {
+        healthElements.waitForElementToBeVisible(tabMojProfil);
+        return tabMojProfil.isDisplayed();
     }
 }
