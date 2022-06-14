@@ -1,5 +1,6 @@
 package hr.vuv.health.database;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class DatabaseCalls {
@@ -17,6 +18,9 @@ public class DatabaseCalls {
         return DriverManager.getConnection(connectionUrl);
     }
 
+    /*
+    * Dohvati broj korisnika
+    * */
     public int dohvatiBrojKorisnika() throws ClassNotFoundException{
         int nBrojKorisnika = 0;
         try (Connection connection = getConnection(); Statement statement = connection.createStatement()){
@@ -35,6 +39,9 @@ public class DatabaseCalls {
         return nBrojKorisnika;
     }
 
+    /*
+    * Dohvati posljednjeg korisnika u tablici AspNetUsers
+    * */
     public String dohvatiPosljednjeRegistriranogKorisnika() throws ClassNotFoundException{
         String sKorisnik = "";
         try (Connection connection = getConnection(); Statement statement = connection.createStatement()){
@@ -52,6 +59,9 @@ public class DatabaseCalls {
         return  sKorisnik;
     }
 
+    /*
+    * Dodaj doktora u tablicu (AspNetUsers + AspNetUsersRoles + MainService.Doctors)
+    * */
     public String dodajDoktora() throws ClassNotFoundException {
         String sId = "";
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
@@ -102,6 +112,9 @@ public class DatabaseCalls {
         return sId;
     }
 
+    /*
+    * Obrisi doktora po ID-u (AspNetUsers + MainService.Doctors)
+    * */
     public void obrisiDoktoraPoId(String sId) throws ClassNotFoundException{
 
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
@@ -117,6 +130,9 @@ public class DatabaseCalls {
         }
     }
 
+    /*
+    * Obrisi doktora po emailu (AspNetUsers + MainService.Doctors)
+    * */
     public void obrisiDoktora(String sEmail) throws ClassNotFoundException{
 
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
@@ -143,5 +159,107 @@ public class DatabaseCalls {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    /*
+    * Dohvati broj usluga (MainService.Services)
+    * */
+    public int dohvatiBrojUsluga() throws ClassNotFoundException {
+        int nBrojUsluga = 0;
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "SELECT COUNT(*) as BrojUsluga FROM MainService.Services;";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()) {
+
+                nBrojUsluga = rs.getInt("BrojUsluga");
+            }
+
+        }catch (SQLException e){
+                e.printStackTrace();
+        }
+
+        return nBrojUsluga;
+    }
+
+    /*
+    * Vrati ID zadnje dodane usluge
+    * */
+    public int vratiIDZadnjeDodaneUsluge() throws ClassNotFoundException {
+        int nZadnjiID = 0;
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "SELECT TOP 1 Id FROM MainService.Services";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                nZadnjiID = rs.getInt("Id");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nZadnjiID;
+    }
+
+    /*
+    * Obrisi uslugu po id
+    * */
+    public void obrisiUsluguPoID() throws ClassNotFoundException {
+        int nId = vratiIDZadnjeDodaneUsluge();
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "DELETE FROM MainService.Services WHERE Id="+nId;
+
+            stmt.execute(SQL);
+        }catch (SQLException ee) {
+            ee.printStackTrace();
+        }
+    }
+
+    public void obrisiUsluguPoParametarID(int nID) throws ClassNotFoundException {
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "DELETE FROM MainService.Services WHERE Id="+nID;
+
+            stmt.execute(SQL);
+        }catch (SQLException ee) {
+            ee.printStackTrace();
+        }
+    }
+
+    /*
+    * Dodaj uslugu djelatnosti
+    * */
+    public int dodajUslugu() throws ClassNotFoundException{
+        int nIdUsluge = 0;
+
+        try(Connection con = getConnection(); Statement stmt = con.createStatement()) {
+
+            String SQL =
+                        "exec sp_executesql N'SET NOCOUNT ON;  INSERT INTO [MainService].[Services] ([Description], [DoctorId], [Name], [Price], [SpecializationId]) \n" +
+                                "\n" +
+                                "VALUES (@p0, @p1, @p2, @p3, @p4);  \n" +
+                                "\n" +
+                                "SELECT [Id]  FROM [MainService].[Services]  WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();    \n" +
+                                "\n" +
+                                "',N'@p0 nvarchar(4000),@p1 nvarchar(450),@p2 nvarchar(4000),@p3 decimal(18,2),@p4 int',\n" +
+                                "\n" +
+                                "@p0=N'Osnovni pregled',@p1=N'59e742a9-5ba1-4e3c-a771-7b03a1bb08ff',@p2=N'Pregled',@p3=52.00,@p4=1\n";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                nIdUsluge = rs.getInt("Id");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return nIdUsluge;
     }
 }

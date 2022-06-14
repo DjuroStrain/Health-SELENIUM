@@ -2,12 +2,14 @@ package hr.vuv.health.testcases.mojprofil;
 
 import hr.vuv.health.content.MojProfilContent;
 import hr.vuv.health.content.PrijavaContent;
+import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.mojprofil.MojProfilDoktorPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
 import jdk.jfr.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import selenium.SeleniumTestWrapper;
 import utility.LoggerClass;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class MojProfilDoktorTests extends SeleniumTestWrapper {
@@ -25,10 +28,9 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
     private StartPage startPage = PageFactory.initElements(getDriver(), StartPage.class);
     private PrijavaPage prijavaPage = PageFactory.initElements(getDriver(), PrijavaPage.class);
-
     private IzbornikPage izbornikPage = PageFactory.initElements(getDriver(), IzbornikPage.class);
-
     private MojProfilDoktorPage mojProfilDoktorPage = PageFactory.initElements(getDriver(), MojProfilDoktorPage.class);
+    private CommonHealthElements healthElements = new CommonHealthElements(getDriver());
 
     static LoggerClass loggerClass = new LoggerClass();
 
@@ -40,10 +42,11 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         startPage.startApplication();
         izbornikPage.klikniIzbornikPrijava();
         prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
-        izbornikPage.klikniIzbornikMojProfil();
+        getDriver().get("https://localhost:7037/profile");
+        //izbornikPage.klikniIzbornikMojProfil();
     }
 
-    @Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu.")
+    @Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu na tabu 'Opći podaci'.")
     @Test
     public void Provjera_Ispravnosti_Prikaza_Podatka_Na_Profilu_Doktora() throws InterruptedException {
         softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaIme()).isEqualTo(MojProfilContent.PROFIL_IME);
@@ -67,6 +70,56 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         softAssertions.assertAll();
 
         log.info("Podaci o doktoru se prikazuju ispravno.");
+    }
+
+    @Description("Dodaj djelatnost doktora")
+    @Test
+    public void Dodaj_Djelatnost_Doktora() throws ClassNotFoundException {
+        int nBrojRedovaUslugaUBaziPrijeDodavanja = healthElements.dohvatiBrojUsluga();
+        mojProfilDoktorPage.dodajUsluguDjelatnostiDoktora(MojProfilContent.NAZIV_USLUGE, MojProfilContent.OPIS_USLUGE, MojProfilContent.CIJENA_USLUGE);
+        int nBrojRedovaUslugaUBaziPoslijeDodavanja = healthElements.dohvatiBrojUsluga();
+
+        int nRazlikaBrojaRedova = nBrojRedovaUslugaUBaziPoslijeDodavanja-nBrojRedovaUslugaUBaziPrijeDodavanja;
+
+        healthElements.obrisiUslugu();
+
+        softAssertions.assertThat(nRazlikaBrojaRedova).isEqualTo(1);
+        assertArrayEquals(mojProfilDoktorPage.vratiListuVrijednostiUslugeIzSadrzaja().toArray(),
+                mojProfilDoktorPage.vratiListuVrijednostiUslugeIzTabliceUsluga().toArray());
+        log.info("Usluga je uspješno dodana.");
+    }
+
+    @Description("Uredi djelatnost doktora")
+    @Test
+    public void Uredi_Djelatnost_Doktora() throws ClassNotFoundException {
+        int nIDUsluge = healthElements.dodajUslugu();
+        int nBrojRedovaUslugaUBaziPrijeUredivanja = healthElements.dohvatiBrojUsluga();
+        mojProfilDoktorPage.urediUslugu(MojProfilContent.IZMIJENJEN_NAZIV_USLUGE, MojProfilContent.IZMIJENJEN_OPIS_USLUGE,
+                MojProfilContent.IZMIJENJENA_CIJENA_USLUGE);
+        int nBrojRedovaUslugaUBaziPoslijeUredivanja = healthElements.dohvatiBrojUsluga();
+
+        int nRazlikaBrojaRedova = nBrojRedovaUslugaUBaziPoslijeUredivanja-nBrojRedovaUslugaUBaziPrijeUredivanja;
+
+        //healthElements.obrisiUsluguParametarId(nIDUsluge);
+
+        softAssertions.assertThat(nRazlikaBrojaRedova).isEqualTo(0);
+        assertArrayEquals(mojProfilDoktorPage.vratiListuPromijenjenihVrijednostiUslugeIzSadrzaja().toArray(),
+                mojProfilDoktorPage.vratiListuVrijednostiUslugeIzTabliceUsluga().toArray());
+        log.info("Usluga je uspješno uređena.");
+    }
+
+    @Description("Obrisi djelatnost doktora")
+    @Test
+    public void Obrisi_Djelatnost_Doktora() throws ClassNotFoundException {
+        int nIDUsluge = healthElements.dodajUslugu();
+        int nBrojRedovaUslugaUBaziPrijeBrisanja = healthElements.dohvatiBrojUsluga();
+        mojProfilDoktorPage.brisanjeUsluge();
+        int nBrojRedovaUslugaUBaziPoslijeBrisanja = healthElements.dohvatiBrojUsluga();
+
+        int nRazlikaBrojaRedova = nBrojRedovaUslugaUBaziPoslijeBrisanja-nBrojRedovaUslugaUBaziPrijeBrisanja;
+
+        softAssertions.assertThat(nRazlikaBrojaRedova).isEqualTo(1);
+        log.info("Usluga je uspješno obrisana.");
     }
 
     @After

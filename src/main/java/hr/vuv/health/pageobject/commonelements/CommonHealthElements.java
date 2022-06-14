@@ -40,6 +40,7 @@ public class CommonHealthElements extends Pages {
     * */
     public void insertText(WebElement element, String sText){
         waitForElementToBeClickable(element);
+        element.clear();
         element.sendKeys(sText);
     }
 
@@ -54,6 +55,16 @@ public class CommonHealthElements extends Pages {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    /*
+     *  Cekaj dok WebElement je jos uvijek vidljiv
+     *
+     * @param
+     * WebElement element
+     * */
+    public void waitForElementToBeInVisible(WebElement element){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
 
     public void scrollToElement() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -70,6 +81,8 @@ public class CommonHealthElements extends Pages {
         Select select = new Select(element);
         select.selectByValue(sOdabir);
     }
+
+
     //Povezivanje na bazu podataka
 
     /*
@@ -93,5 +106,30 @@ public class CommonHealthElements extends Pages {
 
     public void obrisiKorisnikaPoKorisnickomImenu(String sUserName) throws ClassNotFoundException {
         databaseCalls.obrisiKorisnika(sUserName);
+    }
+
+    /*
+    * Dohvati broj usluga
+    * */
+    public int dohvatiBrojUsluga() throws ClassNotFoundException {
+        return databaseCalls.dohvatiBrojUsluga();
+    }
+
+    /*
+    * Obrisi uslugu
+    * */
+    public void obrisiUslugu() throws ClassNotFoundException{
+        databaseCalls.obrisiUsluguPoID();
+    }
+
+    public void obrisiUsluguParametarId(int nID) throws ClassNotFoundException{
+        databaseCalls.obrisiUsluguPoParametarID(nID);
+    }
+
+    /*
+    * Dodaj uslugu
+    * */
+    public int dodajUslugu() throws ClassNotFoundException {
+        return databaseCalls.dodajUslugu();
     }
 }

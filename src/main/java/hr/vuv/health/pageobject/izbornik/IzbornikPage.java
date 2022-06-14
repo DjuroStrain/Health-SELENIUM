@@ -44,8 +44,12 @@ public class IzbornikPage extends Pages {
     @FindBy(xpath = "//a[normalize-space()='Prijava']")
     private WebElement tabPrijava;
 
+    @FindBy(xpath = "//span[2]")
+    private WebElement close;
+
     @Step("U izborniku klikni na 'Prijava'.")
     public void klikniIzbornikPrijava() {
+        healthElements.waitForElementToBeClickable(close);
         healthElements.waitForElementToBeClickable(tabPrijava);
     }
 
