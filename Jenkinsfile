@@ -15,7 +15,7 @@ pipeline {
         }
         stage('test') {
             steps {
-                bat "mvn test -f Health-SELENIUM"
+                bat "./mvn test"
             }
         }
         stage('package') {
