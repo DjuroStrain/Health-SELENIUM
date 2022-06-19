@@ -19,22 +19,22 @@ public class IzbornikPage extends Pages {
 
     private CommonHealthElements healthElements = new CommonHealthElements(driver);
 
-    //Početna stranica
+    //Pocetna stranica
 
-    @FindBy(xpath = "//a[normalize-space()='Početna']")
+    @FindBy(xpath = "//a[normalize-space()='Pocetna']")
     private WebElement tabPocetna;
 
-    @Step("U izborniku klikni na 'Početna'.")
+    @Step("U izborniku klikni na 'Pocetna'.")
     public void klikniIzbornikPocetna() {
         healthElements.waitForElementToBeClickable(tabPocetna);
     }
 
-    //Liječnici
+    //Lijecnici
 
-    @FindBy(xpath = "//a[normalize-space()='Lječnici']")
+    @FindBy(xpath = "//a[normalize-space()='Ljecnici']")
     private WebElement tabLijecnici;
 
-    @Step("U izborniku klikni na 'Lječnici'.")
+    @Step("U izborniku klikni na 'Ljecnici'.")
     public void klikniIzbornikLijecnici() {
         healthElements.waitForElementToBeClickable(tabLijecnici);
     }
@@ -68,9 +68,9 @@ public class IzbornikPage extends Pages {
     * Nakon prijava
     * */
 
-    //Kontrolna ploča
+    //Kontrolna ploca
 
-    @FindBy(xpath = "//a[normalize-space()='Kontrolna ploča']")
+    @FindBy(xpath = "//a[normalize-space()='Kontrolna ploca']")
     private WebElement tabKontrolanPloca;
 
     public void klikniIzbornikKontrolnaPloca() {

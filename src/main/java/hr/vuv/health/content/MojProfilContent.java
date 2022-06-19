@@ -5,8 +5,8 @@ public class MojProfilContent {
     /*
     * Podaci o doktoru
     * */
-    public final static String PROFIL_IME = "Đuro";
-    public final static String PROFIL_PREZIME = "Belačić";
+    public final static String PROFIL_IME = "Duro";
+    public final static String PROFIL_PREZIME = "Belacic";
     public final static String PROFIL_TITULA = "Doktor";
     public final static String PROFIL_ULICA = "Gundulićeva ulica";
     public final static String PROFIL_KUCNI_BROJ = "25";
