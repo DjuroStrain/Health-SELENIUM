@@ -4,7 +4,7 @@ pipeline {
         stage('git repo & clean') {
             steps {
                //bat "rmdir  /s /q Health-SELENIUM"
-                bat "git clone https://github.com/kishancs2020/Health-SELENIUM.git"
+                bat "git clone https://github.com/DjuroStrain/Health-SELENIUM"
                 bat "mvn clean -f Health-SELENIUM"
             }
         }
