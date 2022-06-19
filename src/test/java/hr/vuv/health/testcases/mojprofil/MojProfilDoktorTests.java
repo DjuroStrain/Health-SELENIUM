@@ -7,7 +7,7 @@ import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.mojprofil.MojProfilDoktorPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.After;

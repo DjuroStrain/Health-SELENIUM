@@ -8,6 +8,10 @@ import hr.vuv.health.testcases.SmokeTest;
 import io.qameta.allure.Description;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +30,7 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
     static LoggerClass loggerClass = new LoggerClass();
 
-    @Before
+    @BeforeEach
     public void setup() {
         loggerClass.startTestLog(PrijavaTests.class.getSimpleName());
         startPage.startApplication();
@@ -34,6 +38,7 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
     @Description("Prijava korisnika u aplikaciju")
     @Category(SmokeTest.class)
+    //@Test
     @Test
     public void Prijava_Korisnika_Kao_Doktora() {
         izbornikPage.klikniIzbornikPrijava();
@@ -42,9 +47,15 @@ public class PrijavaTests extends SeleniumTestWrapper {
         log.info("Korisnik se je uspjesno prijavio u aplikaciju.");
     }
 
-    @After
+    @Test
+    public void test(){
+
+    }
+
+    @AfterEach
     public void testEnd() {
         loggerClass.endTestLog(PrijavaTests.class.getSimpleName());
+        getDriver().quit();
     }
 
 }

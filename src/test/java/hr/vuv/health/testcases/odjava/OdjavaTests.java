@@ -5,7 +5,7 @@ import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.odjava.OdjavaPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
