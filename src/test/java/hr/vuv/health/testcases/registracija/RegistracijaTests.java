@@ -11,13 +11,18 @@ import org.junit.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import selenium.SeleniumTestWrapper;
 import utility.LoggerClass;
 
 import java.io.ByteArrayInputStream;
 
+import static org.junit.Assert.assertEquals;
+
 public class RegistracijaTests extends SeleniumTestWrapper {
 
+    private final static Logger log = LoggerFactory.getLogger(RegistracijaTests.class);
     private StartPage startPage = PageFactory.initElements(getDriver(), StartPage.class);
     private RegistracijaPage registracijaPage = PageFactory.initElements(getDriver(), RegistracijaPage.class);
     private CommonHealthElements healthElements = PageFactory.initElements(getDriver(), CommonHealthElements.class);
@@ -44,9 +49,9 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
         healthElements.obrisiKorisnikaPoKorisnickomImenu(RegistracijaContent.KORISNICKO_IME_PACIJENT);
 
-        Assert.assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
+        assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
         //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());
-        Allure.addAttachment("Snimka zaslona kada test nije prošao:", new ByteArrayInputStream(((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES)));
+        log.info("Korisnik sa rolom 'Pacijent' se je uspješno registrirao u aplikaciji.");
     }
 
     @Test
@@ -55,15 +60,19 @@ public class RegistracijaTests extends SeleniumTestWrapper {
         izbornikPage.klikniIzbornikRegistracija();
 
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
+        int nBrojDoktoraPrijeRegistracije = healthElements.vratiBrojRegistriranihDoktora();
         registracijaPage.registracijaKorisnikaKaoDoktora(RegistracijaContent.DOKTOR, RegistracijaContent.KORISNICKO_IME_DOKTOR, RegistracijaContent.IME_DOKTOR,
                 RegistracijaContent.PREZIME_DOKTOR, RegistracijaContent.EMAIL_DOKTOR, RegistracijaContent.MOBITEL_DOKTOR, RegistracijaContent.LOZINKA_DOKTOR);
         Thread.sleep(4000);
         int nBrojKorisnikaNakonRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
+        int nBrojDoktoraNakonRegistracije = healthElements.vratiBrojRegistriranihDoktora();
 
         healthElements.obrisiKorisnikaPoKorisnickomImenu(RegistracijaContent.KORISNICKO_IME_DOKTOR);
 
-        Assert.assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
+        assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
+        assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojDoktoraPrijeRegistracije);
         //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());
+        log.info("Korisnik sa rolom 'Doktor' se je uspješno registrirao u aplikaciji.");
     }
 
     @After

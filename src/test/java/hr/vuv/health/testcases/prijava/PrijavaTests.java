@@ -4,18 +4,15 @@ import hr.vuv.health.content.PrijavaContent;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
+import hr.vuv.health.testcases.SmokeTest;
 import io.qameta.allure.Description;
 import org.junit.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import selenium.SeleniumTestWrapper;
 import utility.LoggerClass;
-
-import java.io.ByteArrayInputStream;
 
 import static org.junit.Assert.assertTrue;
 
@@ -36,6 +33,7 @@ public class PrijavaTests extends SeleniumTestWrapper {
     }
 
     @Description("Prijava korisnika u aplikaciju")
+    @Category(SmokeTest.class)
     @Test
     public void Prijava_Korisnika_Kao_Doktora() {
         izbornikPage.klikniIzbornikPrijava();

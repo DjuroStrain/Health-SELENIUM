@@ -75,7 +75,6 @@ public class MojProfilDoktorPage extends Pages {
             healthElements.waitForElementToBeVisible(txtIme);
             e.printStackTrace();
         }
-        healthElements.waitForElementToBeVisible(txtIme);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until((ExpectedCondition<Boolean>) driver -> (txtIme.getAttribute("value").length() > 0));
         return txtIme.getAttribute("value");

@@ -1,6 +1,5 @@
 package hr.vuv.health.database;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class DatabaseCalls {
@@ -21,7 +20,7 @@ public class DatabaseCalls {
     /*
     * Dohvati broj korisnika
     * */
-    public int dohvatiBrojKorisnika() throws ClassNotFoundException{
+    public int dbConnectionDohvatiBrojKorisnika() throws ClassNotFoundException{
         int nBrojKorisnika = 0;
         try (Connection connection = getConnection(); Statement statement = connection.createStatement()){
             String SQL = "SELECT COUNT(*) as BrojKorisnika FROM AspNetUsers;";
@@ -40,9 +39,30 @@ public class DatabaseCalls {
     }
 
     /*
+     * Dohvati broj doktora
+     * */
+    public int dbConnectionDohvatiBrojDoktora() throws ClassNotFoundException{
+        int nBrojDoktora = 0;
+        try (Connection connection = getConnection(); Statement statement = connection.createStatement()){
+            String SQL = "SELECT COUNT(*) as BrojKorisnika FROM MainService.Doctors;";
+
+            ResultSet rs = statement.executeQuery(SQL);
+
+            while (rs.next())
+            {
+                nBrojDoktora = rs.getInt("BrojKorisnika");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nBrojDoktora;
+    }
+
+    /*
     * Dohvati posljednjeg korisnika u tablici AspNetUsers
     * */
-    public String dohvatiPosljednjeRegistriranogKorisnika() throws ClassNotFoundException{
+    public String dbConnectionDohvatiPosljednjeRegistriranogKorisnika() throws ClassNotFoundException{
         String sKorisnik = "";
         try (Connection connection = getConnection(); Statement statement = connection.createStatement()){
             String SQL = "SELECT TOP 1 * FROM AspNetUsers;";
@@ -62,7 +82,7 @@ public class DatabaseCalls {
     /*
     * Dodaj doktora u tablicu (AspNetUsers + AspNetUsersRoles + MainService.Doctors)
     * */
-    public String dodajDoktora() throws ClassNotFoundException {
+    public String dbConnectionDodajDoktora() throws ClassNotFoundException {
         String sId = "";
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
@@ -115,7 +135,7 @@ public class DatabaseCalls {
     /*
     * Obrisi doktora po ID-u (AspNetUsers + MainService.Doctors)
     * */
-    public void obrisiDoktoraPoId(String sId) throws ClassNotFoundException{
+    public void dbConnectionObrisiDoktoraPoId(String sId) throws ClassNotFoundException{
 
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
@@ -133,7 +153,7 @@ public class DatabaseCalls {
     /*
     * Obrisi doktora po emailu (AspNetUsers + MainService.Doctors)
     * */
-    public void obrisiDoktora(String sEmail) throws ClassNotFoundException{
+    public void dbConnectionObrisiDoktoraPoEmailu(String sEmail) throws ClassNotFoundException{
 
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
@@ -148,7 +168,7 @@ public class DatabaseCalls {
         }
     }
 
-    public void obrisiKorisnika(String sUserName) throws ClassNotFoundException{
+    public void dbConnectionObrisiKorisnikaPoKorisnickomImenu(String sUserName) throws ClassNotFoundException{
 
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
@@ -164,7 +184,7 @@ public class DatabaseCalls {
     /*
     * Dohvati broj usluga (MainService.Services)
     * */
-    public int dohvatiBrojUsluga() throws ClassNotFoundException {
+    public int dbConnectionDohvatiBrojUslugaDoktora() throws ClassNotFoundException {
         int nBrojUsluga = 0;
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
@@ -187,7 +207,7 @@ public class DatabaseCalls {
     /*
     * Vrati ID zadnje dodane usluge
     * */
-    public int vratiIDZadnjeDodaneUsluge() throws ClassNotFoundException {
+    public int dbConnectionVratiIDZadnjeDodaneUsluge() throws ClassNotFoundException {
         int nZadnjiID = 0;
 
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
@@ -209,8 +229,8 @@ public class DatabaseCalls {
     /*
     * Obrisi uslugu po id
     * */
-    public void obrisiUsluguPoID() throws ClassNotFoundException {
-        int nId = vratiIDZadnjeDodaneUsluge();
+    public void dbConnectionObrisiUsluguPoID() throws ClassNotFoundException {
+        int nId = dbConnectionVratiIDZadnjeDodaneUsluge();
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
             String SQL = "DELETE FROM MainService.Services WHERE Id="+nId;
@@ -221,7 +241,7 @@ public class DatabaseCalls {
         }
     }
 
-    public void obrisiUsluguPoParametarID(int nID) throws ClassNotFoundException {
+    public void dbConnectionObrisiUsluguPoParametarID(int nID) throws ClassNotFoundException {
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
             String SQL = "DELETE FROM MainService.Services WHERE Id="+nID;
@@ -235,7 +255,7 @@ public class DatabaseCalls {
     /*
     * Dodaj uslugu djelatnosti
     * */
-    public int dodajUslugu() throws ClassNotFoundException{
+    public int dbConnectionDodajUslugu() throws ClassNotFoundException{
         int nIdUsluge = 0;
 
         try(Connection con = getConnection(); Statement stmt = con.createStatement()) {

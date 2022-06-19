@@ -90,14 +90,22 @@ public class CommonHealthElements extends Pages {
     * */
     @Step("Dohvati broj registriranih korisnika u bazi podataka.")
     public int vratiBrojRegistriranihKorisnika() throws ClassNotFoundException{
-        return databaseCalls.dohvatiBrojKorisnika();
+        return databaseCalls.dbConnectionDohvatiBrojKorisnika();
+    }
+
+    /*
+     * Vrati broj registriraih doktora u bazi
+     * */
+    @Step("Dohvati broj registriranih korisnika u bazi podataka.")
+    public int vratiBrojRegistriranihDoktora() throws ClassNotFoundException{
+        return databaseCalls.dbConnectionDohvatiBrojDoktora();
     }
 
     /*
     * Vrati zadnje registriranog korisnika
     * */
     public String vratiPosljedenjeDodanogKorisnika() throws ClassNotFoundException{
-        return  databaseCalls.dohvatiPosljednjeRegistriranogKorisnika();
+        return  databaseCalls.dbConnectionDohvatiPosljednjeRegistriranogKorisnika();
     }
 
     /*
@@ -105,31 +113,31 @@ public class CommonHealthElements extends Pages {
     * */
 
     public void obrisiKorisnikaPoKorisnickomImenu(String sUserName) throws ClassNotFoundException {
-        databaseCalls.obrisiKorisnika(sUserName);
+        databaseCalls.dbConnectionObrisiKorisnikaPoKorisnickomImenu(sUserName);
     }
 
     /*
     * Dohvati broj usluga
     * */
     public int dohvatiBrojUsluga() throws ClassNotFoundException {
-        return databaseCalls.dohvatiBrojUsluga();
+        return databaseCalls.dbConnectionDohvatiBrojUslugaDoktora();
     }
 
     /*
     * Obrisi uslugu
     * */
     public void obrisiUslugu() throws ClassNotFoundException{
-        databaseCalls.obrisiUsluguPoID();
+        databaseCalls.dbConnectionObrisiUsluguPoID();
     }
 
     public void obrisiUsluguParametarId(int nID) throws ClassNotFoundException{
-        databaseCalls.obrisiUsluguPoParametarID(nID);
+        databaseCalls.dbConnectionObrisiUsluguPoParametarID(nID);
     }
 
     /*
     * Dodaj uslugu
     * */
     public int dodajUslugu() throws ClassNotFoundException {
-        return databaseCalls.dodajUslugu();
+        return databaseCalls.dbConnectionDodajUslugu();
     }
 }

@@ -83,6 +83,7 @@ public class IzbornikPage extends Pages {
     private WebElement tabMojProfil;
 
     public void klikniIzbornikMojProfil() {
+        healthElements.waitForElementToBeClickable(close);
         healthElements.waitForElementToBeClickable(tabMojProfil);
     }
 

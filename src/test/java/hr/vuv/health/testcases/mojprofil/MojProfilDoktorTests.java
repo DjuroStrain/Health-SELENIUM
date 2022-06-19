@@ -42,8 +42,8 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         startPage.startApplication();
         izbornikPage.klikniIzbornikPrijava();
         prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
-        getDriver().get("https://localhost:7037/profile");
-        //izbornikPage.klikniIzbornikMojProfil();
+        //getDriver().get("https://localhost:7037/profile");
+        izbornikPage.klikniIzbornikMojProfil();
     }
 
     @Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu na tabu 'Opći podaci'.")
