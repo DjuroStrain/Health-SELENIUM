@@ -33,6 +33,9 @@ public class PrijavaPage extends Pages {
     @FindBy(xpath = "//a[normalize-space()='Moj profil']")
     private WebElement tabMojProfil;
 
+    @FindBy(xpath = "//a[normalize-space()='Moj profillll']")
+    private WebElement tabMojProfil2;
+
     @Step("Prijava korisnika u aplikaciju i provjera je li se uspješno prijavio.")
     public void prijavaKorisnika(String sKorisnickoIme, String sLozinka) {
         healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
@@ -45,6 +48,6 @@ public class PrijavaPage extends Pages {
 
     public boolean tabMojProfilIsDisplayed() {
         healthElements.waitForElementToBeVisible(tabMojProfil);
-        return tabMojProfil.isDisplayed();
+        return tabMojProfil2.isDisplayed();
     }
 }

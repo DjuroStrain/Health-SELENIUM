@@ -7,7 +7,9 @@ import hr.vuv.health.pageobject.registracija.RegistracijaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
-import org.junit.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.PageFactory;
@@ -30,7 +32,7 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
     static LoggerClass loggerClass = new LoggerClass();
 
-    @Before
+    @BeforeEach
     public void setup(){
         loggerClass.startTestLog(RegistracijaTests.class.getSimpleName());
         startPage.startApplication();
@@ -75,7 +77,7 @@ public class RegistracijaTests extends SeleniumTestWrapper {
         log.info("Korisnik sa rolom 'Doktor' se je uspješno registrirao u aplikaciji.");
     }
 
-    @After
+    @AfterEach
     public void testEnd() {
         loggerClass.endTestLog(RegistracijaTests.class.getSimpleName());
     }

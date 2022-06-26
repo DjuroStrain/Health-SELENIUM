@@ -4,14 +4,15 @@ import hr.vuv.health.content.PrijavaContent;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
+import hr.vuv.health.testcases.MyTestWatcher;
 import hr.vuv.health.testcases.SmokeTest;
 import io.qameta.allure.Description;
-import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
     static LoggerClass loggerClass = new LoggerClass();
 
+    @RegisterExtension
+    MyTestWatcher watcher = new MyTestWatcher(getDriver());
+
     @BeforeEach
     public void setup() {
         loggerClass.startTestLog(PrijavaTests.class.getSimpleName());
@@ -38,7 +42,6 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
     @Description("Prijava korisnika u aplikaciju")
     @Category(SmokeTest.class)
-    //@Test
     @Test
     public void Prijava_Korisnika_Kao_Doktora() {
         izbornikPage.klikniIzbornikPrijava();
@@ -49,13 +52,11 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
     @Test
     public void test(){
-
     }
 
     @AfterEach
     public void testEnd() {
         loggerClass.endTestLog(PrijavaTests.class.getSimpleName());
-        getDriver().quit();
     }
 
 }

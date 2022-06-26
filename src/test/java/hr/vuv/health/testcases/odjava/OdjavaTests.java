@@ -8,7 +8,9 @@ import hr.vuv.health.pageobject.setup.StartPage;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +32,7 @@ public class OdjavaTests extends SeleniumTestWrapper {
 
     LoggerClass loggerClass = new LoggerClass();
 
-    @Before
+    @BeforeEach
     public void setup() {
         loggerClass.startTestLog(this.getClass().getSimpleName());
         startPage.startApplication();
@@ -46,7 +48,7 @@ public class OdjavaTests extends SeleniumTestWrapper {
         log.info("Korisnik se je uspješno odjavio iz aplikacije");
     }
 
-    @After
+    @AfterEach
     public void testEnd() {
         loggerClass.endTestLog(this.getClass().getSimpleName());
     }

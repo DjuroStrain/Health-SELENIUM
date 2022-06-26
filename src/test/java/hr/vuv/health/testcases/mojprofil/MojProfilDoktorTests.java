@@ -12,7 +12,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +38,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
     SoftAssertions softAssertions = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setup() {
         loggerClass.startTestLog(this.getClass().getSimpleName());
         startPage.startApplication();
@@ -122,7 +124,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         log.info("Usluga je uspješno obrisana.");
     }
 
-    @After
+    @AfterEach
     public void testEnd() {
         loggerClass.endTestLog(this.getClass().getSimpleName());
     }
