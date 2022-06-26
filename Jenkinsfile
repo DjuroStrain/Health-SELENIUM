@@ -24,5 +24,13 @@ pipeline {
                 bat "mvn package -f Health-SELENIUM"
             }
         }
+        stage('Allure report'){
+		  steps{
+			script{
+			  allure ([results: [[path: 'allure-results']], report: "allure-report"])
+			}
+		  }
+		}
+	}
     }
 }
