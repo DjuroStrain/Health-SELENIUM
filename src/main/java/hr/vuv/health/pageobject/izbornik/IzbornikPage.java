@@ -49,7 +49,6 @@ public class IzbornikPage extends Pages {
 
     @Step("U izborniku klikni na 'Prijava'.")
     public void klikniIzbornikPrijava() {
-        healthElements.waitForElementToBeClickable(close);
         healthElements.waitForElementToBeClickable(tabPrijava);
     }
 
@@ -83,8 +82,16 @@ public class IzbornikPage extends Pages {
     private WebElement tabMojProfil;
 
     public void klikniIzbornikMojProfil() {
-        healthElements.waitForElementToBeClickable(close);
         healthElements.waitForElementToBeClickable(tabMojProfil);
+    }
+
+    //Radno vrijeme
+
+    @FindBy(xpath = "//a[normalize-space()='Radno vrijeme']")
+    private WebElement tabRadnoVrijeme;
+
+    public void klikniIzbornikRadnoVrijeme() {
+        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
     }
 
     //Odjava

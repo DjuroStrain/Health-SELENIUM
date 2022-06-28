@@ -24,9 +24,24 @@ public class MojProfilContent {
     public final static String CIJENA_USLUGE = "GBP52.00";
 
     /*
-    * Podaci za izmijenu uslug
+    * Podaci za izmijenu uslugu
     * */
     public final static String IZMIJENJEN_NAZIV_USLUGE = "Pregled promijena";
     public final static String IZMIJENJEN_OPIS_USLUGE = "Opis pregleda promijena";
     public final static String IZMIJENJENA_CIJENA_USLUGE = "GBP100.00";
+
+
+    /*
+    * Radno vrijeme
+    * */
+    //prijepodne
+    public final static String RADNO_VRIJEME_PRIJEPODNE_OD = "08:00:00";
+    public final static String RADNO_VRIJEME_PRIJEPODNE_DO = "14:00:00";
+
+    //poslijepodne
+    public final static String RADNO_VRIJEME_POSLIJEPODNE_OD = "14:00:00";
+    public final static String RADNO_VRIJEME_POSLIJEPODNE_DO = "20:00:00";
+
+    //ne radi
+    public final static String NE_RADI = "00:00:00";
 }

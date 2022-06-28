@@ -2,6 +2,7 @@ package hr.vuv.health.pageobject.commonelements;
 
 import hr.vuv.health.database.DatabaseCalls;
 import io.qameta.allure.Step;
+import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -114,6 +115,20 @@ public class CommonHealthElements extends Pages {
 
     public void obrisiKorisnikaPoKorisnickomImenu(String sUserName) throws ClassNotFoundException {
         databaseCalls.dbConnectionObrisiKorisnikaPoKorisnickomImenu(sUserName);
+    }
+
+    /*
+    * Dodaj doktora
+    * */
+    public void dodajDoktora() throws ClassNotFoundException{
+        databaseCalls.dbConnectionDodajDoktora();
+    }
+
+    /*
+    * Obrisi doktora
+    * */
+    public void obrisiDoktora(String sID) throws ClassNotFoundException {
+        databaseCalls.dbConnectionObrisiDoktoraPoId(sID);
     }
 
     /*

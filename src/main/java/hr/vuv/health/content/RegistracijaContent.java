@@ -20,4 +20,16 @@ public class RegistracijaContent {
     public final static String EMAIL_DOKTOR = "ivoivicdoktor@gmail.com";
     public final static String MOBITEL_DOKTOR = "0914567324";
     public final static String LOZINKA_DOKTOR = "Lozinka1234!";
+
+
+    /*
+     * Validacije
+     * */
+    public final static String VALIDACIJA_TITULA = "Titula je obavezno polje.";
+    public final static String VALIDACIJA_KORISNICKA_OZNAKA = "Korisnicka oznaka je obavezno polje.";
+    public final static String VALIDACIJA_PREZIME = "Prezime je obavezno polje.";
+    public final static String VALIDACIJA_IME = "Ime je obavezno polje.";
+    public final static String VALIDACIJA_EMAIL = "Email je obavezno polje.";
+    public final static String VALIDACIJA_TELEFONSKI_BROJ = "Telefonski broj je obavezno polje.";
+    public final static String VALIDACIJA_LOZINKA = "Lozinka je obavezno polje.";
 }

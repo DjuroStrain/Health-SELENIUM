@@ -4,9 +4,11 @@ import hr.vuv.health.content.MojProfilContent;
 import hr.vuv.health.content.PrijavaContent;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
+import hr.vuv.health.pageobject.ljecnici.LjecniciPage;
 import hr.vuv.health.pageobject.mojprofil.MojProfilDoktorPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
+import hr.vuv.health.testcases.MyTestWatcher;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.checkerframework.checker.units.qual.C;
@@ -15,6 +17,7 @@ import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,17 +35,22 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
     private PrijavaPage prijavaPage = PageFactory.initElements(getDriver(), PrijavaPage.class);
     private IzbornikPage izbornikPage = PageFactory.initElements(getDriver(), IzbornikPage.class);
     private MojProfilDoktorPage mojProfilDoktorPage = PageFactory.initElements(getDriver(), MojProfilDoktorPage.class);
+    private LjecniciPage ljecniciPage = new LjecniciPage(getDriver());
     private CommonHealthElements healthElements = new CommonHealthElements(getDriver());
 
     static LoggerClass loggerClass = new LoggerClass();
 
     SoftAssertions softAssertions = new SoftAssertions();
 
+    @RegisterExtension
+    MyTestWatcher watcher = new MyTestWatcher(getDriver());
+
     @BeforeEach
-    public void setup() {
+    public void setup() throws ClassNotFoundException {
         loggerClass.startTestLog(this.getClass().getSimpleName());
         startPage.startApplication();
         izbornikPage.klikniIzbornikPrijava();
+        healthElements.dodajDoktora();
         prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
         //getDriver().get("https://localhost:7037/profile");
         izbornikPage.klikniIzbornikMojProfil();
@@ -50,7 +58,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
     @Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu na tabu 'Opći podaci'.")
     @Test
-    public void Provjera_Ispravnosti_Prikaza_Podatka_Na_Profilu_Doktora() throws InterruptedException {
+    public void Provjera_Ispravnosti_Prikaza_Podatka_Na_Profilu_Doktora() throws InterruptedException, ClassNotFoundException {
         softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaIme()).isEqualTo(MojProfilContent.PROFIL_IME);
 
         softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaPrezime()).isEqualTo(MojProfilContent.PROFIL_PREZIME);
@@ -69,6 +77,8 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
         softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaEmail()).isEqualTo(MojProfilContent.PROFIL_EMAIL);
 
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
+
         softAssertions.assertAll();
 
         log.info("Podaci o doktoru se prikazuju ispravno.");
@@ -86,6 +96,9 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         healthElements.obrisiUslugu();
 
         softAssertions.assertThat(nRazlikaBrojaRedova).isEqualTo(1);
+
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
+
         assertArrayEquals(mojProfilDoktorPage.vratiListuVrijednostiUslugeIzSadrzaja().toArray(),
                 mojProfilDoktorPage.vratiListuVrijednostiUslugeIzTabliceUsluga().toArray());
         log.info("Usluga je uspješno dodana.");
@@ -105,6 +118,9 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         //healthElements.obrisiUsluguParametarId(nIDUsluge);
 
         softAssertions.assertThat(nRazlikaBrojaRedova).isEqualTo(0);
+
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
+
         assertArrayEquals(mojProfilDoktorPage.vratiListuPromijenjenihVrijednostiUslugeIzSadrzaja().toArray(),
                 mojProfilDoktorPage.vratiListuVrijednostiUslugeIzTabliceUsluga().toArray());
         log.info("Usluga je uspješno uređena.");
@@ -120,8 +136,39 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
         int nRazlikaBrojaRedova = nBrojRedovaUslugaUBaziPoslijeBrisanja-nBrojRedovaUslugaUBaziPrijeBrisanja;
 
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
+
         softAssertions.assertThat(nRazlikaBrojaRedova).isEqualTo(1);
         log.info("Usluga je uspješno obrisana.");
+    }
+
+    @Description("Uredi radno vrijeme doktora")
+    @Test
+    public void Uredi_Radno_Vrijeme_Doktora() throws ClassNotFoundException {
+
+        mojProfilDoktorPage.unesiRadnoVrijemeDoktoraPonedjeljak(MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_OD, MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_DO);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostiPonedjeljakRadiOdNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_OD);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPonedjeljakRadiDoNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_DO);
+
+        mojProfilDoktorPage.unesiRadnoVrijemeDoktoraUtorak(MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_OD, MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_DO);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostiUtorakRadiOdNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_OD);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostUtorakRadiDoNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_DO);
+
+        mojProfilDoktorPage.unesiRadnoVrijemeDoktoraSrijeda(MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_OD, MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_DO);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostiSrijedaRadiOdNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_OD);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostSrijedaRadiDoNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_DO);
+
+        mojProfilDoktorPage.unesiRadnoVrijemeDoktoraCetvrtak(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_OD, MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_DO);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostiCetvrtakRadiOdNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_OD);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostCetvrtakRadiDoNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_DO);
+
+        mojProfilDoktorPage.unesiRadnoVrijemeDoktoraPetak(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_OD, MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_DO);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostiPetakRadiOdNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_OD);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPetakRadiDoNakonUnosa()).isEqualTo(MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_DO);
+
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
+
+        softAssertions.assertAll();
     }
 
     @AfterEach

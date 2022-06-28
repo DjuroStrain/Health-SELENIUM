@@ -5,20 +5,18 @@ import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.registracija.RegistracijaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
-import io.qameta.allure.Allure;
+import hr.vuv.health.testcases.MyTestWatcher;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import selenium.SeleniumTestWrapper;
 import utility.LoggerClass;
-
-import java.io.ByteArrayInputStream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,17 +30,21 @@ public class RegistracijaTests extends SeleniumTestWrapper {
 
     static LoggerClass loggerClass = new LoggerClass();
 
+    @RegisterExtension
+    MyTestWatcher watcher = new MyTestWatcher(getDriver());
+
+    SoftAssertions softAssertions = new SoftAssertions();
+
     @BeforeEach
     public void setup(){
         loggerClass.startTestLog(RegistracijaTests.class.getSimpleName());
         startPage.startApplication();
+        izbornikPage.klikniIzbornikRegistracija();
     }
 
     @Test
     @Description("Registracija novog korisnika sa rolom - Pacijent")
     public void Registriraj_Korisnika_Kao_Pacijenta() throws InterruptedException, ClassNotFoundException{
-        izbornikPage.klikniIzbornikRegistracija();
-
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
         registracijaPage.registracijaKorisnikaKaoPacijenta(RegistracijaContent.KORISNICKO_IME_PACIJENT, RegistracijaContent.IME_PACIJENT,
                 RegistracijaContent.PREZIME_PACIJENT, RegistracijaContent.EMAIL_PACIJENT, RegistracijaContent.MOBITEL_PACIJENT, RegistracijaContent.LOZINKA_PACIJENT);
@@ -59,8 +61,6 @@ public class RegistracijaTests extends SeleniumTestWrapper {
     @Test
     @Description("Registracija novog korisnika sa rolom - Doktor")
     public void Registriraj_Korisnika_Kao_Doktora() throws InterruptedException, ClassNotFoundException {
-        izbornikPage.klikniIzbornikRegistracija();
-
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
         int nBrojDoktoraPrijeRegistracije = healthElements.vratiBrojRegistriranihDoktora();
         registracijaPage.registracijaKorisnikaKaoDoktora(RegistracijaContent.DOKTOR, RegistracijaContent.KORISNICKO_IME_DOKTOR, RegistracijaContent.IME_DOKTOR,
@@ -75,6 +75,23 @@ public class RegistracijaTests extends SeleniumTestWrapper {
         assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojDoktoraPrijeRegistracije);
         //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());
         log.info("Korisnik sa rolom 'Doktor' se je uspješno registrirao u aplikaciji.");
+    }
+
+    @Description("Pokusaj registriranja korisnika bez unosa obaveznih podataka te provjera validacija za obavezna polja.")
+    @Test
+    public void Provjera_Validacija_Za_Obavezna_Polja_Pri_Pokusaju_Registracije() throws InterruptedException{
+        registracijaPage.klikniNaGumbKreirajBezUnosaObaveznihPodataka();
+
+        softAssertions.assertThat(registracijaPage.vratiValidacijuZaObaveznoPoljeTitula()).isEqualTo(RegistracijaContent.VALIDACIJA_TITULA);
+        softAssertions.assertThat(registracijaPage.vratiValidacijuZaObaveznoPoljeKorisnickoIme()).isEqualTo(RegistracijaContent.VALIDACIJA_KORISNICKA_OZNAKA);
+        softAssertions.assertThat(registracijaPage.vratiValidacijuZaObaveznoPoljeIme()).isEqualTo(RegistracijaContent.VALIDACIJA_IME);
+        softAssertions.assertThat(registracijaPage.vratiValidacijuZaObaveznoPoljePrezime()).isEqualTo(RegistracijaContent.VALIDACIJA_PREZIME);
+        softAssertions.assertThat(registracijaPage.vratiValidacijuZaObaveznoPoljeEmail()).isEqualTo(RegistracijaContent.VALIDACIJA_EMAIL);
+        softAssertions.assertThat(registracijaPage.vratiValidacijuZaObaveznoPoljeTelBroj()).isEqualTo(RegistracijaContent.VALIDACIJA_TELEFONSKI_BROJ);
+        softAssertions.assertThat(registracijaPage.vratiValidacijuZaObaveznoPoljeLozinka()).isEqualTo(RegistracijaContent.VALIDACIJA_LOZINKA);
+        softAssertions.assertAll();
+
+        log.info("Prikazuju se ispravne validacije za pokušaj registracije bez unosa obaveznih podataka.");
     }
 
     @AfterEach

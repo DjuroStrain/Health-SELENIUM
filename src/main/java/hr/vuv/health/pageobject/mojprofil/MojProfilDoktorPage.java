@@ -4,6 +4,7 @@ import hr.vuv.health.content.MojProfilContent;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
 import org.bouncycastle.jcajce.provider.symmetric.IDEA;
+import org.checkerframework.checker.index.qual.NegativeIndexFor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -276,5 +277,220 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(tdNazivUsluge);
         healthElements.waitForElementToBeClickable(btnDeleteService);
         healthElements.waitForElementToBeVisible(tdNoRecords);
+    }
+
+
+    /*
+    * Radno vrijeme
+    * */
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[2]")
+    private WebElement tdPonedjeljak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[2]//td[4]")
+    private WebElement tdPonedjeljakRadiOd;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[2]//td[4]//following::span//span")
+    private WebElement btnOdaberiVrijemeOdPonedjeljak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='08:00']")
+    private WebElement vrijemeOdPonedjeljak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[2]//td[5]")
+    private WebElement tdPonedjeljakRadiDo;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[2]//td[5]//following::span//span")
+    private WebElement btnOdaberiVrijemeDoPonedjeljak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='14:00']")
+    private WebElement vrijemeDoPonedjeljak;
+
+    public void unesiRadnoVrijemeDoktoraPonedjeljak(String sPonedjeljakRadiOd, String sPonedjeljakRadiDo) {
+        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
+        healthElements.waitForElementToBeClickable(tdPonedjeljak);
+        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(tdPonedjeljakRadiOd);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdPonedjeljak);
+        healthElements.waitForElementToBeClickable(vrijemeOdPonedjeljak);
+        healthElements.waitForElementToBeClickable(tdPonedjeljakRadiDo);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoPonedjeljak);
+        healthElements.waitForElementToBeClickable(vrijemeDoPonedjeljak);
+        healthElements.waitForElementToBeClickable(btnUpdateService);
+    }
+
+    public String vratiVrijednostiPonedjeljakRadiOdNakonUnosa() {
+        return tdPonedjeljakRadiOd.getText();
+    }
+
+    public String vratiVrijednostPonedjeljakRadiDoNakonUnosa() {
+        return tdPonedjeljakRadiDo.getText();
+    }
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[3]")
+    private WebElement tdUtorak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[3]//td[4]")
+    private WebElement tdUtorakRadiOd;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[3]//td[4]//following::span//span")
+    private WebElement btnOdaberiVrijemeOdUtorak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='08:00']")
+    private WebElement vrijemeOdUtorak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[3]//td[5]")
+    private WebElement tdUtorakRadiDo;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[3]//td[5]//following::span//span")
+    private WebElement btnOdaberiVrijemeDoUtorak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='14:00']")
+    private WebElement vrijemeDoUtorak;
+
+    public void unesiRadnoVrijemeDoktoraUtorak(String sUtorakRadiOd, String sUtorakRadiDo) {
+        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
+        healthElements.waitForElementToBeClickable(tdUtorak);
+        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(tdUtorakRadiOd);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdUtorak);
+        healthElements.waitForElementToBeClickable(vrijemeOdUtorak);
+        healthElements.waitForElementToBeClickable(tdUtorakRadiDo);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoUtorak);
+        healthElements.waitForElementToBeClickable(vrijemeDoUtorak);
+        healthElements.waitForElementToBeClickable(btnUpdateService);
+    }
+
+    public String vratiVrijednostiUtorakRadiOdNakonUnosa() {
+        return tdUtorakRadiOd.getText();
+    }
+
+    public String vratiVrijednostUtorakRadiDoNakonUnosa() {
+        return tdUtorakRadiDo.getText();
+    }
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[4]")
+    private WebElement tdSrijeda;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[4]//td[4]")
+    private WebElement tdSrijedaRadiOd;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[4]//td[4]//following::span//span")
+    private WebElement btnOdaberiVrijemeOdSrijeda;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='14:00']")
+    private WebElement vrijemeOdSrijeda;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[4]//td[5]")
+    private WebElement tdSrijedaRadiDo;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[4]//td[5]//following::span//span")
+    private WebElement btnOdaberiVrijemeDoSrijeda;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='20:00']")
+    private WebElement vrijemeDoSrijeda;
+
+    public void unesiRadnoVrijemeDoktoraSrijeda(String sSrijedaRadiOd, String sSrijedaRadiDo) {
+        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
+        healthElements.waitForElementToBeClickable(tdSrijeda);
+        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(tdSrijedaRadiOd);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdSrijeda);
+        healthElements.waitForElementToBeClickable(vrijemeOdSrijeda);
+        healthElements.waitForElementToBeClickable(tdSrijedaRadiDo);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoSrijeda);
+        healthElements.waitForElementToBeClickable(vrijemeDoSrijeda);
+        healthElements.waitForElementToBeClickable(btnUpdateService);
+    }
+
+    public String vratiVrijednostiSrijedaRadiOdNakonUnosa() {
+        return tdSrijedaRadiOd.getText();
+    }
+
+    public String vratiVrijednostSrijedaRadiDoNakonUnosa() {
+        return tdSrijedaRadiDo.getText();
+    }
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[5]")
+    private WebElement tdCetvrtak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[5]//td[4]")
+    private WebElement tdCetvrtakRadiOd;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[5]//td[4]//following::span//span")
+    private WebElement btnOdaberiVrijemeOdCetvrtak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='14:00']")
+    private WebElement vrijemeOdCetvrtak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[5]//td[5]")
+    private WebElement tdCetvrtakRadiDo;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[5]//td[5]//following::span//span")
+    private WebElement btnOdaberiVrijemeDoCetvrtak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='20:00']")
+    private WebElement vrijemeDoCetvrtak;
+
+    public void unesiRadnoVrijemeDoktoraCetvrtak(String sCetvrtakRadiOd, String sCetvrtakRadiDo) {
+        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
+        healthElements.waitForElementToBeClickable(tdCetvrtak);
+        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(tdCetvrtakRadiOd);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdCetvrtak);
+        healthElements.waitForElementToBeClickable(vrijemeOdCetvrtak);
+        healthElements.waitForElementToBeClickable(tdCetvrtakRadiDo);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoCetvrtak);
+        healthElements.waitForElementToBeClickable(vrijemeDoCetvrtak);
+        healthElements.waitForElementToBeClickable(btnUpdateService);
+    }
+
+    public String vratiVrijednostiCetvrtakRadiOdNakonUnosa() {
+        return tdCetvrtakRadiOd.getText();
+    }
+
+    public String vratiVrijednostCetvrtakRadiDoNakonUnosa() {
+        return tdCetvrtakRadiDo.getText();
+    }
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[6]")
+    private WebElement tdPetak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[6]//td[4]")
+    private WebElement tdPetakRadiOd;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[6]//td[4]//following::span//span")
+    private WebElement btnOdaberiVrijemeOdPetak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='14:00']")
+    private WebElement vrijemeOdPetak;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[6]//td[5]")
+    private WebElement tdPetakRadiDo;
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[6]//td[5]//following::span//span")
+    private WebElement btnOdaberiVrijemeDoPetak;
+
+    @FindBy(xpath = "//div[@class='e-control e-timepicker e-lib e-popup-wrapper e-popup e-popup-open']//li[normalize-space()='20:00']")
+    private WebElement vrijemeDoPetak;
+
+    public void unesiRadnoVrijemeDoktoraPetak(String sPetakRadiOd, String sPetakRadiDo) {
+        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
+        healthElements.waitForElementToBeClickable(tdPetak);
+        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(tdPetakRadiOd);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdPetak);
+        healthElements.waitForElementToBeClickable(vrijemeOdPetak);
+        healthElements.waitForElementToBeClickable(tdPetakRadiDo);
+        healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoPetak);
+        healthElements.waitForElementToBeClickable(vrijemeDoPetak);
+        healthElements.waitForElementToBeClickable(btnUpdateService);
+    }
+
+    public String vratiVrijednostiPetakRadiOdNakonUnosa() {
+        return tdPetakRadiOd.getText();
+    }
+
+    public String vratiVrijednostPetakRadiDoNakonUnosa() {
+        return tdPetakRadiDo.getText();
     }
 }

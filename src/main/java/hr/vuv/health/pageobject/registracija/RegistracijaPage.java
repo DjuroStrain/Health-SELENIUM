@@ -2,12 +2,17 @@ package hr.vuv.health.pageobject.registracija;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Pages;
 
 import java.rmi.Remote;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RegistracijaPage extends Pages {
 
@@ -87,5 +92,77 @@ public class RegistracijaPage extends Pages {
         Thread.sleep(1000);
         healthElements.waitForElementToBeClickable(btnKreirajRacun);
         healthElements.waitForElementToBeVisible(btnPrijaviSe);
+    }
+
+    /*
+    * Validacije
+    * */
+
+    @Step("Klikni na gumb 'Kreiraj svoj račun' bez unosa obavezih podataka")
+    public void klikniNaGumbKreirajBezUnosaObaveznihPodataka() throws InterruptedException {
+        healthElements.scrollToElement();
+        healthElements.waitForElementToBeVisible(btnPrijava2);
+        try{
+            healthElements.waitForElementToBeClickable(btnKreirajRacun);
+        }catch (ElementClickInterceptedException e) {
+            healthElements.waitForElementToBeClickable(btnKreirajRacun);
+        }
+    }
+
+    @FindBy(xpath = "//select[@id='roleSelect']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeTitula;
+
+    @Step("Dohvati validaciju za obavezno polje 'Titula'")
+    public String vratiValidacijuZaObaveznoPoljeTitula() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeTitula);
+        return txtValidacijaZaObaveznoPoljeTitula.getText();
+    }
+
+    @FindBy(xpath = "//input[@id='username']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeKorisnickoIme;
+
+    @Step("Dohvati validaciju za obavezno polje 'KorisnickoIme'")
+    public String vratiValidacijuZaObaveznoPoljeKorisnickoIme() {
+        return txtValidacijaZaObaveznoPoljeKorisnickoIme.getText();
+    }
+
+    @FindBy(xpath = "//input[@id='firstName']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeIme;
+
+    @Step("Dohvati validaciju za obavezno polje 'Ime'")
+    public String vratiValidacijuZaObaveznoPoljeIme() {
+        return txtValidacijaZaObaveznoPoljeIme.getText();
+    }
+
+    @FindBy(xpath = "//input[@id='lastName']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljePrezime;
+
+    @Step("Dohvati validaciju za obavezno polje 'Prezime'")
+    public String vratiValidacijuZaObaveznoPoljePrezime() {
+        return txtValidacijaZaObaveznoPoljePrezime.getText();
+    }
+
+    @FindBy(xpath = "//input[@id='email']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeEmail;
+
+    @Step("Dohvati validaciju za obavezno polje 'Email'")
+    public String vratiValidacijuZaObaveznoPoljeEmail() {
+        return txtValidacijaZaObaveznoPoljeEmail.getText();
+    }
+
+    @FindBy(xpath = "//input[@id='number']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeTelBroj;
+
+    @Step("Dohvati validaciju za obavezno polje 'TelBroj'")
+    public String vratiValidacijuZaObaveznoPoljeTelBroj() {
+        return txtValidacijaZaObaveznoPoljeTelBroj.getText();
+    }
+
+    @FindBy(xpath = "//input[@id='password']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeLozinka;
+
+    @Step("Dohvati validaciju za obavezno polje 'Lozinka'")
+    public String vratiValidacijuZaObaveznoPoljeLozinka() {
+        return txtValidacijaZaObaveznoPoljeLozinka.getText();
     }
 }

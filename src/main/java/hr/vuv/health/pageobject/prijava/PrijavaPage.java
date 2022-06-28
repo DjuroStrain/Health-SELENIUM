@@ -2,6 +2,7 @@ package hr.vuv.health.pageobject.prijava;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,5 +50,31 @@ public class PrijavaPage extends Pages {
     public boolean tabMojProfilIsDisplayed() {
         healthElements.waitForElementToBeVisible(tabMojProfil);
         return tabMojProfil2.isDisplayed();
+    }
+
+    /*
+     * Validacije
+     * */
+
+    @Step("Klikni na gumb 'Prijavi se' bez unosa obavezih podataka")
+    public void klikniNaGumbPrijavaBezUnosaObaveznihPodataka() throws InterruptedException {
+        healthElements.waitForElementToBeClickable(btnPrijaviSe);
+    }
+
+    @FindBy(xpath = "//input[@id='username']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeKorisnickoIme;
+
+    @Step("Dohvati validaciju za obavezno polje 'KorisnickoIme'")
+    public String vratiValidacijuZaObaveznoPoljeKorisnickoIme() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeKorisnickoIme);
+        return txtValidacijaZaObaveznoPoljeKorisnickoIme.getText();
+    }
+
+    @FindBy(xpath = "//input[@id='password']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeLozinka;
+
+    @Step("Dohvati validaciju za obavezno polje 'Lozinka'")
+    public String vratiValidacijuZaObaveznoPoljeLozinka() {
+        return txtValidacijaZaObaveznoPoljeLozinka.getText();
     }
 }
