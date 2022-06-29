@@ -125,6 +125,13 @@ public class CommonHealthElements extends Pages {
     }
 
     /*
+     * Dodaj doktora bez adrese i specijalizacije
+     * */
+    public void dodajDoktoraBezAdreseISpecijalizacije() throws ClassNotFoundException{
+        databaseCalls.dbConnectionDodajDoktoraBezAdreseISpecijalizacije();
+    }
+
+    /*
     * Obrisi doktora
     * */
     public void obrisiDoktora(String sID) throws ClassNotFoundException {
@@ -134,8 +141,8 @@ public class CommonHealthElements extends Pages {
     /*
     * Dohvati broj usluga
     * */
-    public int dohvatiBrojUsluga() throws ClassNotFoundException {
-        return databaseCalls.dbConnectionDohvatiBrojUslugaDoktora();
+    public int dohvatiBrojUsluga(String sDoktorID) throws ClassNotFoundException {
+        return databaseCalls.dbConnectionDohvatiBrojUslugaDoktora(sDoktorID);
     }
 
     /*
@@ -154,5 +161,12 @@ public class CommonHealthElements extends Pages {
     * */
     public int dodajUslugu() throws ClassNotFoundException {
         return databaseCalls.dbConnectionDodajUslugu();
+    }
+
+    /*
+    * Vrati radno vrijeme ordinacije za pojedini dan
+    * */
+    public String vratiRadnoVrijemeOrdinacijeZaPojediniDan(int nDanID, String sDoktorID) throws ClassNotFoundException{
+        return databaseCalls.dbConnectionVratiRadnoVrijemeOrdinacijeZaOdredeniDan(nDanID, sDoktorID);
     }
 }

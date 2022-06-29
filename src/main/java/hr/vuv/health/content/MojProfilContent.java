@@ -15,6 +15,17 @@ public class MojProfilContent {
     public final static String PROFIL_GRAD_MJESTO = "Virovitica";
     public final static String PROFIL_EMAIL = "durobelacic@gmail.com";
 
+    //Validacije
+    public final static String VALIDACIJA_IME = "Ime je obavezno polje";
+    public final static String VALIDACIJA_PREZIME = "Prezime je obavezno polje";
+    public final static String VALIDACIJA_TITULA = "Titula je obavezno polje";
+    public final static String VALIDACIJA_SPECIJALIZACIJA = "Specijalizacija je obavezno polje";
+    public final static String VALIDACIJA_ULICA = "Ulica je obavezno polje";
+    public final static String VALIDACIJA_KUCNI_BROJ = "Kućni broj je obavezno polje";
+    public final static String VALIDACIJA_POSTANSKI_BROJ = "Poštanski broj je obavezno polje";
+    public final static String VALIDACIJA_GRAD_MJESTO = "Grad/Mjesto je obavezno polje";
+    public final static String VALIDACIJA_DRZAVA = "Država je obavezno polje";
+    public final static String VALIDACIJA_EMAIL = "Email je obavezno polje";
 
     /*
     * Podaci za unos nove usluge

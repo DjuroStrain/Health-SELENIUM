@@ -5,10 +5,7 @@ import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
 import org.bouncycastle.jcajce.provider.symmetric.IDEA;
 import org.checkerframework.checker.index.qual.NegativeIndexFor;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -64,6 +61,32 @@ public class MojProfilDoktorPage extends Pages {
 
     @FindBy(xpath = "//label[normalize-space()='Email']//following::input")
     private WebElement txtEmail;
+
+    @FindBy(xpath = "//button[normalize-space()='Spremi profil']")
+    private WebElement btnSpremiProfil;
+
+    /*
+    *  Unesi podatke 'Titula', 'Specijalizacija' i 'Adresa' za doktora
+    * */
+
+    @FindBy(xpath = "//label[normalize-space()='Specijalizacija']//following-sibling::span")
+    private WebElement ddSpecijalizacija;
+
+    @FindBy(xpath = "//div[@class='e-content e-dropdownbase']//following-sibling::li[normalize-space()='Fizioterapija']")
+    private WebElement selectFizioterapija;
+
+    @Step("Unesi dodatne obavezne podatke o doktoru (titula, specijalizacija i adresa)")
+    public void unesiDodatneObaveznePodatkeODoktoru(String sTitula, String sUlica, String sKucniBroj, String sPostanskiBroj,
+                                                    String sGradMjesto, String sDrzava) {
+        healthElements.insertText(txtTitula, sTitula);
+        healthElements.waitForElementToBeClickable(ddSpecijalizacija);
+        healthElements.waitForElementToBeClickable(selectFizioterapija);
+        healthElements.insertText(txtUlica, sUlica);
+        healthElements.insertText(txtKucniBroj, sKucniBroj);
+        healthElements.insertText(txtPostanskiBroj, sPostanskiBroj);
+        healthElements.insertText(txtGradMjesto, sGradMjesto);
+        healthElements.insertText(txtDrzava, sDrzava);
+    }
 
     /*
     *  Polje 'Ime'
@@ -147,6 +170,114 @@ public class MojProfilDoktorPage extends Pages {
 
 
     /*
+     * Validacije
+     * */
+
+    @Step("Obrisi polja 'Ime', 'Prezime' i 'Email'")
+    public void obrisiIspunjenaPoljaNaTabOpciPodaci() {
+        healthElements.waitForElementToBeClickable(txtIme);
+        txtIme.clear();
+        txtPrezime.click();
+        txtPrezime.clear();
+        txtEmail.click();
+        txtEmail.clear();
+    }
+
+    @Step("Klikni na gumb 'Spremi profil' bez unosa obavezih podataka")
+    public void klikniNaGumbKreirajBezUnosaObaveznihPodataka() throws InterruptedException {
+        healthElements.waitForElementToBeClickable(btnSpremiProfil);
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Ime']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeIme;
+
+    @Step("Dohvati validaciju za obavezno polje 'Ime'")
+    public String vratiValidacijuZaObaveznoPoljeIme() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeIme);
+        return txtValidacijaZaObaveznoPoljeIme.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Prezime']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljePrezime;
+
+    @Step("Dohvati validaciju za obavezno polje 'Prezime'")
+    public String vratiValidacijuZaObaveznoPoljePrezime() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljePrezime);
+        return txtValidacijaZaObaveznoPoljePrezime.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Titula']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeTitula;
+
+    @Step("Dohvati validaciju za obavezno polje 'Titula'")
+    public String vratiValidacijuZaObaveznoPoljeTitula() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeTitula);
+        return txtValidacijaZaObaveznoPoljeTitula.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Specijalizacija']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeSpecijalizacija;
+
+    @Step("Dohvati validaciju za obavezno polje 'Specijalizacija'")
+    public String vratiValidacijuZaObaveznoPoljeSpecijalizacija() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeSpecijalizacija);
+        return txtValidacijaZaObaveznoPoljeSpecijalizacija.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Ulica']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeUlica;
+
+    @Step("Dohvati validaciju za obavezno polje 'Ulica'")
+    public String vratiValidacijuZaObaveznoPoljeUlica() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeUlica);
+        return txtValidacijaZaObaveznoPoljeUlica.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Kućni broj']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeKucniBroj;
+
+    @Step("Dohvati validaciju za obavezno polje 'Kućni broj'")
+    public String vratiValidacijuZaObaveznoPoljeKucniBroj() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeKucniBroj);
+        return txtValidacijaZaObaveznoPoljeKucniBroj.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Poštanski broj']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljePostanskiBroj;
+
+    @Step("Dohvati validaciju za obavezno polje 'Poštanski broj'")
+    public String vratiValidacijuZaObaveznoPoljePostanskiBroj() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljePostanskiBroj);
+        return txtValidacijaZaObaveznoPoljePostanskiBroj.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Grad/Mjesto']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeGradMjesto;
+
+    @Step("Dohvati validaciju za obavezno polje 'Grad/Mjesto'")
+    public String vratiValidacijuZaObaveznoPoljeGradMjesto() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeGradMjesto);
+        return txtValidacijaZaObaveznoPoljeGradMjesto.getText();
+    }
+
+    @FindBy(xpath = "//label[normalize-space()='Država']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeDrzava;
+
+    @Step("Dohvati validaciju za obavezno polje 'Država'")
+    public String vratiValidacijuZaObaveznoPoljeDrzava() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeDrzava);
+        return txtValidacijaZaObaveznoPoljeDrzava.getText();
+    }
+    @FindBy(xpath = "//label[normalize-space()='Email']//following::div[@class='validation-message']")
+    private WebElement txtValidacijaZaObaveznoPoljeEmail;
+
+    @Step("Dohvati validaciju za obavezno polje 'Email'")
+    public String vratiValidacijuZaObaveznoPoljeEmail() {
+        healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeEmail);
+        return txtValidacijaZaObaveznoPoljeEmail.getText();
+    }
+
+    /*
     * Tab 'Djelatnosti'
     * */
 
@@ -225,6 +356,9 @@ public class MojProfilDoktorPage extends Pages {
         return lVrijednostiUslugeIzSadrzaja;
     }
 
+    /*public int vratiBrojRedovaUslugaIzBaze(String sDoktorID) throws ClassNotFoundException {
+        return healthElements.vratiBrojUslugaDoktora(sDoktorID);
+    }*/
 
     /*
     * Uređivanje
@@ -318,12 +452,8 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(btnUpdateService);
     }
 
-    public String vratiVrijednostiPonedjeljakRadiOdNakonUnosa() {
-        return tdPonedjeljakRadiOd.getText();
-    }
-
-    public String vratiVrijednostPonedjeljakRadiDoNakonUnosa() {
-        return tdPonedjeljakRadiDo.getText();
+    public String vratiRadnoVrijemeZaPonedjeljakNakonUnosa() {
+        return tdPonedjeljakRadiOd.getText()+"-"+tdPonedjeljakRadiDo.getText();
     }
 
     @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[3]")
@@ -360,12 +490,8 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(btnUpdateService);
     }
 
-    public String vratiVrijednostiUtorakRadiOdNakonUnosa() {
-        return tdUtorakRadiOd.getText();
-    }
-
-    public String vratiVrijednostUtorakRadiDoNakonUnosa() {
-        return tdUtorakRadiDo.getText();
+    public String vratiRadnoVrijemeZaUtorakNakonUnosa() {
+        return tdUtorakRadiOd.getText()+"-"+tdUtorakRadiDo.getText();
     }
 
     @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[4]")
@@ -402,12 +528,8 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(btnUpdateService);
     }
 
-    public String vratiVrijednostiSrijedaRadiOdNakonUnosa() {
-        return tdSrijedaRadiOd.getText();
-    }
-
-    public String vratiVrijednostSrijedaRadiDoNakonUnosa() {
-        return tdSrijedaRadiDo.getText();
+    public String vratiRadnoVrijemeZaSrijedaNakonUnosa() {
+        return tdSrijedaRadiOd.getText()+"-"+tdSrijedaRadiDo.getText();
     }
 
     @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[5]")
@@ -444,12 +566,8 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(btnUpdateService);
     }
 
-    public String vratiVrijednostiCetvrtakRadiOdNakonUnosa() {
-        return tdCetvrtakRadiOd.getText();
-    }
-
-    public String vratiVrijednostCetvrtakRadiDoNakonUnosa() {
-        return tdCetvrtakRadiDo.getText();
+    public String vratiRadnoVrijemeZaCetvrtakNakonUnosa() {
+        return tdCetvrtakRadiOd.getText()+"-"+tdCetvrtakRadiDo.getText();
     }
 
     @FindBy(xpath = "//table[@class='e-table']//following::table//tbody//tr[6]")
@@ -486,11 +604,18 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(btnUpdateService);
     }
 
-    public String vratiVrijednostiPetakRadiOdNakonUnosa() {
-        return tdPetakRadiOd.getText();
+    public String vratiRadnoVrijemeZaPetakNakonUnosa() {
+        return tdPetakRadiOd.getText()+"-"+tdPetakRadiDo.getText();
     }
 
-    public String vratiVrijednostPetakRadiDoNakonUnosa() {
-        return tdPetakRadiDo.getText();
+    //Broj redova u tablici 'Radno vrijeme'
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody")
+    private WebElement tblRadnoVrijeme;
+
+    public int vratiBrojRedovaTabliceRadnoVrijeme() {
+        List<WebElement> lBrojRedovaTabliceRadnoVrijeme = tblRadnoVrijeme.findElements(By.tagName("tr"));
+
+        return  lBrojRedovaTabliceRadnoVrijeme.size();
     }
 }
