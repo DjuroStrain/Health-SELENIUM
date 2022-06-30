@@ -4,8 +4,7 @@ pipeline {
         stage('git repo & clean') {
             steps {
                //bat "rmdir  /s /q Health-SELENIUM"
-                cleanWs()
-                bat "git clone https://github.com/DjuroStrain/Health-SELENIUM"
+                bat "git pull https://github.com/DjuroStrain/Health-SELENIUM"
                 bat "mvn clean -f Health-SELENIUM"
             }
         }
@@ -15,22 +14,22 @@ pipeline {
             }
         }
         stage('test') {
-            steps {
-                bat "mvn test"
-            }
+        steps{
+    			bat "mvn -Dtest=PrijavaTests test"
+    		  }
         }
-        stage('package') {
-            steps {
-                bat "mvn package -f Health-SELENIUM"
-            }
-        }
-        stage('Allure report'){
-		  steps{
-			script{
-			  allure ([results: [[path: 'allure-results']], report: "allure-report"])
-			}
-		  }
-		}
-	}
+        stage('reports') {
+        steps {
+        script {
+            allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'target/allure-results']]
+            ])
+    }
+    }
+}
     }
 }
