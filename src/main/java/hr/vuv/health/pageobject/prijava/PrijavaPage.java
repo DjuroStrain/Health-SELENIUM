@@ -1,9 +1,9 @@
 package hr.vuv.health.pageobject.prijava;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
-import io.qameta.allure.Step;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.SearchContext;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -34,7 +34,7 @@ public class PrijavaPage extends Pages {
     @FindBy(xpath = "//a[normalize-space()='Moj profil']")
     private WebElement tabMojProfil;
 
-    @FindBy(xpath = "//a[normalize-space()='Moj profillll']")
+    @FindBy(xpath = "//a[normalize-space()='Moj profil']")
     private WebElement tabMojProfil2;
 
     @Step("Prijava korisnika u aplikaciju i provjera je li se uspješno prijavio.")

@@ -44,7 +44,7 @@ public class PrijavaTests extends SeleniumTestWrapper {
         startPage.startApplication();
         izbornikPage.klikniIzbornikPrijava();
     }
-    /*
+
     @Description("Prijava korisnika u aplikaciju")
     @Category(SmokeTest.class)
     @Test
@@ -65,11 +65,8 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
         log.info("Prikazuju se ispravne validacije za pokušaj prijave bez unosa obaveznih podataka.");
     }
-*/
-    @Test
-    public void test() {
 
-    }
+
     @AfterEach
     public void testEnd() {
         loggerClass.endTestLog(PrijavaTests.class.getSimpleName());
