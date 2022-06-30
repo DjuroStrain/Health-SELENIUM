@@ -10,7 +10,7 @@
     <junit.jupiter.version>5.8.2</junit.jupiter.version>
     <junit.platform.version>1.8.2</junit.platform.version>
     <allure-maven.version>2.10.0</allure-maven.version>
-    <allure-junit5.version>2.18.1</allure-junit5.version>
+    <allure-junit5.version>2.13.9</allure-junit5.version>
     <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <aspectj.version>1.9.6</aspectj.version>
