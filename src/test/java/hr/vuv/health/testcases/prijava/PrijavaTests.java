@@ -62,7 +62,7 @@ public class PrijavaTests extends SeleniumTestWrapper {
         softAssertions.assertThat(prijavaPage.vratiValidacijuZaObaveznoPoljeKorisnickoIme()).isEqualTo(PrijavaContent.VALIDACIJA_KORISNICKA_OZNAKA);
         softAssertions.assertThat(prijavaPage.vratiValidacijuZaObaveznoPoljeLozinka()).isEqualTo(PrijavaContent.VALIDACIJA_LOZINKA);
         softAssertions.assertAll();
-
+        //proba
         log.info("Prikazuju se ispravne validacije za pokušaj prijave bez unosa obaveznih podataka.");
     }
 
