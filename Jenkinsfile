@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('git repo & clean') {
+        stage('git pull') {
             steps {
                //bat "rmdir  /s /q Health-SELENIUM"
                 bat "git pull https://github.com/DjuroStrain/Health-SELENIUM"
