@@ -87,7 +87,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         log.info("Podaci o doktoru se prikazuju ispravno.");
     }
 
-    @Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu na tabu 'Opći podaci'.")
+    /*@Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu na tabu 'Opći podaci'.")
     @Test
     public void Provjera_Ispravnosti_Prikaza_Podatka_Na_Profilu_Doktora() throws InterruptedException, ClassNotFoundException {
         izbornikPage.klikniIzbornikPrijava();
@@ -108,13 +108,15 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         softAssertions.assertAll();
 
         log.info("Podaci o doktoru se prikazuju ispravno.");
-    }
+    }*/
 
     @Description("Pokusaj spremanja podataka doktora bez unosa obaveznih podataka te provjera validacija za obavezna polja.")
     @Test
-    public void Provjera_Validacija_Za_Obavezna_Polja_Pri_Pokusaju_Spremanja_Podataka_Doktora() throws InterruptedException{
+    public void Provjera_Validacija_Za_Obavezna_Polja_Pri_Pokusaju_Spremanja_Podataka_Doktora() throws InterruptedException, ClassNotFoundException {
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR_BEZ);
+        healthElements.dodajDoktoraBezAdreseISpecijalizacije();
         izbornikPage.klikniIzbornikPrijava();
-        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
+        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR_BEZ, PrijavaContent.LOZINKA_DOKTOR_BEZ);
         izbornikPage.klikniIzbornikMojProfil();
 
         mojProfilDoktorPage.klikniNaGumbKreirajBezUnosaObaveznihPodataka();
