@@ -53,16 +53,38 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
     @Description("Unesi dodatne obavezne podatke (titula, specjalizacija, adresa) doktora")
     @Test
-    public void Unesi_Dodatne_Obavezne_Podatke_Doktora() {
+    public void Unesi_Dodatne_Obavezne_Podatke_Doktora() throws ClassNotFoundException{
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR_BEZ);
+        healthElements.dodajDoktoraBezAdreseISpecijalizacije();
         izbornikPage.klikniIzbornikPrijava();
-        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
+        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR_BEZ, PrijavaContent.LOZINKA_DOKTOR_BEZ);
         izbornikPage.klikniIzbornikMojProfil();
 
         mojProfilDoktorPage.unesiDodatneObaveznePodatkeODoktoru(MojProfilContent.PROFIL_TITULA, MojProfilContent.PROFIL_ULICA,
                 MojProfilContent.PROFIL_KUCNI_BROJ, MojProfilContent.PROFIL_POSTANSKI_BROJ, MojProfilContent.PROFIL_GRAD_MJESTO,
                 MojProfilContent.PROFIL_DRZAVA);
 
+        izbornikPage.klikniIzbornikKontrolnaPloca();
+        izbornikPage.klikniIzbornikMojProfil();
 
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaIme()).isEqualTo(MojProfilContent.PROFIL_IME);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaPrezime()).isEqualTo(MojProfilContent.PROFIL_PREZIME);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaTitula()).isEqualTo(MojProfilContent.PROFIL_TITULA);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaUlica()).isEqualTo(MojProfilContent.PROFIL_ULICA);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaKucniBroj()).isEqualTo(MojProfilContent.PROFIL_KUCNI_BROJ);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaPostanskiBroj()).isEqualTo(MojProfilContent.PROFIL_POSTANSKI_BROJ);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaGradMjesto()).isEqualTo(MojProfilContent.PROFIL_GRAD_MJESTO);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaDrzava()).isEqualTo(MojProfilContent.PROFIL_DRZAVA);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiVrijednostPoljaEmail()).isEqualTo(MojProfilContent.PROFIL_EMAIL);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiPrikazTabliceUslugaPrije()).isFalse();
+        softAssertions.assertThat(mojProfilDoktorPage.vratiPrikazTabliceRadnoVrijemePrije()).isFalse();
+        softAssertions.assertThat(mojProfilDoktorPage.vratiPrikazTabliceUslugaPoslije()).isTrue();
+        softAssertions.assertThat(mojProfilDoktorPage.vratiPrikazTabliceRadnoVrijemePoslije()).isTrue();
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR_BEZ);
+
+        softAssertions.assertAll();
+
+        log.info("Podaci o doktoru se prikazuju ispravno.");
     }
 
     @Description("Provjera ispravnosti prikaza podataka o doktoru na njegovom profilu na tabu 'Opći podaci'.")
@@ -168,16 +190,20 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         izbornikPage.klikniIzbornikPrijava();
         prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
         izbornikPage.klikniIzbornikMojProfil();
-
+        mojProfilDoktorPage.klikniNaDjelatnosti();
         int nBrojRedovaUslugaUBaziPrijeBrisanja = healthElements.dohvatiBrojUsluga(PrijavaContent.ID_DOKTOR);
+        int nBrojRedovaUslugaUTabliciPrijeBrisanja = mojProfilDoktorPage.vratiBrojRedovaTabliceUsluge();
         mojProfilDoktorPage.brisanjeUsluge();
         int nBrojRedovaUslugaUBaziPoslijeBrisanja = healthElements.dohvatiBrojUsluga(PrijavaContent.ID_DOKTOR);
+        int nBrojRedovaUslugaUTabliciPoslijeBrisanja = mojProfilDoktorPage.vratiBrojRedovaTabliceUsluge();
 
-        int nRazlikaBrojaRedova = nBrojRedovaUslugaUBaziPoslijeBrisanja-nBrojRedovaUslugaUBaziPrijeBrisanja;
+        int nRazlikaBrojaRedovaBaza = nBrojRedovaUslugaUBaziPoslijeBrisanja-nBrojRedovaUslugaUBaziPrijeBrisanja;
+        int nRazlikaBrojaRedovaTablica = nBrojRedovaUslugaUTabliciPoslijeBrisanja - nBrojRedovaUslugaUTabliciPrijeBrisanja;
 
         healthElements.obrisiUsluguParametarId(nIDUsluge);
 
-        softAssertions.assertThat(nRazlikaBrojaRedova).isEqualTo(1);
+        softAssertions.assertThat(nRazlikaBrojaRedovaBaza).isEqualTo(1);
+        softAssertions.assertThat(nRazlikaBrojaRedovaTablica).isEqualTo(1);
         log.info("Usluga je uspješno obrisana.");
     }
 

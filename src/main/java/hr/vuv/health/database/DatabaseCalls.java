@@ -116,7 +116,7 @@ public class DatabaseCalls {
                                 "      ,[Email]\n" +
                                 "      ,[SpecializationId])\n" +
                                 "\n" +
-                                "VALUES ('e9fbae22-ea0c-4f52-9618-2717e8f53046', 'Duro', 'Belacic', 'Doctor', 1, 'durobelacic@gmail.com', 1);\n" +
+                                "VALUES ('e9fbae22-ea0c-4f52-9618-2717e8f53046', 'Duro', 'Belacic', 'Doktor', 1, 'durobelacic@gmail.com', 1);\n" +
                                 "\n" +
                                 "exec sp_executesql N'SET NOCOUNT ON;  DECLARE @inserted0 TABLE ([Id] int, [_Position] [int]);  MERGE [MainService].[WorkHours] USING \n" +
                                 "\n" +
@@ -185,7 +185,7 @@ public class DatabaseCalls {
                             "      ,[Email]\n" +
                             "      ,[SpecializationId])\n" +
                             "\n" +
-                            "VALUES ('e8fbae22-ea0c-4f52-9618-2717e8f53046', 'Duro2', 'Belacic2', 'NULLf', NULL, 'durobelacic2@gmail.com', NULL);";
+                            "VALUES ('e8fbae22-ea0c-4f52-9618-2717e8f53046', 'Duro2', 'Belacic2', NULL, NULL, 'durobelacic2@gmail.com', NULL);";
 
             ResultSet rs = stmt.executeQuery(SQL);
 

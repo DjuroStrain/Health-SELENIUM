@@ -6,13 +6,8 @@ import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import selenium.SeleniumTestWrapper;
-import utils2.ScreenshotClass;
 
 import java.io.ByteArrayInputStream;
-import java.lang.reflect.Field;
 import java.util.Optional;
 
 

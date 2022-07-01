@@ -1,14 +1,10 @@
 package hr.vuv.health.pageobject.prijava;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.SearchContext;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import selenium.Pages;
@@ -39,8 +35,8 @@ public class PrijavaPage extends Pages {
 
     @Step("Prijava korisnika u aplikaciju i provjera je li se uspješno prijavio.")
     public void prijavaKorisnika(String sKorisnickoIme, String sLozinka) {
-        healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
-        healthElements.insertText(txtLozinka, sLozinka);
+        healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
+        healthElements.insertTextScrollTo(txtLozinka, sLozinka);
         healthElements.waitForElementToBeClickable(btnPrijaviSe);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

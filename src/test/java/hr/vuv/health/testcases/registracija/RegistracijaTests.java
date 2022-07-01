@@ -70,10 +70,10 @@ public class RegistracijaTests extends SeleniumTestWrapper {
         int nBrojDoktoraNakonRegistracije = healthElements.vratiBrojRegistriranihDoktora();
 
         healthElements.obrisiKorisnikaPoKorisnickomImenu(RegistracijaContent.KORISNICKO_IME_DOKTOR);
+        healthElements.obrisiDoktoraPoEmailu(RegistracijaContent.EMAIL_DOKTOR);
 
         assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojKorisnikaPrijeRegistracije);
-        assertEquals(1, nBrojKorisnikaNakonRegistracije - nBrojDoktoraPrijeRegistracije);
-        //Assert.assertEquals(RegistracijaContent.KORISNICKO_IME, healthElements.vratiPosljedenjeDodanogKorisnika());
+        assertEquals(1, nBrojDoktoraNakonRegistracije - nBrojDoktoraPrijeRegistracije);
         log.info("Korisnik sa rolom 'Doktor' se je uspješno registrirao u aplikaciji.");
     }
 

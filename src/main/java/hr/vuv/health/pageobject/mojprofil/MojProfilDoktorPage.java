@@ -3,8 +3,6 @@ package hr.vuv.health.pageobject.mojprofil;
 import hr.vuv.health.content.MojProfilContent;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
-import org.bouncycastle.jcajce.provider.symmetric.IDEA;
-import org.checkerframework.checker.index.qual.NegativeIndexFor;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -26,14 +24,14 @@ public class MojProfilDoktorPage extends Pages {
     private CommonHealthElements healthElements = new CommonHealthElements(driver);
 
     //Moj profil - Izbornik
-    @FindBy(xpath = "//div[normalize-space()='Opći podaci']")
-    private WebElement tabOpciPodaci;
+    @FindBy(xpath = "//button[normalize-space()='Opći podaci']")
+    private WebElement accOpciPodaci;
 
-    @FindBy(xpath = "//div[normalize-space()='Djelatnosti']")
-    private WebElement tabDjelatnosti;
+    @FindBy(xpath = "//button[normalize-space()='Djelatnosti']")
+    private WebElement accDjelatnosti;
 
-    @FindBy(xpath = "//div[normalize-space()='Radno vrijeme']")
-    private WebElement tabRadnoVrijeme;
+    @FindBy(xpath = "//button[normalize-space()='Radno vrijeme']")
+    private WebElement accRadnoVrijeme;
 
     @FindBy(xpath = "//label[normalize-space()='Ime']//following::input")
     private WebElement txtIme;
@@ -75,30 +73,79 @@ public class MojProfilDoktorPage extends Pages {
     @FindBy(xpath = "//div[@class='e-content e-dropdownbase']//following-sibling::li[normalize-space()='Fizioterapija']")
     private WebElement selectFizioterapija;
 
+    List<WebElement> lTablicaUslugaPrije = new ArrayList<>();
+    List<WebElement> lTablicaRadnoVrijemePrije = new ArrayList<>();
+    List<WebElement> lTablicaUslugaPoslije = new ArrayList<>();
+    List<WebElement> lTablicaRadnoVrijemePoslije = new ArrayList<>();
+
+
+
+    public void prikazTabliceUslugaPrije() {
+        lTablicaUslugaPrije = driver.findElements(By.xpath("//table[@class='e-table']//following::table//tbody//tr"));
+    }
+
+    public void prikazTabliceRadnoVrijemePrije() {
+        healthElements.waitForElementToBeClickable(accRadnoVrijeme);
+        lTablicaUslugaPrije = driver.findElements(By.xpath("//div[@id = 'collapseThree']//following::table[2]//tbody//tr"));
+        healthElements.waitForElementToBeClickable(accOpciPodaci);
+    }
+
+    public void prikazTabliceUslugaPoslije() {
+        lTablicaUslugaPoslije = driver.findElements(By.xpath("//table[@class='e-table']//following::table//tbody//tr"));
+    }
+
+    public void prikazTabliceRadnoVrijemePoslije() {
+        healthElements.waitForElementToBeClickable(accRadnoVrijeme);
+        lTablicaUslugaPrije = driver.findElements(By.xpath("//div[@id = 'collapseThree']//following::table[2]//tbody//tr"));
+    }
+
     @Step("Unesi dodatne obavezne podatke o doktoru (titula, specijalizacija i adresa)")
     public void unesiDodatneObaveznePodatkeODoktoru(String sTitula, String sUlica, String sKucniBroj, String sPostanskiBroj,
                                                     String sGradMjesto, String sDrzava) {
-        healthElements.insertText(txtTitula, sTitula);
+        healthElements.waitForElementToBeClickable(accDjelatnosti);
+        prikazTabliceUslugaPrije();
+        prikazTabliceRadnoVrijemePrije();
+        try {
+            Thread.sleep(2000);
+        }catch (InterruptedException e){
+
+        }
+        healthElements.insertTextScrollTo(txtTitula, sTitula);
         healthElements.waitForElementToBeClickable(ddSpecijalizacija);
         healthElements.waitForElementToBeClickable(selectFizioterapija);
-        healthElements.insertText(txtUlica, sUlica);
-        healthElements.insertText(txtKucniBroj, sKucniBroj);
-        healthElements.insertText(txtPostanskiBroj, sPostanskiBroj);
-        healthElements.insertText(txtGradMjesto, sGradMjesto);
-        healthElements.insertText(txtDrzava, sDrzava);
+        healthElements.insertTextScrollTo(txtUlica, sUlica);
+        healthElements.insertTextScrollTo(txtKucniBroj, sKucniBroj);
+        healthElements.insertTextScrollTo(txtPostanskiBroj, sPostanskiBroj);
+        healthElements.insertTextScrollTo(txtGradMjesto, sGradMjesto);
+        healthElements.insertTextScrollTo(txtDrzava, sDrzava);
+        healthElements.waitForElementToBeClickable(btnSpremiProfil);
+        healthElements.waitForElementToBeClickable(accDjelatnosti);
+        prikazTabliceUslugaPoslije();
+        prikazTabliceRadnoVrijemePoslije();
+    }
+
+    public Boolean vratiPrikazTabliceUslugaPrije() {
+        return lTablicaUslugaPrije.size() > 0;
+    }
+
+    public Boolean vratiPrikazTabliceRadnoVrijemePrije() {
+        return lTablicaRadnoVrijemePrije.size() > 0;
+    }
+
+    public Boolean vratiPrikazTabliceUslugaPoslije() {
+        return lTablicaUslugaPoslije.size() > 0;
+    }
+
+    public Boolean vratiPrikazTabliceRadnoVrijemePoslije() {
+        return lTablicaRadnoVrijemePoslije.size() > 0;
     }
 
     /*
     *  Polje 'Ime'
     * */
     @Step("Vrati vrijednost polja 'Ime'")
-    public String vratiVrijednostPoljaIme() throws InterruptedException {
-        try {
-            healthElements.waitForElementToBeVisible(txtIme);
-        }catch (StaleElementReferenceException e) {
-            healthElements.waitForElementToBeVisible(txtIme);
-            e.printStackTrace();
-        }
+    public String vratiVrijednostPoljaIme() {
+        healthElements.fluentWaitForElement(txtIme);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until((ExpectedCondition<Boolean>) driver -> (txtIme.getAttribute("value").length() > 0));
         return txtIme.getAttribute("value");
@@ -286,7 +333,7 @@ public class MojProfilDoktorPage extends Pages {
     @FindBy(xpath = "//span[normalize-space()='Add']")
     private WebElement btnAddService;
 
-    @FindBy(xpath = "//span[normalize-space()='Update']")
+    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Update']")
     private WebElement btnUpdateService;
 
     @FindBy(id = "Name")
@@ -303,7 +350,7 @@ public class MojProfilDoktorPage extends Pages {
 
     @Step("Dodaj uslugu")
     public void dodajUsluguDjelatnostiDoktora(String sNazivUsluge, String sOpisUsluge, String sCijenaUsluge) {
-        healthElements.waitForElementToBeClickable(tabDjelatnosti);
+        healthElements.waitForElementToBeClickable(accDjelatnosti);
         healthElements.waitForElementToBeClickable(btnAddService);
         healthElements.insertText(txtNazivUsluge, sNazivUsluge);
         healthElements.insertText(txtOpisUsluge, sOpisUsluge);
@@ -364,30 +411,18 @@ public class MojProfilDoktorPage extends Pages {
     * Uređivanje
     * */
 
-    @FindBy(xpath = "//span[normalize-space()='Edit']")
+    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Edit']")
     private WebElement btnEditService;
 
     @Step("Uredi uslugu")
     public void urediUslugu(String sIzmjenjenNazivUsluge, String sIzmijenjenOpisUsluge, String sIzmijenjenaCijena) {
-        healthElements.waitForElementToBeClickable(tabDjelatnosti);
+        healthElements.waitForElementToBeClickable(accDjelatnosti);
         healthElements.waitForElementToBeClickable(tdNazivUsluge);
         healthElements.waitForElementToBeClickable(btnEditService);
         healthElements.insertText(txtNazivUsluge, sIzmjenjenNazivUsluge);
         healthElements.insertText(txtOpisUsluge, sIzmijenjenOpisUsluge);
         healthElements.insertText(txtCijenaUsluge, sIzmijenjenaCijena);
-        try {
-            Thread.sleep(3000);
-        }
-        catch (InterruptedException e) {
-
-        }
         healthElements.waitForElementToBeClickable(btnUpdateService);
-        try {
-            Thread.sleep(3000);
-        }
-        catch (InterruptedException e) {
-
-        }
     }
 
     public List<String> vratiListuPromijenjenihVrijednostiUslugeIzSadrzaja() {
@@ -402,15 +437,29 @@ public class MojProfilDoktorPage extends Pages {
         return lVrijednostiUslugeIzSadrzaja;
     }
 
-    @FindBy(xpath = "//span[normalize-space()='Delete']")
+    @Step("Klikni na 'Djelatnosti'")
+    public void klikniNaDjelatnosti(){
+        healthElements.waitForElementToBeClickable(accDjelatnosti);
+    }
+
+
+    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Delete']")
     private WebElement btnDeleteService;
 
     @Step("Brisanje usluge")
     public void brisanjeUsluge() {
-        healthElements.waitForElementToBeClickable(tabDjelatnosti);
         healthElements.waitForElementToBeClickable(tdNazivUsluge);
         healthElements.waitForElementToBeClickable(btnDeleteService);
         healthElements.waitForElementToBeVisible(tdNoRecords);
+    }
+
+    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody")
+    private WebElement tblUsluge;
+
+    public int vratiBrojRedovaTabliceUsluge() {
+        healthElements.waitForElementToBeVisible(tblUsluge);
+        List<WebElement> lBrojRedovaTabliceUsluga = tblUsluge.findElements(By.tagName("tr"));
+        return lBrojRedovaTabliceUsluga.size();
     }
 
 
@@ -440,7 +489,7 @@ public class MojProfilDoktorPage extends Pages {
     private WebElement vrijemeDoPonedjeljak;
 
     public void unesiRadnoVrijemeDoktoraPonedjeljak(String sPonedjeljakRadiOd, String sPonedjeljakRadiDo) {
-        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
+        healthElements.waitForElementToBeClickable(accRadnoVrijeme);
         healthElements.waitForElementToBeClickable(tdPonedjeljak);
         healthElements.waitForElementToBeClickable(btnEditService);
         healthElements.waitForElementToBeClickable(tdPonedjeljakRadiOd);
@@ -478,7 +527,6 @@ public class MojProfilDoktorPage extends Pages {
     private WebElement vrijemeDoUtorak;
 
     public void unesiRadnoVrijemeDoktoraUtorak(String sUtorakRadiOd, String sUtorakRadiDo) {
-        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
         healthElements.waitForElementToBeClickable(tdUtorak);
         healthElements.waitForElementToBeClickable(btnEditService);
         healthElements.waitForElementToBeClickable(tdUtorakRadiOd);
@@ -516,7 +564,6 @@ public class MojProfilDoktorPage extends Pages {
     private WebElement vrijemeDoSrijeda;
 
     public void unesiRadnoVrijemeDoktoraSrijeda(String sSrijedaRadiOd, String sSrijedaRadiDo) {
-        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
         healthElements.waitForElementToBeClickable(tdSrijeda);
         healthElements.waitForElementToBeClickable(btnEditService);
         healthElements.waitForElementToBeClickable(tdSrijedaRadiOd);
@@ -554,7 +601,6 @@ public class MojProfilDoktorPage extends Pages {
     private WebElement vrijemeDoCetvrtak;
 
     public void unesiRadnoVrijemeDoktoraCetvrtak(String sCetvrtakRadiOd, String sCetvrtakRadiDo) {
-        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
         healthElements.waitForElementToBeClickable(tdCetvrtak);
         healthElements.waitForElementToBeClickable(btnEditService);
         healthElements.waitForElementToBeClickable(tdCetvrtakRadiOd);
@@ -592,7 +638,6 @@ public class MojProfilDoktorPage extends Pages {
     private WebElement vrijemeDoPetak;
 
     public void unesiRadnoVrijemeDoktoraPetak(String sPetakRadiOd, String sPetakRadiDo) {
-        healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
         healthElements.waitForElementToBeClickable(tdPetak);
         healthElements.waitForElementToBeClickable(btnEditService);
         healthElements.waitForElementToBeClickable(tdPetakRadiOd);
@@ -610,7 +655,7 @@ public class MojProfilDoktorPage extends Pages {
 
     //Broj redova u tablici 'Radno vrijeme'
 
-    @FindBy(xpath = "//table[@class='e-table']//following::table//tbody")
+    @FindBy(xpath = "//div[@id = 'collapseThree']//following::table[2]//tbody")
     private WebElement tblRadnoVrijeme;
 
     public int vratiBrojRedovaTabliceRadnoVrijeme() {

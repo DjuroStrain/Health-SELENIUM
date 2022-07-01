@@ -2,17 +2,10 @@ package hr.vuv.health.pageobject.registracija;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Pages;
-
-import java.rmi.Remote;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class RegistracijaPage extends Pages {
 
@@ -61,13 +54,13 @@ public class RegistracijaPage extends Pages {
     @Step("Registracija korisnika kao pacijenta.")
     public void registracijaKorisnikaKaoPacijenta(String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
                                                   String sMobitel, String sLozinka) throws InterruptedException {
-        healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
-        healthElements.insertText(txtIme, sIme);
-        healthElements.insertText(txtPrezime, sPrezime);
-        healthElements.insertText(txtEmail, sEmail);
-        healthElements.insertText(txtMobitel, sMobitel);
-        healthElements.insertText(txtLozinka, sLozinka);
-        healthElements.scrollToElement();
+        healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
+        healthElements.insertTextScrollTo(txtIme, sIme);
+        healthElements.insertTextScrollTo(txtPrezime, sPrezime);
+        healthElements.insertTextScrollTo(txtEmail, sEmail);
+        healthElements.insertTextScrollTo(txtMobitel, sMobitel);
+        healthElements.insertTextScrollTo(txtLozinka, sLozinka);
+        healthElements.scroll();
         healthElements.waitForElementToBeVisible(btnPrijava2);
         Thread.sleep(1000);
         healthElements.waitForElementToBeClickable(btnKreirajRacun);
@@ -81,13 +74,13 @@ public class RegistracijaPage extends Pages {
     public void registracijaKorisnikaKaoDoktora(String sDoktor, String sKorisnickoIme, String sIme, String sPrezime, String sEmail, String sMobitel,
                                                 String sLozinka) throws InterruptedException {
         healthElements.selectFromDropdown(ddVrstaKorisnika, sDoktor);
-        healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
-        healthElements.insertText(txtIme, sIme);
-        healthElements.insertText(txtPrezime, sPrezime);
-        healthElements.insertText(txtEmail, sEmail);
-        healthElements.insertText(txtMobitel, sMobitel);
-        healthElements.insertText(txtLozinka, sLozinka);
-        healthElements.scrollToElement();
+        healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
+        healthElements.insertTextScrollTo(txtIme, sIme);
+        healthElements.insertTextScrollTo(txtPrezime, sPrezime);
+        healthElements.insertTextScrollTo(txtEmail, sEmail);
+        healthElements.insertTextScrollTo(txtMobitel, sMobitel);
+        healthElements.insertTextScrollTo(txtLozinka, sLozinka);
+        healthElements.scroll();
         healthElements.waitForElementToBeVisible(btnPrijava2);
         Thread.sleep(1000);
         healthElements.waitForElementToBeClickable(btnKreirajRacun);
@@ -100,13 +93,14 @@ public class RegistracijaPage extends Pages {
 
     @Step("Klikni na gumb 'Kreiraj svoj račun' bez unosa obavezih podataka")
     public void klikniNaGumbKreirajBezUnosaObaveznihPodataka() throws InterruptedException {
-        healthElements.scrollToElement();
+        healthElements.scroll();
         healthElements.waitForElementToBeVisible(btnPrijava2);
-        try{
+        /*try{
             healthElements.waitForElementToBeClickable(btnKreirajRacun);
         }catch (ElementClickInterceptedException e) {
             healthElements.waitForElementToBeClickable(btnKreirajRacun);
-        }
+        }*/
+        healthElements.waitForElementToBeClickable(btnKreirajRacun);
     }
 
     @FindBy(xpath = "//select[@id='roleSelect']//following::div[@class='validation-message']")

@@ -69,11 +69,11 @@ public class IzbornikPage extends Pages {
 
     //Kontrolna ploca
 
-    @FindBy(xpath = "//a[normalize-space()='Kontrolna ploca']")
-    private WebElement tabKontrolanPloca;
+    @FindBy(xpath = "//a[normalize-space()='Kontrolna ploča']")
+    private WebElement tabKontrolnaPloca;
 
     public void klikniIzbornikKontrolnaPloca() {
-        healthElements.waitForElementToBeClickable(tabKontrolanPloca);
+        healthElements.waitForElementToBeClickable(tabKontrolnaPloca);
     }
 
     //Moj profil

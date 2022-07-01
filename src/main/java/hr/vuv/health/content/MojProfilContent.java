@@ -5,15 +5,26 @@ public class MojProfilContent {
     /*
     * Podaci o doktoru
     * */
-    public final static String PROFIL_IME = "Duro";
+    /*public final static String PROFIL_IME = "Duro";
     public final static String PROFIL_PREZIME = "Belacic";
     public final static String PROFIL_TITULA = "Doktor";
-    public final static String PROFIL_ULICA = "Gundulićeva ulica";
-    public final static String PROFIL_KUCNI_BROJ = "25";
-    public final static String PROFIL_POSTANSKI_BROJ = "33000";
+    public final static String PROFIL_ULICA = "Ulica kralja Tomislava";
+    public final static String PROFIL_KUCNI_BROJ = "9";
+    public final static String PROFIL_POSTANSKI_BROJ = "21101";
     public final static String PROFIL_DRZAVA = "Hrvatska";
-    public final static String PROFIL_GRAD_MJESTO = "Virovitica";
-    public final static String PROFIL_EMAIL = "durobelacic@gmail.com";
+    public final static String PROFIL_GRAD_MJESTO = "Split";
+    public final static String PROFIL_EMAIL = "durobelacic@gmail.com";*/
+
+    //Br 2
+    public final static String PROFIL_IME = "Duro2";
+    public final static String PROFIL_PREZIME = "Belacic2";
+    public final static String PROFIL_TITULA = "Doktor";
+    public final static String PROFIL_ULICA = "Ulica kralja Tomislava";
+    public final static String PROFIL_KUCNI_BROJ = "9";
+    public final static String PROFIL_POSTANSKI_BROJ = "21101";
+    public final static String PROFIL_DRZAVA = "Hrvatska";
+    public final static String PROFIL_GRAD_MJESTO = "Split";
+    public final static String PROFIL_EMAIL = "durobelacic2@gmail.com";
 
     //Validacije
     public final static String VALIDACIJA_IME = "Ime je obavezno polje";

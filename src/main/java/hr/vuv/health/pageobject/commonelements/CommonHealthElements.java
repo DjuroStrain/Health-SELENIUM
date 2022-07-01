@@ -2,16 +2,12 @@ package hr.vuv.health.pageobject.commonelements;
 
 import hr.vuv.health.database.DatabaseCalls;
 import io.qameta.allure.Step;
-import org.checkerframework.checker.units.qual.C;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 import selenium.Pages;
 
 import java.time.Duration;
+import java.util.function.Function;
 
 public class CommonHealthElements extends Pages {
 
@@ -29,9 +25,30 @@ public class CommonHealthElements extends Pages {
     * @param WebElement element
     * */
     public void waitForElementToBeClickable(WebElement element){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.click();
+        try{
+            fluentWaitForElement(element);
+            waitForElementToBeVisible(element);
+            scrollToElement(element);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            try {
+                element.click();
+            }catch (ElementClickInterceptedException e) {
+                element.click();
+            }
+        }catch (StaleElementReferenceException e) {
+            fluentWaitForElement(element);
+            waitForElementToBeVisible(element);
+            scrollToElement(element);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            try {
+                element.click();
+            }catch (ElementClickInterceptedException e2) {
+                element.click();
+            }
+        }
+
     }
 
     /*
@@ -39,7 +56,17 @@ public class CommonHealthElements extends Pages {
     *
     * @param WebElement element, String sText
     * */
+    public void insertTextScrollTo(WebElement element, String sText){
+        fluentWaitForElement(element);
+        scrollToElement(element);
+        waitForElementToBeClickable(element);
+        element.clear();
+        element.sendKeys(sText);
+    }
+    //bez scrolla
     public void insertText(WebElement element, String sText){
+        fluentWaitForElement(element);
+        //scrollToElement(element);
         waitForElementToBeClickable(element);
         element.clear();
         element.sendKeys(sText);
@@ -67,9 +94,32 @@ public class CommonHealthElements extends Pages {
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public void scrollToElement() {
+    public void scrollToElement(WebElement element) {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("window.scrollTo(0," + element.getLocation().y + ")");
+    }
+
+    public void scroll() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("javascript:window.scrollBy(250,350)");
+    }
+
+    /*
+    * Fluent wait
+    * */
+    public void fluentWaitForElement(WebElement element) {
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+        WebElement finalElement = element;
+        element = wait.until(new Function<WebDriver, WebElement>() {
+            @Override
+            public WebElement apply(WebDriver driver) {
+                return finalElement;
+            }
+        });
     }
 
     /*
@@ -127,8 +177,8 @@ public class CommonHealthElements extends Pages {
     /*
      * Dodaj doktora bez adrese i specijalizacije
      * */
-    public void dodajDoktoraBezAdreseISpecijalizacije() throws ClassNotFoundException{
-        databaseCalls.dbConnectionDodajDoktoraBezAdreseISpecijalizacije();
+    public String dodajDoktoraBezAdreseISpecijalizacije() throws ClassNotFoundException{
+        return databaseCalls.dbConnectionDodajDoktoraBezAdreseISpecijalizacije();
     }
 
     /*
@@ -136,6 +186,10 @@ public class CommonHealthElements extends Pages {
     * */
     public void obrisiDoktora(String sID) throws ClassNotFoundException {
         databaseCalls.dbConnectionObrisiDoktoraPoId(sID);
+    }
+
+    public void obrisiDoktoraPoEmailu(String sEmail) throws ClassNotFoundException {
+        databaseCalls.dbConnectionObrisiDoktoraPoEmailu(sEmail);
     }
 
     /*
