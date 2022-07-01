@@ -226,7 +226,7 @@ public class MojProfilDoktorPage extends Pages {
         txtIme.clear();
         txtPrezime.click();
         txtPrezime.clear();
-        txtEmail.click();
+        healthElements.waitForElementToBeClickable(txtEmail);
         txtEmail.clear();
     }
 
@@ -330,11 +330,14 @@ public class MojProfilDoktorPage extends Pages {
 
     //Dodavanje usluge
 
-    @FindBy(xpath = "//span[normalize-space()='Add']")
+    @FindBy(xpath = "//div[@id='collapseTwo']//following-sibling::span[normalize-space()='Add']")
     private WebElement btnAddService;
 
-    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Update']")
+    @FindBy(xpath = "//div[@id = 'collapseTwo']//following-sibling::span[normalize-space()='Update']")
     private WebElement btnUpdateService;
+
+    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Update']")
+    private WebElement btnUpdateWorkHours;
 
     @FindBy(id = "Name")
     private WebElement txtNazivUsluge;
@@ -411,8 +414,11 @@ public class MojProfilDoktorPage extends Pages {
     * Uređivanje
     * */
 
-    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Edit']")
+    @FindBy(xpath = "//div[@id = 'collapseTwo']//following-sibling::span[normalize-space()='Edit']")
     private WebElement btnEditService;
+
+    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Edit']")
+    private WebElement btnEditWorkhours;
 
     @Step("Uredi uslugu")
     public void urediUslugu(String sIzmjenjenNazivUsluge, String sIzmijenjenOpisUsluge, String sIzmijenjenaCijena) {
@@ -443,8 +449,9 @@ public class MojProfilDoktorPage extends Pages {
     }
 
 
-    @FindBy(xpath = "//div[@id = 'collapseThree']//following-sibling::span[normalize-space()='Delete']")
+    @FindBy(xpath = "//div[@id = 'collapseTwo']//following-sibling::span[normalize-space()='Delete']")
     private WebElement btnDeleteService;
+
 
     @Step("Brisanje usluge")
     public void brisanjeUsluge() {
@@ -491,14 +498,14 @@ public class MojProfilDoktorPage extends Pages {
     public void unesiRadnoVrijemeDoktoraPonedjeljak(String sPonedjeljakRadiOd, String sPonedjeljakRadiDo) {
         healthElements.waitForElementToBeClickable(accRadnoVrijeme);
         healthElements.waitForElementToBeClickable(tdPonedjeljak);
-        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(btnEditWorkhours);
         healthElements.waitForElementToBeClickable(tdPonedjeljakRadiOd);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdPonedjeljak);
         healthElements.waitForElementToBeClickable(vrijemeOdPonedjeljak);
         healthElements.waitForElementToBeClickable(tdPonedjeljakRadiDo);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoPonedjeljak);
         healthElements.waitForElementToBeClickable(vrijemeDoPonedjeljak);
-        healthElements.waitForElementToBeClickable(btnUpdateService);
+        healthElements.waitForElementToBeClickable(btnUpdateWorkHours);
     }
 
     public String vratiRadnoVrijemeZaPonedjeljakNakonUnosa() {
@@ -528,14 +535,14 @@ public class MojProfilDoktorPage extends Pages {
 
     public void unesiRadnoVrijemeDoktoraUtorak(String sUtorakRadiOd, String sUtorakRadiDo) {
         healthElements.waitForElementToBeClickable(tdUtorak);
-        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(btnEditWorkhours);
         healthElements.waitForElementToBeClickable(tdUtorakRadiOd);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdUtorak);
         healthElements.waitForElementToBeClickable(vrijemeOdUtorak);
         healthElements.waitForElementToBeClickable(tdUtorakRadiDo);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoUtorak);
         healthElements.waitForElementToBeClickable(vrijemeDoUtorak);
-        healthElements.waitForElementToBeClickable(btnUpdateService);
+        healthElements.waitForElementToBeClickable(btnUpdateWorkHours);
     }
 
     public String vratiRadnoVrijemeZaUtorakNakonUnosa() {
@@ -565,14 +572,14 @@ public class MojProfilDoktorPage extends Pages {
 
     public void unesiRadnoVrijemeDoktoraSrijeda(String sSrijedaRadiOd, String sSrijedaRadiDo) {
         healthElements.waitForElementToBeClickable(tdSrijeda);
-        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(btnEditWorkhours);
         healthElements.waitForElementToBeClickable(tdSrijedaRadiOd);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdSrijeda);
         healthElements.waitForElementToBeClickable(vrijemeOdSrijeda);
         healthElements.waitForElementToBeClickable(tdSrijedaRadiDo);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoSrijeda);
         healthElements.waitForElementToBeClickable(vrijemeDoSrijeda);
-        healthElements.waitForElementToBeClickable(btnUpdateService);
+        healthElements.waitForElementToBeClickable(btnUpdateWorkHours);
     }
 
     public String vratiRadnoVrijemeZaSrijedaNakonUnosa() {
@@ -602,14 +609,14 @@ public class MojProfilDoktorPage extends Pages {
 
     public void unesiRadnoVrijemeDoktoraCetvrtak(String sCetvrtakRadiOd, String sCetvrtakRadiDo) {
         healthElements.waitForElementToBeClickable(tdCetvrtak);
-        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(btnEditWorkhours);
         healthElements.waitForElementToBeClickable(tdCetvrtakRadiOd);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdCetvrtak);
         healthElements.waitForElementToBeClickable(vrijemeOdCetvrtak);
         healthElements.waitForElementToBeClickable(tdCetvrtakRadiDo);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoCetvrtak);
         healthElements.waitForElementToBeClickable(vrijemeDoCetvrtak);
-        healthElements.waitForElementToBeClickable(btnUpdateService);
+        healthElements.waitForElementToBeClickable(btnUpdateWorkHours);
     }
 
     public String vratiRadnoVrijemeZaCetvrtakNakonUnosa() {
@@ -639,14 +646,14 @@ public class MojProfilDoktorPage extends Pages {
 
     public void unesiRadnoVrijemeDoktoraPetak(String sPetakRadiOd, String sPetakRadiDo) {
         healthElements.waitForElementToBeClickable(tdPetak);
-        healthElements.waitForElementToBeClickable(btnEditService);
+        healthElements.waitForElementToBeClickable(btnEditWorkhours);
         healthElements.waitForElementToBeClickable(tdPetakRadiOd);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeOdPetak);
         healthElements.waitForElementToBeClickable(vrijemeOdPetak);
         healthElements.waitForElementToBeClickable(tdPetakRadiDo);
         healthElements.waitForElementToBeClickable(btnOdaberiVrijemeDoPetak);
         healthElements.waitForElementToBeClickable(vrijemeDoPetak);
-        healthElements.waitForElementToBeClickable(btnUpdateService);
+        healthElements.waitForElementToBeClickable(btnUpdateWorkHours);
     }
 
     public String vratiRadnoVrijemeZaPetakNakonUnosa() {

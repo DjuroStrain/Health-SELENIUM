@@ -52,8 +52,9 @@ public class RegistracijaPage extends Pages {
     private WebElement btnPrijava2;
 
     @Step("Registracija korisnika kao pacijenta.")
-    public void registracijaKorisnikaKaoPacijenta(String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
+    public void registracijaKorisnikaKaoPacijenta(String sPacijent, String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
                                                   String sMobitel, String sLozinka) throws InterruptedException {
+        healthElements.selectFromDropdown(ddVrstaKorisnika, sPacijent);
         healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
         healthElements.insertTextScrollTo(txtIme, sIme);
         healthElements.insertTextScrollTo(txtPrezime, sPrezime);
@@ -62,8 +63,8 @@ public class RegistracijaPage extends Pages {
         healthElements.insertTextScrollTo(txtLozinka, sLozinka);
         healthElements.scroll();
         healthElements.waitForElementToBeVisible(btnPrijava2);
-        Thread.sleep(1000);
         healthElements.waitForElementToBeClickable(btnKreirajRacun);
+        btnKreirajRacun.click();
         healthElements.waitForElementToBeVisible(btnPrijaviSe);
     }
 

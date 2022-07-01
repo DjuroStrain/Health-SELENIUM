@@ -1,6 +1,7 @@
 package hr.vuv.health.testcases.odjava;
 
 import hr.vuv.health.content.PrijavaContent;
+import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import hr.vuv.health.pageobject.odjava.OdjavaPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
@@ -32,14 +33,17 @@ public class OdjavaTests extends SeleniumTestWrapper {
     private OdjavaPage odjavaPage = PageFactory.initElements(getDriver(), OdjavaPage.class);
     private IzbornikPage izbornikPage = PageFactory.initElements(getDriver(), IzbornikPage.class);
 
+    private CommonHealthElements healthElements = new CommonHealthElements(getDriver());
     LoggerClass loggerClass = new LoggerClass();
 
     @RegisterExtension
     MyTestWatcher watcher = new MyTestWatcher(getDriver());
     @BeforeEach
-    public void setup() {
+    public void setup() throws ClassNotFoundException {
         loggerClass.startTestLog(this.getClass().getSimpleName());
         startPage.startApplication();
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
+        healthElements.dodajDoktora();
         izbornikPage.klikniIzbornikPrijava();
     }
 

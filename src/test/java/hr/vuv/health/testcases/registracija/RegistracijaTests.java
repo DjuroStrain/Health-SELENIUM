@@ -46,7 +46,7 @@ public class RegistracijaTests extends SeleniumTestWrapper {
     @Description("Registracija novog korisnika sa rolom - Pacijent")
     public void Registriraj_Korisnika_Kao_Pacijenta() throws InterruptedException, ClassNotFoundException{
         int nBrojKorisnikaPrijeRegistracije = healthElements.vratiBrojRegistriranihKorisnika();
-        registracijaPage.registracijaKorisnikaKaoPacijenta(RegistracijaContent.KORISNICKO_IME_PACIJENT, RegistracijaContent.IME_PACIJENT,
+        registracijaPage.registracijaKorisnikaKaoPacijenta(RegistracijaContent.PACIJENT, RegistracijaContent.KORISNICKO_IME_PACIJENT, RegistracijaContent.IME_PACIJENT,
                 RegistracijaContent.PREZIME_PACIJENT, RegistracijaContent.EMAIL_PACIJENT, RegistracijaContent.MOBITEL_PACIJENT, RegistracijaContent.LOZINKA_PACIJENT);
         Thread.sleep(4000);
         int nBrojKorisnikaNakonRegistracije = healthElements.vratiBrojRegistriranihKorisnika();

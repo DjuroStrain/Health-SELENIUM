@@ -119,6 +119,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR_BEZ, PrijavaContent.LOZINKA_DOKTOR_BEZ);
         izbornikPage.klikniIzbornikMojProfil();
 
+        mojProfilDoktorPage.obrisiIspunjenaPoljaNaTabOpciPodaci();
         mojProfilDoktorPage.klikniNaGumbKreirajBezUnosaObaveznihPodataka();
 
         softAssertions.assertThat(mojProfilDoktorPage.vratiValidacijuZaObaveznoPoljeIme()).isEqualTo(MojProfilContent.VALIDACIJA_IME);

@@ -226,9 +226,9 @@ public class DatabaseCalls {
         try (Connection con = getConnection(); Statement stmt = con.createStatement()){
 
             String SQL =
-                    "DELETE FROM AspNetUsers WHERE Email="+sEmail+";\n" +
+                    "DELETE FROM AspNetUsers WHERE Email='"+sEmail+"';\n" +
                             "\n" +
-                    "DELETE FROM MainService.Doctors WHERE Email ="+sEmail+";";
+                    "DELETE FROM MainService.Doctors WHERE Email ='"+sEmail+"';";
 
             stmt.execute(SQL);
         } catch (SQLException e){

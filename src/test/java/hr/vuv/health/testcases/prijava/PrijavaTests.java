@@ -56,7 +56,7 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
     @Description("Pokusaj prijave korisnika bez unosa obaveznih podataka te provjera validacija za obavezna polja.")
     @Test
-    public void Provjera_Validacija_Za_Obavezna_Polja_Pri_Pokusaju_Registracije() throws InterruptedException{
+    public void Provjera_Validacija_Za_Obavezna_Polja_Pri_Pokusaju_Prijave() throws InterruptedException{
         prijavaPage.klikniNaGumbPrijavaBezUnosaObaveznihPodataka();
 
         softAssertions.assertThat(prijavaPage.vratiValidacijuZaObaveznoPoljeKorisnickoIme()).isEqualTo(PrijavaContent.VALIDACIJA_KORISNICKA_OZNAKA);
