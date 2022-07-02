@@ -14,22 +14,27 @@ pipeline {
             }
         }
         stage('test') {
-        steps{
+            steps{
     			bat "mvn -Dtest=PrijavaTests test"
     		  }
         }
         stage('reports') {
-        steps {
-        script {
-            allure([
-                    includeProperties: false,
-                    jdk: '',
-                    properties: [],
-                    reportBuildPolicy: 'ALWAYS',
-                    results: [[path: 'target/allure-results']]
-            ])
+            steps {
+                script {
+                    allure([
+                            includeProperties: false,
+                            jdk: '',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                             results: [[path: 'target/allure-results']]
+                      ])}
+                 }
+            }
+        post {
+        always {
+            emailext body: 'Izvršavanje testova je gotovo. Allure report je generiran.', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test',
+            attachmentsPattern: 'allure-report.zip'
+        }
     }
-    }
-}
-    }
+  }
 }
