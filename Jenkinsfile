@@ -1,40 +1,47 @@
 pipeline {
     agent any
     stages {
-        stage('git pull') {
-            steps {
-               //bat "rmdir  /s /q Health-SELENIUM"
-                bat "git pull https://github.com/DjuroStrain/Health-SELENIUM"
-                bat "mvn clean -f Health-SELENIUM"
-            }
-        }
-        stage('install') {
-            steps {
-                bat "mvn install -f Health-SELENIUM"
-            }
-        }
-        stage('test') {
+        /*stage('Clean workspace')
+        {
             steps{
-    			bat "mvn -Dtest=PrijavaTests test"
+                cleanWs()
+            }
+        }*/
+        stage('Clean workspace') {
+            steps {
+                //bat "rmdir  /s /q Health-SELENIUM"
+                //bat "git clone https://github.com/DjuroStrain/Health-SELENIUM"
+                bat "mvn clean"
+            }
+        }
+        stage('Install') {
+            steps {
+                bat "mvn install"
+            }
+        }
+        stage('Run tests') {
+        steps{
+    			bat "mvn test -Dtest=OdjavaTests"
     		  }
         }
-        stage('reports') {
-            steps {
-                script {
-                    allure([
-                            includeProperties: false,
-                            jdk: '',
-                            properties: [],
-                            reportBuildPolicy: 'ALWAYS',
-                             results: [[path: 'target/allure-results']]
-                      ])}
-                 }
-            }
-        post {
-        always {
-            emailext body: 'Izvršavanje testova je gotovo. Allure report je generiran.', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test',
-            attachmentsPattern: 'allure-report.zip'
+        stage('Allure Report') {
+        steps {
+        script {
+            allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'target/allure-results']]
+            ])
+        }
+        }
         }
     }
-  }
+        post {
+        always {
+            emailext body: '$DEFAULT_CONTENT', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: '$DEFAULT_SUBJECT'
+        }
+    }
 }
+
