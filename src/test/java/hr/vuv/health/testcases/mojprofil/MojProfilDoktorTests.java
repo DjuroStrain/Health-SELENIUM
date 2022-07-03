@@ -215,6 +215,25 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         log.info("Usluga je uspješno obrisana.");
     }
 
+    @Description("Provjera validacija za pokusaj dodavanja usluge bez obaveznih podataka")
+    @Test
+    public void Provjera_Validacija_Za_Dodavanje_Usluga() throws ClassNotFoundException {
+        izbornikPage.klikniIzbornikPrijava();
+        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
+        izbornikPage.klikniIzbornikMojProfil();
+        mojProfilDoktorPage.klikniNaDjelatnostiIDodajUslugu();
+        mojProfilDoktorPage.klikniNaGumbAzuriraj();
+
+        softAssertions.assertThat(mojProfilDoktorPage.vratiValidacijuZaNazivUsluge()).isEqualTo(MojProfilContent.NAZIV_OBAVEZAN);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiValidacijuZaOpisUsluge()).isEqualTo(MojProfilContent.OPIS_OBAVEZAN);
+        softAssertions.assertThat(mojProfilDoktorPage.vratiValidacijuZaCijenuUsluge()).isEqualTo(MojProfilContent.CIJENA_OBAVEZNA);
+
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
+
+        softAssertions.assertAll();
+        log.info("Pokazuju se ispravne validacije pri pokusaju spremanja usluge bez unosa obaveznih podataka");
+    }
+
     @Description("Uredi radno vrijeme doktora")
     @Test
     public void Uredi_Radno_Vrijeme_Doktora() throws ClassNotFoundException {
@@ -252,7 +271,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
 
         softAssertions.assertAll();
 
-        log.info("Radno vrijeme je uspješno ažurirano te se ispravno prikazuje u tablici 'Radno vrijeme' te u bazi podataka.");
+        log.info("Radno vrijeme je uspješno ažurirano te se ispravno prikazuje u tablici 'Radno vrijeme' i bazi podataka.");
     }
 
     @AfterEach

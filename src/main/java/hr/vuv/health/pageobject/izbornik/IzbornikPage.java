@@ -86,6 +86,15 @@ public class IzbornikPage extends Pages {
         healthElements.waitForElementToBeClickable(tabMojProfil);
     }
 
+    //Termini
+
+    @FindBy(xpath = "//a[normalize-space()='Termini']")
+    private WebElement tabTermini;
+
+    public void klikniIzbornikTabTermini() {
+        healthElements.waitForElementToBeClickable(tabTermini);
+    }
+
     //Radno vrijeme
 
     @FindBy(xpath = "//a[normalize-space()='Radno vrijeme']")

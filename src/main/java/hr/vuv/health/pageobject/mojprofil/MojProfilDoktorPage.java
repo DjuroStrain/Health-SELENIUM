@@ -448,6 +448,11 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(accDjelatnosti);
     }
 
+    @Step("Klikni na 'Djelatnosti' i 'Dodaj uslugu'")
+    public void klikniNaDjelatnostiIDodajUslugu(){
+        healthElements.waitForElementToBeClickable(accDjelatnosti);
+        healthElements.waitForElementToBeClickable(btnAddService);
+    }
 
     @FindBy(xpath = "//div[@id = 'collapseTwo']//following-sibling::span[normalize-space()='Delete']")
     private WebElement btnDeleteService;
@@ -656,9 +661,40 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(btnUpdateWorkHours);
     }
 
+    @Step("Klikni na gumb azuriraj")
+    public void klikniNaGumbAzuriraj() {
+        healthElements.waitForElementToBeClickable(btnUpdateService);
+    }
+
+    @FindBy(id = "Name-info")
+    private WebElement validaacijaNazivUsluge;
+
+    @Step("Vrati validaciju za naziv usluge")
+    public String vratiValidacijuZaNazivUsluge() {
+        return validaacijaNazivUsluge.getText();
+    }
+
+    @FindBy(id = "Description-info")
+    private WebElement validacijaOpisUsluge;
+
+    @Step("Vrati validaciju za opis usluge")
+    public String vratiValidacijuZaOpisUsluge() {
+        return validacijaOpisUsluge.getText();
+    }
+
+    @FindBy(id = "Price-info")
+    private WebElement validacijaCijenaUsluge;
+
+    @Step("Vrati validaciju za cijenu usluge")
+    public String vratiValidacijuZaCijenuUsluge() {
+        return validacijaCijenaUsluge   .getText();
+    }
+
     public String vratiRadnoVrijemeZaPetakNakonUnosa() {
         return tdPetakRadiOd.getText()+"-"+tdPetakRadiDo.getText();
     }
+
+
 
     //Broj redova u tablici 'Radno vrijeme'
 

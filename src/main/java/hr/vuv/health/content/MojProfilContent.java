@@ -56,7 +56,7 @@ public class MojProfilContent {
 
 
     /*
-    * Radno vrijeme
+    * Radno vrijeme - doktor
     * */
     //prijepodne
     public final static String RADNO_VRIJEME_PRIJEPODNE_OD = "08:00:00";
@@ -66,6 +66,22 @@ public class MojProfilContent {
     public final static String RADNO_VRIJEME_POSLIJEPODNE_OD = "14:00:00";
     public final static String RADNO_VRIJEME_POSLIJEPODNE_DO = "20:00:00";
 
+    /*
+     * Radno vrijeme - kada gleda pacijent
+     * */
+    //prijepodne
+    public final static String RADNO_VRIJEME_PRIJEPODNE_OD_PACIJENT = "08:00";
+    public final static String RADNO_VRIJEME_PRIJEPODNE_DO_PACIJENT = "14:00";
+
+    //poslijepodne
+    public final static String RADNO_VRIJEME_POSLIJEPODNE_OD_PACIJENT = "14:00";
+    public final static String RADNO_VRIJEME_POSLIJEPODNE_DO_PACIJENT = "20:00";
+
     //ne radi
     public final static String NE_RADI = "00:00:00";
+
+    //Validacije
+    public final static String NAZIV_OBAVEZAN = "Naziv je obavezan.";
+    public final static String OPIS_OBAVEZAN = "Opis je obavezan.";
+    public final static String CIJENA_OBAVEZNA = "Cijena mora iznositi barem 1 HRK";
 }
