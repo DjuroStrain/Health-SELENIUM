@@ -21,7 +21,7 @@ public class IzbornikPage extends Pages {
 
     //Pocetna stranica
 
-    @FindBy(xpath = "//a[normalize-space()='Pocetna']")
+    @FindBy(xpath = "//a[normalize-space()='Početna']")
     private WebElement tabPocetna;
 
     @Step("U izborniku klikni na 'Pocetna'.")
@@ -31,12 +31,13 @@ public class IzbornikPage extends Pages {
 
     //Lijecnici
 
-    @FindBy(xpath = "//a[normalize-space()='Ljecnici']")
+    @FindBy(xpath = "//a[contains(text(), 'Lječnici')]")
     private WebElement tabLijecnici;
 
-    @Step("U izborniku klikni na 'Ljecnici'.")
+    @Step("U izborniku klikni na 'Lječnici'.")
     public void klikniIzbornikLijecnici() {
         healthElements.waitForElementToBeClickable(tabLijecnici);
+        //tabLijecnici.click();
     }
 
     //Prijava
@@ -64,7 +65,7 @@ public class IzbornikPage extends Pages {
 
 
     /*
-    * Nakon prijava
+    * Nakon prijave - doktor
     * */
 
     //Kontrolna ploca
@@ -93,6 +94,20 @@ public class IzbornikPage extends Pages {
     public void klikniIzbornikRadnoVrijeme() {
         healthElements.waitForElementToBeClickable(tabRadnoVrijeme);
     }
+
+    /*
+     * Nakon prijave - pacijent
+     * */
+
+    //Moji termini
+
+    @FindBy(xpath = "//a[normalize-space()='Moji termini']")
+    private WebElement tabMojiTermini;
+
+    public void klikniIzbornikMojiTermini() {
+        healthElements.waitForElementToBeClickable(tabMojiTermini);
+    }
+
 
     //Odjava
 

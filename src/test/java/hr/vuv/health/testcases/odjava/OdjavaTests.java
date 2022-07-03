@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -39,8 +40,10 @@ public class OdjavaTests extends SeleniumTestWrapper {
     @RegisterExtension
     MyTestWatcher watcher = new MyTestWatcher(getDriver());
     @BeforeEach
-    public void setup() throws ClassNotFoundException {
+    public void setup(TestInfo testInfo) throws ClassNotFoundException {
         loggerClass.startTestLog(this.getClass().getSimpleName());
+        log.info("Naziv testa koji se izvrsava: "+ testInfo.getDisplayName());
+        log.info("");
         startPage.startApplication();
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
         healthElements.dodajDoktora();
@@ -57,7 +60,7 @@ public class OdjavaTests extends SeleniumTestWrapper {
     }
 
     @AfterEach
-    public void testEnd() {
+    public void testEnd(TestInfo testInfo) {
         loggerClass.endTestLog(this.getClass().getSimpleName());
     }
 }

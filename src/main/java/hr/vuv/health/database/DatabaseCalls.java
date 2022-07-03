@@ -1,5 +1,7 @@
 package hr.vuv.health.database;
 
+import hr.vuv.health.pageobject.setup.StartPage;
+
 import java.sql.*;
 
 public class DatabaseCalls {
@@ -116,7 +118,7 @@ public class DatabaseCalls {
                                 "      ,[Email]\n" +
                                 "      ,[SpecializationId])\n" +
                                 "\n" +
-                                "VALUES ('e9fbae22-ea0c-4f52-9618-2717e8f53046', 'Duro', 'Belacic', 'Doktor', 1, 'durobelacic@gmail.com', 1);\n" +
+                                "VALUES ('e9fbae22-ea0c-4f52-9618-2717e8f53046', 'Duro', 'Belacic', 'dr. mr.', 1, 'durobelacic@gmail.com', 1);\n" +
                                 "\n" +
                                 "exec sp_executesql N'SET NOCOUNT ON;  DECLARE @inserted0 TABLE ([Id] int, [_Position] [int]);  MERGE [MainService].[WorkHours] USING \n" +
                                 "\n" +
@@ -234,6 +236,72 @@ public class DatabaseCalls {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    /*
+     * Vrati punu naziv doktora
+     * */
+    public String dbConnectionVratiPuniNazivDoktora(String sDoktorID) throws ClassNotFoundException{
+        String sNaziv = "";
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL =
+                    "SELECT CONCAT(Title, ' ',LastName,' ',FirstName) as NazivDoktora FROM MainService.Doctors WHERE MainService.Doctors.Id ='"+sDoktorID+"'";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sNaziv = rs.getString("NazivDoktora");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sNaziv;
+    }
+
+    /*
+     * Vrati specijalzaciju doktora
+     * */
+    public String dbConnectionVratiSpecijalizacijuDoktora(String sDoktorID) throws ClassNotFoundException{
+        String sSpecijalizacija = "";
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL =
+                    "SELECT MainService.Specializations.Name AS Specijalizacija FROM MainService.Specializations INNER JOIN MainService.Doctors ON Doctors.SpecializationId = Specializations.Id WHERE Doctors.Id ='"+sDoktorID+"'";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sSpecijalizacija = rs.getString("Specijalizacija");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sSpecijalizacija;
+    }
+
+    /*
+    * Vrati punu adresu za doktora
+    * */
+    public String dbConnectionVratiPunuAdresuDoktora(String sDoktorID) throws ClassNotFoundException{
+        String sAdresa = "";
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL =
+                    "SELECT CONCAT(StreetName,' ',StreetNo,', ', PostalCode,', ',City) AS Adresa FROM MainService.Address INNER JOIN MainService.Doctors ON Doctors.AddressId = MainService.Address.Id WHERE MainService.Doctors.Id ='"+sDoktorID+"'";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sAdresa = rs.getString("Adresa");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sAdresa;
     }
 
     public void dbConnectionObrisiKorisnikaPoKorisnickomImenu(String sUserName) throws ClassNotFoundException{
@@ -374,5 +442,85 @@ public class DatabaseCalls {
         }
 
         return sRadnoVrijeme;
+    }
+
+    /*
+    *  Vrati opis pregleda za termin
+    * */
+
+    public String dbConnectionVratiOpisPregledaZaTermin(String sPacijentID, String sDoktorId) throws ClassNotFoundException {
+        String sOpisPregleda = "";
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "SELECT Title FROM AppointmentService.Appointments WHERE PatientId = '"+sPacijentID+"' AND DoctorId='"+sDoktorId+"';";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sOpisPregleda = rs.getString("Title");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sOpisPregleda;
+    }
+
+    public String dbConnectionVratiOpisPregledaZaTerminTabMojtermini(String sPacijentID, String sDoktorId) throws ClassNotFoundException {
+        String sOpisPregleda = "";
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "SELECT CONCAT(AppointmentService.Appointments.Title,' - ',MainService.Doctors.FirstName,' ',MainService.Doctors.LastName) as OpisPregleda FROM AppointmentService.Appointments INNER JOIN MainService.Doctors on MainService.Doctors.Id = DoctorId WHERE PatientId = '"+sPacijentID+"' AND DoctorId='"+sDoktorId+"';";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sOpisPregleda = rs.getString("OpisPregleda");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sOpisPregleda;
+    }
+
+    /*
+     *  Vrati vrijeme termina
+     * */
+
+    public String dbConnectionVratiVrijemeTermina(String sPacijentID, String sDoktorId) throws ClassNotFoundException {
+        String sVrijemeTermina = "";
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "SELECT CONCAT(FORMAT(TimeFrom,'hh:mm'),' - ',FORMAT(TimeTo,'hh:mm')) as VrijemeTermina FROM AppointmentService.Appointments WHERE PatientId = '"+sPacijentID+"' AND DoctorId='"+sDoktorId+"'";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sVrijemeTermina = rs.getString("VrijemeTermina");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sVrijemeTermina;
+    }
+
+    /*
+     *  Obrisi termin
+     * */
+
+    public void dbConnectionObrisiTermin(String sPacijentID, String sDoktorId) throws ClassNotFoundException {
+        String sVrijemeTermina = "";
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "DELETE FROM AppointmentService.Appointments WHERE PatientId = '"+sPacijentID+"' AND DoctorId='"+sDoktorId+"'";
+
+            stmt.execute(SQL);
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

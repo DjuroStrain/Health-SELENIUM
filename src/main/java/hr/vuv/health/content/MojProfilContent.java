@@ -26,6 +26,8 @@ public class MojProfilContent {
     public final static String PROFIL_GRAD_MJESTO = "Split";
     public final static String PROFIL_EMAIL = "durobelacic2@gmail.com";
 
+    public final static String PROFIL_SPECIJALIZACIJA = "Fizioterapija";
+
     //Validacije
     public final static String VALIDACIJA_IME = "Ime je obavezno polje";
     public final static String VALIDACIJA_PREZIME = "Prezime je obavezno polje";

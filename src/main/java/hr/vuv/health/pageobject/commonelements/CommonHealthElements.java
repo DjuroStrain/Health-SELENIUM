@@ -133,6 +133,18 @@ public class CommonHealthElements extends Pages {
         select.selectByValue(sOdabir);
     }
 
+    /*
+    * Odaberi iz dropdowna
+    *
+    * @param String sOdabir
+    * */
+
+
+
+    public void selectFromUlLiDropdown(String sOdabir) {
+        WebElement element = driver.findElement(By.xpath("//div[@class='e-content e-dropdownbase']//following-sibling::li[normalize-space()='"+sOdabir+"']"));
+        element.click();
+    }
 
     //Povezivanje na bazu podataka
 
@@ -193,6 +205,27 @@ public class CommonHealthElements extends Pages {
     }
 
     /*
+     * Vrati puni naziv doktora
+     * */
+    public String vratiPuniNazivDoktora(String sDoktorID) throws ClassNotFoundException {
+        return databaseCalls.dbConnectionVratiPuniNazivDoktora(sDoktorID);
+    }
+
+    /*
+     * Vrati specijalizaciju doktora
+     * */
+    public String vratiSpecijalzacijuDoktora(String sDoktorID) throws ClassNotFoundException {
+        return databaseCalls.dbConnectionVratiSpecijalizacijuDoktora(sDoktorID);
+    }
+
+    /*
+    * Vrati punu adresu doktora
+    * */
+    public String vratiPunuAdresuDoktora(String sDoktorID) throws ClassNotFoundException {
+        return databaseCalls.dbConnectionVratiPunuAdresuDoktora(sDoktorID);
+    }
+
+    /*
     * Dohvati broj usluga
     * */
     public int dohvatiBrojUsluga(String sDoktorID) throws ClassNotFoundException {
@@ -222,5 +255,31 @@ public class CommonHealthElements extends Pages {
     * */
     public String vratiRadnoVrijemeOrdinacijeZaPojediniDan(int nDanID, String sDoktorID) throws ClassNotFoundException{
         return databaseCalls.dbConnectionVratiRadnoVrijemeOrdinacijeZaOdredeniDan(nDanID, sDoktorID);
+    }
+
+    /*
+     * Vrati opis predleda za termin
+     * */
+    public String vratiOpisPregledaZaTermin(String sPacijentID, String sDoktorID) throws ClassNotFoundException{
+        return databaseCalls.dbConnectionVratiOpisPregledaZaTermin(sPacijentID, sDoktorID);
+    }
+
+    //Opis pregleda na u tablici termina na tabu MojiTermini
+    public String vratiOpisPregledaZaTerminTabMojiTermini(String sPacijentID, String sDoktorID) throws ClassNotFoundException{
+        return databaseCalls.dbConnectionVratiOpisPregledaZaTerminTabMojtermini(sPacijentID, sDoktorID);
+    }
+
+    /*
+     * Vrati vrijeme termina
+     * */
+    public String vratiVrijemeTermina(String sPacijentID, String sDoktorID) throws ClassNotFoundException{
+        return databaseCalls.dbConnectionVratiVrijemeTermina(sPacijentID, sDoktorID);
+    }
+
+    /*
+    * Obrisi termin
+    * */
+    public void obrisiTermin(String sPacijentID, String sDoktorID) throws ClassNotFoundException{
+        databaseCalls.dbConnectionObrisiTermin(sPacijentID, sDoktorID);
     }
 }

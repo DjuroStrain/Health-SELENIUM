@@ -9,10 +9,12 @@ import hr.vuv.health.testcases.MyTestWatcher;
 import hr.vuv.health.testcases.SmokeTest;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.bouncycastle.asn1.tsp.TSTInfo;
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.support.PageFactory;
@@ -39,20 +41,32 @@ public class PrijavaTests extends SeleniumTestWrapper {
     SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeEach
-    public void setup() {
+    public void setup(TestInfo testInfo) {
         loggerClass.startTestLog(PrijavaTests.class.getSimpleName());
+        log.info("Naziv testa koji se izvrsava: "+ testInfo.getDisplayName());
+        log.info("");
         startPage.startApplication();
         izbornikPage.klikniIzbornikPrijava();
     }
 
-    @Description("Prijava korisnika u aplikaciju")
+    @Description("Prijava korisnika u aplikaciju sa rolom doktor")
     @Category(SmokeTest.class)
     @Test
     public void Prijava_Korisnika_Kao_Doktora() {
-        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
+        prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR2, PrijavaContent.LOZINKA_DOKTOR2);
         assertTrue(prijavaPage.tabMojProfilIsDisplayed());
-        log.info("Korisnik se je uspjesno prijavio u aplikaciju.");
+        log.info("Korisnik sa rolom doktor se je uspjesno prijavio u aplikaciju.");
     }
+
+    @Description("Prijava korisnika u aplikaciju sa rolom pacijent")
+    @Category(SmokeTest.class)
+    @Test
+    public void Prijava_Korisnika_Kao_Pacijenta() {
+        prijavaPage.prijavaKorisnikaKaoPacijenta(PrijavaContent.KORISNICKO_IME_PACIJENT, PrijavaContent.LOZINKA_PACIJENT);
+        assertTrue(prijavaPage.tabMojiTerminiIsDisplayed());
+        log.info("Korisnik sa rolom pacijent  se je uspjesno prijavio u aplikaciju.");
+    }
+
 
     @Description("Pokusaj prijave korisnika bez unosa obaveznih podataka te provjera validacija za obavezna polja.")
     @Test
@@ -68,7 +82,7 @@ public class PrijavaTests extends SeleniumTestWrapper {
 
 
     @AfterEach
-    public void testEnd() {
+    public void testEnd(TestInfo testInfo) {
         loggerClass.endTestLog(PrijavaTests.class.getSimpleName());
     }
 

@@ -2,10 +2,9 @@ package hr.vuv.health.testcases.mojprofil;
 
 import hr.vuv.health.content.MojProfilContent;
 import hr.vuv.health.content.PrijavaContent;
-import hr.vuv.health.content.RegistracijaContent;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import hr.vuv.health.pageobject.izbornik.IzbornikPage;
-import hr.vuv.health.pageobject.ljecnici.LjecniciPage;
+import hr.vuv.health.pageobject.lijecnici.LijecniciBezRolePage;
 import hr.vuv.health.pageobject.mojprofil.MojProfilDoktorPage;
 import hr.vuv.health.pageobject.prijava.PrijavaPage;
 import hr.vuv.health.pageobject.setup.StartPage;
@@ -15,6 +14,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
     private PrijavaPage prijavaPage = PageFactory.initElements(getDriver(), PrijavaPage.class);
     private IzbornikPage izbornikPage = PageFactory.initElements(getDriver(), IzbornikPage.class);
     private MojProfilDoktorPage mojProfilDoktorPage = PageFactory.initElements(getDriver(), MojProfilDoktorPage.class);
-    private LjecniciPage ljecniciPage = new LjecniciPage(getDriver());
+    private LijecniciBezRolePage ljecniciPage = new LijecniciBezRolePage(getDriver());
     private CommonHealthElements healthElements = new CommonHealthElements(getDriver());
 
     static LoggerClass loggerClass = new LoggerClass();
@@ -44,8 +44,10 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
     MyTestWatcher watcher = new MyTestWatcher(getDriver());
 
     @BeforeEach
-    public void setup() throws ClassNotFoundException {
+    public void setup(TestInfo testInfo) throws ClassNotFoundException {
         loggerClass.startTestLog(this.getClass().getSimpleName());
+        log.info("Naziv testa koji se izvrsava: "+ testInfo.getDisplayName());
+        log.info("");
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
         healthElements.dodajDoktora();
         startPage.startApplication();
@@ -132,6 +134,9 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
         softAssertions.assertThat(mojProfilDoktorPage.vratiValidacijuZaObaveznoPoljeGradMjesto()).isEqualTo(MojProfilContent.VALIDACIJA_GRAD_MJESTO);
         softAssertions.assertThat(mojProfilDoktorPage.vratiValidacijuZaObaveznoPoljeDrzava()).isEqualTo(MojProfilContent.VALIDACIJA_DRZAVA);
         softAssertions.assertThat(mojProfilDoktorPage.vratiValidacijuZaObaveznoPoljeEmail()).isEqualTo(MojProfilContent.VALIDACIJA_EMAIL);
+
+        healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR_BEZ);
+
         softAssertions.assertAll();
 
         log.info("Prikazuju se ispravne validacije za pokušaj spremanja podataka o doktoru bez unosa obaveznih podataka.");
@@ -251,7 +256,7 @@ public class MojProfilDoktorTests extends SeleniumTestWrapper {
     }
 
     @AfterEach
-    public void testEnd() {
+    public void testEnd(TestInfo testInfo) {
         loggerClass.endTestLog(this.getClass().getSimpleName());
     }
 }

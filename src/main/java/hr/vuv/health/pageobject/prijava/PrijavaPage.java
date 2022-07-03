@@ -33,7 +33,7 @@ public class PrijavaPage extends Pages {
     @FindBy(xpath = "//a[normalize-space()='Moj profil']")
     private WebElement tabMojProfil2;
 
-    @Step("Prijava korisnika u aplikaciju i provjera je li se uspješno prijavio.")
+    @Step("Prijava doktora u aplikaciju i provjera je li se uspješno prijavio.")
     public void prijavaKorisnika(String sKorisnickoIme, String sLozinka) {
         healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
         healthElements.insertTextScrollTo(txtLozinka, sLozinka);
@@ -46,6 +46,24 @@ public class PrijavaPage extends Pages {
     public boolean tabMojProfilIsDisplayed() {
         healthElements.waitForElementToBeVisible(tabMojProfil);
         return tabMojProfil2.isDisplayed();
+    }
+
+    @FindBy(xpath = "//a[normalize-space()='Moji termini']")
+    private WebElement tabMojiTermini;
+
+    @Step("Prijava pacijenta u aplikaciju i provjera je li se uspješno prijavio.")
+    public void prijavaKorisnikaKaoPacijenta(String sKorisnickoIme, String sLozinka) {
+        healthElements.insertText(txtKorisnickoIme, sKorisnickoIme);
+        healthElements.insertText(txtLozinka, sLozinka);
+        healthElements.waitForElementToBeClickable(btnPrijaviSe);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.invisibilityOf(btnPrijaviSe));
+    }
+
+    public boolean tabMojiTerminiIsDisplayed() {
+        healthElements.waitForElementToBeVisible(tabMojiTermini);
+        return tabMojiTermini.isDisplayed();
     }
 
     /*

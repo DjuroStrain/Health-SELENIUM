@@ -11,6 +11,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -36,8 +37,10 @@ public class RegistracijaTests extends SeleniumTestWrapper {
     SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeEach
-    public void setup(){
+    public void setup(TestInfo testInfo){
         loggerClass.startTestLog(RegistracijaTests.class.getSimpleName());
+        log.info("Naziv testa koji se izvrsava: "+ testInfo.getDisplayName());
+        log.info("");
         startPage.startApplication();
         izbornikPage.klikniIzbornikRegistracija();
     }
@@ -95,7 +98,7 @@ public class RegistracijaTests extends SeleniumTestWrapper {
     }
 
     @AfterEach
-    public void testEnd() {
+    public void testEnd(TestInfo testInfo) {
         loggerClass.endTestLog(RegistracijaTests.class.getSimpleName());
     }
 }
