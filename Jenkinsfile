@@ -1,24 +1,30 @@
 pipeline {
     agent any
     stages {
-        stage('git pull') {
+        /*stage('Clean workspace')
+        {
+            steps{
+                cleanWs()
+            }
+        }*/
+        stage('Clean workspace') {
             steps {
-               //bat "rmdir  /s /q Health-SELENIUM"
-                bat "git pull https://github.com/DjuroStrain/Health-SELENIUM"
-                bat "mvn clean -f Health-SELENIUM"
+                //bat "rmdir  /s /q Health-SELENIUM"
+                //bat "git clone https://github.com/DjuroStrain/Health-SELENIUM"
+                bat "mvn clean"
             }
         }
-        stage('install') {
+        stage('Install') {
             steps {
-                bat "mvn install -f Health-SELENIUM"
+                bat "mvn install"
             }
         }
-        stage('test') {
+        stage('Run tests') {
         steps{
-    			bat "mvn -Dtest=PrijavaTests test"
+    			bat "mvn test -Dtest=OdjavaTests"
     		  }
         }
-        stage('reports') {
+        stage('Allure Report') {
         steps {
         script {
             allure([
@@ -28,8 +34,14 @@ pipeline {
                     reportBuildPolicy: 'ALWAYS',
                     results: [[path: 'target/allure-results']]
             ])
+        }
+        }
+        }
     }
+        post {
+        always {
+            emailext body: '$DEFAULT_CONTENT', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: '$DEFAULT_SUBJECT'
+        }
     }
 }
-    }
-}
+
