@@ -2,6 +2,7 @@ package hr.vuv.health.pageobject.registracija;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -94,14 +95,12 @@ public class RegistracijaPage extends Pages {
 
     @Step("Klikni na gumb 'Kreiraj svoj račun' bez unosa obavezih podataka")
     public void klikniNaGumbKreirajBezUnosaObaveznihPodataka() throws InterruptedException {
-        healthElements.scroll();
-        healthElements.waitForElementToBeVisible(btnPrijava2);
-        /*try{
+        try{
             healthElements.waitForElementToBeClickable(btnKreirajRacun);
         }catch (ElementClickInterceptedException e) {
             healthElements.waitForElementToBeClickable(btnKreirajRacun);
-        }*/
-        healthElements.waitForElementToBeClickable(btnKreirajRacun);
+        }
+        //healthElements.waitForElementToBeClickable(btnKreirajRacun);
     }
 
     @FindBy(xpath = "//select[@id='roleSelect']//following::div[@class='validation-message']")
