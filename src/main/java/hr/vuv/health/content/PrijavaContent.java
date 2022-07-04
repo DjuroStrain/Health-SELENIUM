@@ -21,6 +21,6 @@ public class PrijavaContent {
     /*
      * Validacije
      * */
-    public final static String VALIDACIJA_KORISNICKA_OZNAKA = "Korisnicka oznaka je obavezno polje.";
-    public final static String VALIDACIJA_LOZINKA = "Lozinka je obavezno polje.";
+    public final static String VALIDACIJA_KORISNICKA_OZNAKA = "Korisnička oznaka je obavezna.";
+    public final static String VALIDACIJA_LOZINKA = "Lozinka je obavezna.";
 }

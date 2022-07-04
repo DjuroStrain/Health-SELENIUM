@@ -25,11 +25,11 @@ public class RegistracijaContent {
     /*
      * Validacije
      * */
-    public final static String VALIDACIJA_TITULA = "Titula je obavezno polje.";
-    public final static String VALIDACIJA_KORISNICKA_OZNAKA = "Korisnicka oznaka je obavezno polje.";
-    public final static String VALIDACIJA_PREZIME = "Prezime je obavezno polje.";
-    public final static String VALIDACIJA_IME = "Ime je obavezno polje.";
-    public final static String VALIDACIJA_EMAIL = "Email je obavezno polje.";
-    public final static String VALIDACIJA_TELEFONSKI_BROJ = "Telefonski broj je obavezno polje.";
-    public final static String VALIDACIJA_LOZINKA = "Lozinka je obavezno polje.";
+    public final static String VALIDACIJA_TITULA = "Titula je obavezna.";
+    public final static String VALIDACIJA_KORISNICKA_OZNAKA = "Korisnička oznaka je obavezna.";
+    public final static String VALIDACIJA_PREZIME = "Prezime je obavezna.";
+    public final static String VALIDACIJA_IME = "Ime je obavezno.";
+    public final static String VALIDACIJA_EMAIL = "Email je obavezan.";
+    public final static String VALIDACIJA_TELEFONSKI_BROJ = "Telefonski broj je obavezan.";
+    public final static String VALIDACIJA_LOZINKA = "Lozinka je obavezna.";
 }

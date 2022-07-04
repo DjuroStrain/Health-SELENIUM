@@ -29,16 +29,16 @@ public class MojProfilContent {
     public final static String PROFIL_SPECIJALIZACIJA = "Fizioterapija";
 
     //Validacije
-    public final static String VALIDACIJA_IME = "Ime je obavezno polje";
-    public final static String VALIDACIJA_PREZIME = "Prezime je obavezno polje";
-    public final static String VALIDACIJA_TITULA = "Titula je obavezno polje";
-    public final static String VALIDACIJA_SPECIJALIZACIJA = "Specijalizacija je obavezno polje";
-    public final static String VALIDACIJA_ULICA = "Ulica je obavezno polje";
-    public final static String VALIDACIJA_KUCNI_BROJ = "Kućni broj je obavezno polje";
-    public final static String VALIDACIJA_POSTANSKI_BROJ = "Poštanski broj je obavezno polje";
-    public final static String VALIDACIJA_GRAD_MJESTO = "Grad/Mjesto je obavezno polje";
-    public final static String VALIDACIJA_DRZAVA = "Država je obavezno polje";
-    public final static String VALIDACIJA_EMAIL = "Email je obavezno polje";
+    public final static String VALIDACIJA_IME = "Ime je obavezno.";
+    public final static String VALIDACIJA_PREZIME = "Prezime je obavezno.";
+    public final static String VALIDACIJA_TITULA = "Titula je obavezna.";
+    public final static String VALIDACIJA_SPECIJALIZACIJA = "Specijalizacija je obavezna.";
+    public final static String VALIDACIJA_ULICA = "Ulica je obavezna.";
+    public final static String VALIDACIJA_KUCNI_BROJ = "Kućni broj je obavezan.";
+    public final static String VALIDACIJA_POSTANSKI_BROJ = "Poštanski broj je obavezan.";
+    public final static String VALIDACIJA_GRAD_MJESTO = "Grad/Mjesto je obavezno.";
+    public final static String VALIDACIJA_DRZAVA = "Država je obavezna.";
+    public final static String VALIDACIJA_EMAIL = "Email je obavezan.";
 
     /*
     * Podaci za unos nove usluge

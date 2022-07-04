@@ -64,11 +64,11 @@ public class TerminiTests extends SeleniumTestWrapper {
         terminiPage.odaberiTerminPregleda(PacijentContent.OPIS_TERMINA, PacijentContent.RAZLOG_TERMINA);
 
         softAssertions.assertThat(terminiPage.vratiVrijednostOpisPregledaTablica())
-                .isEqualTo(healthElements.vratiOpisPregledaZaTermin(PacijentContent.PACIJENT_ID, PacijentContent.DOKTOR_ID));
+                .isEqualTo(healthElements.vratiOpisPregledaZaTerminRolaDoktor(PacijentContent.DOKTOR_ID));
         softAssertions.assertThat(terminiPage.vratiVrijednostVrijemePregledaTablica())
-                .isEqualTo(healthElements.vratiVrijemeTermina(PacijentContent.PACIJENT_ID, PacijentContent.DOKTOR_ID));
+                .isEqualTo(healthElements.vratiVrijemeTerminaRolaDoktor(PacijentContent.DOKTOR_ID));
 
-        //healthElements.obrisiTermin(PacijentContent.PACIJENT_ID, PacijentContent.DOKTOR_ID);
+        healthElements.obrisiTermin(PacijentContent.PACIJENT_ID, PacijentContent.DOKTOR_ID);
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
 
         softAssertions.assertAll();
@@ -88,6 +88,12 @@ public class TerminiTests extends SeleniumTestWrapper {
         healthElements.obrisiTermin(PacijentContent.PACIJENT_ID, PacijentContent.DOKTOR_ID);
 
     }*/
+
+    @Description("Obrisi termin")
+    @Test
+    public void Obrisi_Termin() {
+
+    }
 
     @AfterEach
     public void testEnd() {

@@ -580,6 +580,30 @@ public class DatabaseCalls {
     }
 
     /*
+     *  Vrati opis pregleda za termin
+     * */
+
+    public String dbConnectionVratiOpisPregledaZaTermin(String sDoktorId) throws ClassNotFoundException {
+        String sOpisPregleda = "";
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "SELECT Title FROM AppointmentService.Appointments WHERE DoctorId='"+sDoktorId+"';";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sOpisPregleda = rs.getString("Title");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sOpisPregleda;
+    }
+
+
+
+    /*
      *  Vrati vrijeme termina
      * */
 
@@ -600,6 +624,25 @@ public class DatabaseCalls {
         }
         return sVrijemeTermina;
     }
+
+    public String dbConnectionVratiVrijemeTermina(String sDoktorId) throws ClassNotFoundException {
+        String sVrijemeTermina = "";
+
+        try (Connection con = getConnection(); Statement stmt = con.createStatement()){
+
+            String SQL = "SELECT CONCAT(FORMAT(TimeFrom,'hh:mm'),' - ',FORMAT(TimeTo,'hh:mm')) as VrijemeTermina FROM AppointmentService.Appointments WHERE DoctorId='"+sDoktorId+"'";
+
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()){
+                sVrijemeTermina = rs.getString("VrijemeTermina");
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sVrijemeTermina;
+    }
+
 
     /*
      *  Obrisi termin

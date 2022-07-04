@@ -285,10 +285,22 @@ public class CommonHealthElements extends Pages {
     }
 
     /*
+     * Vrati opis predleda za termin
+     * */
+    public String vratiOpisPregledaZaTerminRolaDoktor(String sDoktorID) throws ClassNotFoundException{
+        System.out.println("Prelgd: "+databaseCalls.dbConnectionVratiOpisPregledaZaTermin(sDoktorID));
+        return databaseCalls.dbConnectionVratiOpisPregledaZaTermin(sDoktorID);
+    }
+
+    /*
      * Vrati vrijeme termina
      * */
     public String vratiVrijemeTermina(String sPacijentID, String sDoktorID) throws ClassNotFoundException{
         return databaseCalls.dbConnectionVratiVrijemeTermina(sPacijentID, sDoktorID);
+    }
+
+    public String vratiVrijemeTerminaRolaDoktor(String sDoktorID) throws ClassNotFoundException{
+        return databaseCalls.dbConnectionVratiVrijemeTermina(sDoktorID);
     }
 
     /*
