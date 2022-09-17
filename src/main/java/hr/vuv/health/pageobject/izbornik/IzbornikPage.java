@@ -19,27 +19,6 @@ public class IzbornikPage extends Pages {
 
     private CommonHealthElements healthElements = new CommonHealthElements(driver);
 
-    //Pocetna stranica
-
-    @FindBy(xpath = "//a[normalize-space()='Početna']")
-    private WebElement tabPocetna;
-
-    @Step("U izborniku klikni na 'Pocetna'.")
-    public void klikniIzbornikPocetna() {
-        healthElements.waitForElementToBeClickable(tabPocetna);
-    }
-
-    //Lijecnici
-
-    @FindBy(xpath = "//a[contains(text(), 'Lječnici')]")
-    private WebElement tabLijecnici;
-
-    @Step("U izborniku klikni na 'Lječnici'.")
-    public void klikniIzbornikLijecnici() {
-        healthElements.waitForElementToBeClickable(tabLijecnici);
-        //tabLijecnici.click();
-    }
-
     //Prijava
 
     @FindBy(xpath = "//a[normalize-space()='Prijava']")
@@ -53,6 +32,27 @@ public class IzbornikPage extends Pages {
         healthElements.waitForElementToBeClickable(tabPrijava);
     }
 
+    //Pocetna stranica
+
+    @FindBy(xpath = "//a[normalize-space()='Početna']")
+    private WebElement tabPocetna;
+
+    @Step("U izborniku klikni na 'Pocetna'.")
+    public void klikniIzbornikPocetna() {
+        healthElements.waitForElementToBeClickable(tabPocetna);
+    }
+
+    //Lijecnici
+
+    @FindBy(xpath = "//a[contains(text(), 'Liječnici')]")
+    private WebElement tabLijecnici;
+
+    @Step("U izborniku klikni na 'Liječnici'.")
+    public void klikniIzbornikLijecnici() {
+        healthElements.waitForElementToBeClickable(tabLijecnici);
+        //tabLijecnici.click();
+    }
+
     //Registracija
 
     @FindBy(xpath = "//a[normalize-space()='Registracija']")
@@ -62,7 +62,38 @@ public class IzbornikPage extends Pages {
     public void klikniIzbornikRegistracija() {
         healthElements.waitForElementToBeClickable(tabRegistracija);
     }
+    /*
+    * Obavijesti
+    * */
+    @FindBy(xpath = "//a[contains(text(), 'Obavijesti')]")
+    private WebElement tabObavijesti;
 
+    @Step("U izborniku klikni na 'Obavijesti'.")
+    public void klikniIzbornikObavijesti() {
+        healthElements.waitForElementToBeClickable(tabObavijesti);
+    }
+
+    /*
+     * Prijava greške
+     * */
+    @FindBy(xpath = "//i[contains(@class, 'bug')]//ancestor::a")
+    private WebElement tabGreske;
+
+    @Step("U izborniku klikni na 'Prijavu grešku'.")
+    public void klikniIzbornikPrijaviGresku() {
+        healthElements.waitForElementToBeClickable(tabGreske);
+    }
+
+    /*
+     * Prijavljene greške
+     * */
+    @FindBy(xpath = "//a[normalize-space()='Prijavljene greške']")
+    private WebElement tabPrijavljeneGreske;
+
+    @Step("U izborniku klikni na 'Prijavljene greške'.")
+    public void klikniIzbornikPrijavljeneGreske() {
+        healthElements.waitForElementToBeClickable(tabPrijavljeneGreske);
+    }
 
     /*
     * Nakon prijave - doktor
@@ -87,9 +118,8 @@ public class IzbornikPage extends Pages {
     }
 
     //Termini
-
     @FindBy(xpath = "//a[normalize-space()='Termini']")
-    private WebElement tabTermini;
+    public WebElement tabTermini;
 
     public void klikniIzbornikTabTermini() {
         healthElements.waitForElementToBeClickable(tabTermini);
@@ -127,4 +157,14 @@ public class IzbornikPage extends Pages {
         healthElements.waitForElementToBeClickable(tabOdjava);
     }
 
+    /*
+    * Nakon prijave admin
+    * */
+
+    @FindBy(xpath = "//a[normalize-space()='Specijalizacije']")
+    private WebElement tabSpecijalizacije;
+
+    public void klikniIzbornikSpecijalizacije() {
+        healthElements.waitForElementToBeClickable(tabSpecijalizacije);
+    }
 }

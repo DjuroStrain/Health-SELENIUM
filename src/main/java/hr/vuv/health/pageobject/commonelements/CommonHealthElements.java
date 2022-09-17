@@ -2,6 +2,7 @@ package hr.vuv.health.pageobject.commonelements;
 
 import hr.vuv.health.database.DatabaseCalls;
 import io.qameta.allure.Step;
+import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 import selenium.Pages;
@@ -56,13 +57,14 @@ public class CommonHealthElements extends Pages {
     *
     * @param WebElement element, String sText
     * */
-    public void insertTextScrollTo(WebElement element, String sText){
+    public void scrollToInsertText(WebElement element, String sText){
         fluentWaitForElement(element);
         scrollToElement(element);
         waitForElementToBeClickable(element);
         element.clear();
         element.sendKeys(sText);
     }
+
     //bez scrolla
     public void insertText(WebElement element, String sText){
         fluentWaitForElement(element);
@@ -142,6 +144,7 @@ public class CommonHealthElements extends Pages {
 
 
     public void selectFromUlLiDropdown(String sOdabir) {
+        waitForElementToBeVisible(driver.findElement(By.xpath("//div[@class='e-content e-dropdownbase']//following-sibling::li")));
         WebElement element = driver.findElement(By.xpath("//div[@class='e-content e-dropdownbase']//following-sibling::li[normalize-space()='"+sOdabir+"']"));
         element.click();
     }
@@ -315,5 +318,86 @@ public class CommonHealthElements extends Pages {
     * */
     public void dodajTermin() throws ClassNotFoundException{
         databaseCalls.dbConnectionDodajTermin();
+    }
+
+    /*
+     * Dodaj termin
+     * */
+    public void dodajTermin2() throws ClassNotFoundException{
+        databaseCalls.dbConnectionDodajTermin2();
+    }
+
+    /*
+     * Obrisi obavijest
+     * */
+    public void obrisiObavijestDoktor(String sPacijentID, String sDoktorID) throws ClassNotFoundException{
+        databaseCalls.dbConnectionObrisiObavijestDoktor(sPacijentID, sDoktorID);
+    }
+
+    public void obrisiObavijestPacijent(String sPacijentID, String sDoktorID) throws ClassNotFoundException{
+        databaseCalls.dbConnectionObrisiObavijestPacijent(sPacijentID, sDoktorID);
+    }
+
+    /*
+     * Dodaj obavijest
+     * */
+    public void dodajObavijest() throws ClassNotFoundException{
+        databaseCalls.dbConnectionDodajObavijestDoktoru();
+    }
+
+    /*
+     * Dodaj obavijest
+     * */
+    public void dodajObavijest2() throws ClassNotFoundException{
+        databaseCalls.dbConnectionDodajObavijestPacijentu();
+    }
+
+    /*
+    * Vrati broj obavijesti
+    * */
+    public int vratiBrojObavijesti(String sPacijentID, String sDoktorID) throws ClassNotFoundException {
+        return databaseCalls.dbConnectionVratiBrojObavijesti(sPacijentID, sDoktorID);
+    }
+
+    /*
+     * Vrati broj specijalizacija
+     * */
+    public int vratiBrojSpecijalizacija(String sSpacijalizacija) throws ClassNotFoundException {
+        return databaseCalls.dbConnectionVratiBrojSpecijalizacija(sSpacijalizacija);
+    }
+
+    /*
+    * Obrisi specijalizaciju
+    * */
+    public void obrisiSpecijalizaciju(String sSpecijalizacija) throws ClassNotFoundException {
+        databaseCalls.dbConnectionObrisiSpecijalizaciju(sSpecijalizacija);
+    }
+
+    /*
+     * Dodaj specijalizaciju
+     * */
+    public void dodajSpecijalizaciju() throws ClassNotFoundException {
+        databaseCalls.dbConnectionDodajSpecijalizaciju();
+    }
+
+    /*
+     * Vrati dodanu gresku
+     * */
+    public int vratiDodanuGresku(String sEmail) throws ClassNotFoundException {
+        return databaseCalls.dbConnectionVratiDodanuGresku(sEmail);
+    }
+
+    /*
+     * Obrisi gresku
+     * */
+    public void obrisiGresku(String sEmail) throws ClassNotFoundException {
+        databaseCalls.dbConnectionObrisiGresku(sEmail);
+    }
+
+    /*
+     * Dodaj gresku
+     * */
+    public void dodajGresku() throws ClassNotFoundException {
+        databaseCalls.dbConnectionDodajGresku();
     }
 }

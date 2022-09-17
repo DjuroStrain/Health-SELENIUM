@@ -54,7 +54,6 @@ public class OdjavaTests extends SeleniumTestWrapper {
     @Test
     public void Odjava_Korisnika() {
         prijavaPage.prijavaKorisnika(PrijavaContent.KORISNICKO_IME_DOKTOR, PrijavaContent.LOZINKA_DOKTOR);
-
         assertTrue(odjavaPage.odjavaKorisnikaIzAplikacije());
         log.info("Korisnik se je uspješno odjavio iz aplikacije");
     }

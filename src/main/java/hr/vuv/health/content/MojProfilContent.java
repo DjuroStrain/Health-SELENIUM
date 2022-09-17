@@ -16,17 +16,17 @@ public class MojProfilContent {
     public final static String PROFIL_EMAIL = "durobelacic@gmail.com";*/
 
     //Br 2
-    public final static String PROFIL_IME = "Duro2";
-    public final static String PROFIL_PREZIME = "Belacic2";
-    public final static String PROFIL_TITULA = "Doktor";
-    public final static String PROFIL_ULICA = "Ulica kralja Tomislava";
-    public final static String PROFIL_KUCNI_BROJ = "9";
-    public final static String PROFIL_POSTANSKI_BROJ = "21101";
+    public final static String PROFIL_IME = "Duro";
+    public final static String PROFIL_PREZIME = "Belacic";
+    public final static String PROFIL_TITULA = "dr. mr.";
+    public final static String PROFIL_ULICA = "Ul. Fausta Vrančića";
+    public final static String PROFIL_KUCNI_BROJ = "2";
+    public final static String PROFIL_POSTANSKI_BROJ = "43000";
     public final static String PROFIL_DRZAVA = "Hrvatska";
-    public final static String PROFIL_GRAD_MJESTO = "Split";
-    public final static String PROFIL_EMAIL = "durobelacic2@gmail.com";
+    public final static String PROFIL_GRAD_MJESTO = "Bjelovar";
+    public final static String PROFIL_EMAIL = "durobelacic@gmail.com";
 
-    public final static String PROFIL_SPECIJALIZACIJA = "Fizioterapija";
+    public final static String PROFIL_SPECIJALIZACIJA = "Stomatologija";
 
     //Validacije
     public final static String VALIDACIJA_IME = "Ime je obavezno.";

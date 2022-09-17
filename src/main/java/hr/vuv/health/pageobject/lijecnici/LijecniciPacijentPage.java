@@ -5,9 +5,7 @@ import hr.vuv.health.content.PrijavaContent;
 import hr.vuv.health.content.RegistracijaContent;
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import selenium.Pages;
@@ -28,16 +26,18 @@ public class LijecniciPacijentPage extends Pages {
     /*
     * Filter doktora po specijalizaciji
     * */
-    @FindBy(xpath = "//div[@id='accordionExample']//div")
-    private WebElement accFilter;
 
-    @FindBy(xpath = "//div[@id='collapseTwo']//div//div//div[2]//span")
+    @FindBy(xpath = "//label[normalize-space()='Specijalizacija']//following::span")
     private WebElement ddOdaberiSpecijalizaciju;
 
     @Step("Otvori filter i odaberi specijalizaciju")
     public void otvoriFilterOdaberiSpacijalzaciju(String sSpecijalzacija) {
-        healthElements.waitForElementToBeClickable(accFilter);
         healthElements.waitForElementToBeClickable(ddOdaberiSpecijalizaciju);
+        try {
+            Thread.sleep(3000);
+        }catch (InterruptedException e) {
+
+        }
         healthElements.selectFromUlLiDropdown(sSpecijalzacija);
         try {
             Thread.sleep(3000);
@@ -50,34 +50,51 @@ public class LijecniciPacijentPage extends Pages {
      * Filter doktora po imenu
      * */
 
-    @FindBy(css = "input[placeholder='Pretražite doktore...']")
+    @FindBy(css = "input[placeholder='Pretražite liječnike...']")
     private WebElement txtPetraziDoktore;
 
     @FindBy(xpath = "//button[normalize-space()='Traži']")
     private WebElement btnTrazi;
 
-    @Step("Otvori filter i odaberi specijalizaciju")
+    @Step("Otvori filter i pretraži doktora po imenu")
     public void otvoriFilterPretraziDoktore() {
-        healthElements.waitForElementToBeClickable(accFilter);
         healthElements.waitForElementToBeClickable(txtPetraziDoktore);
         healthElements.insertText(txtPetraziDoktore, PrijavaContent.IME_DOKTOR);
         healthElements.waitForElementToBeClickable(btnTrazi);
     }
 
-    @FindBy(css = "div[class='specialist-display']")
+    @FindBy(xpath = "//div[@class='doctor-section']//following-sibling::div")
+    private WebElement cardDoktor;
+
+    @Step("Otvori filter i pretraži doktora po imenu")
+    public void otvoriFilterPretraziIOdaberiDoktora() {
+        healthElements.waitForElementToBeVisible(cardDoktor);
+        healthElements.waitForElementToBeClickable(txtPetraziDoktore);
+        healthElements.insertText(txtPetraziDoktore, PrijavaContent.IME_DOKTOR);
+        healthElements.waitForElementToBeClickable(btnTrazi);
+        try{
+            Thread.sleep(2000);
+        }catch (InterruptedException ie){
+
+        }
+        healthElements.waitForElementToBeClickable(cardDoktor);
+    }
+
+    @FindBy(xpath = "div[class='specialist-display']")
     private WebElement cardsLijecnici;
 
-    @FindBy(css = "div[class='specialist-display'] > div[id*='Specialist']")
+    @FindBy(xpath = "//div[@class='card-body']")
     private WebElement cardLijecnik;
 
-    @FindBy(css = "div[class='specialist-display'] > div[id*='Specialist'] > div > div:nth-child(2) > div > h5")
+    @FindBy(xpath = "//div[contains(@id, 'Specialist')]//following::h5[@class='card-title']")
     private WebElement txtTitulaImeDoktora;
 
-    @FindBy(xpath = "//div[@class='specialization']//span[@class='specialization-text']")
+    @FindBy(xpath = "//div[contains(@id, 'Specialist')]//following::div[@class='specialization']//span[contains(@class, 'specialization')]")
     private WebElement txtSpecijalizacijaDoktora;
 
     @FindBy(xpath = "//div[@class='location']//span")
     private WebElement txtAdresaDoktora;
+
 
     @Step("Dohvati naziv ljecnika")
     public String vratiNazivLjecnika() {
@@ -96,7 +113,7 @@ public class LijecniciPacijentPage extends Pages {
     }
 
     public int vratBrojKarticaDoktora() {
-        List<WebElement> lBrojKarticaDoktora = cardsLijecnici.findElements(By.cssSelector("div[id*='Specialist']"));
+        List<WebElement> lBrojKarticaDoktora = driver.findElements(By.xpath("//div[@class='card-body']"));
         return lBrojKarticaDoktora.size();
     }
 
@@ -319,7 +336,58 @@ public class LijecniciPacijentPage extends Pages {
         return txtVrijemePregledaTablica.getText();
     }
 
-    public void aaaaaa() {
-        System.out.println("Opis: "+txtOpisPregledaTablica.getText());
+    /*
+    * Ocijeni liječnika
+    * */
+
+    @FindBy(xpath = "//div[@id='accordionExample']//following-sibling::div[@class='accordion-item'][4]")
+    private WebElement accOsvrti;
+
+    @FindBy(xpath = "//div[@class='e-handle e-handle-first']")
+    private WebElement slider;
+
+    @FindBy(xpath = "//button[normalize-space()='Dodaj osvrt']//preceding::textarea")
+    private WebElement txtOsvrt;
+
+    @FindBy(xpath = "//button[normalize-space()='Dodaj osvrt']")
+    private WebElement btnDodajOsvrt;
+
+    public void setAttribute(WebElement element, String attName, String attValue) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
+                element, attName, attValue);
+    }
+
+    @Step("Ocijeni liječnika")
+    public void ocijeniLijecnika(String sOsvrt) {
+        healthElements.waitForElementToBeClickable(accOsvrti);
+        healthElements.waitForElementToBeVisible(slider);
+        for(int i = 0; i < 3; i++){
+            slider.sendKeys(Keys.ARROW_RIGHT);
+        }
+        healthElements.insertText(txtOsvrt, sOsvrt);
+        healthElements.waitForElementToBeClickable(btnDodajOsvrt);
+
+    }
+
+    @FindBy(id = "NewIconCard")
+    private WebElement areaOsvrt;
+
+    @FindBy(xpath = "//div[@id='NewIconCard']//following-sibling::div[@class='e-card-content']")
+    private WebElement sadrzajOsvrta;
+
+    @FindBy(xpath = "//div[@id='NewIconCard']//following-sibling::div[@class='e-card-header']")
+    private WebElement headerOsvrta;
+
+    @Step("Provjera ocijene liječnika")
+    public int brojZvjezdicaCheck() {
+        healthElements.waitForElementToBeVisible(headerOsvrta);
+        List<WebElement> brojZvjezdica = headerOsvrta.findElements(By.tagName("span"));
+        return brojZvjezdica.size();
+    }
+
+    @Step("Provjera prikaza sadržaja dodanog osvrta")
+    public String sadrzajOsvrta() {
+        return sadrzajOsvrta.getText();
     }
 }

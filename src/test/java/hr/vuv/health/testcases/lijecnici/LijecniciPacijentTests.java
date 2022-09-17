@@ -50,25 +50,21 @@ public class LijecniciPacijentTests extends SeleniumTestWrapper {
         log.info("Naziv testa koji se izvrsava: "+ testInfo.getDisplayName());
         log.info("");
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
-        healthElements.dodajDoktora();
+        healthElements.dodajDoktoraSaRadnimVremenom();
         startPage.startApplication();
-        izbornikPage.klikniIzbornikPrijava();
-        prijavaPage.prijavaKorisnikaKaoPacijenta(PrijavaContent.KORISNICKO_IME_PACIJENT, PrijavaContent.LOZINKA_PACIJENT);
+        startPage.prijavaPacijenta();
+        izbornikPage.klikniIzbornikLijecnici();
     }
 
     @Description("Pretrazi doktora po specijalizaciji")
     @Test
     public void Pretrazi_Doktora_Po_Specijalizaciji() throws ClassNotFoundException, InterruptedException {
-        izbornikPage.klikniIzbornikLijecnici();
         lijecniciPage.otvoriFilterOdaberiSpacijalzaciju(MojProfilContent.PROFIL_SPECIJALIZACIJA);
-
         softAssertions.assertThat(lijecniciPage.vratiNazivLjecnika()).isEqualTo(healthElements.vratiPuniNazivDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratiSpecijalizacijuDoktora()).isEqualTo(healthElements.vratiSpecijalzacijuDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratiAdresuDoktora()).isEqualTo(healthElements.vratiPunuAdresuDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratBrojKarticaDoktora()).isEqualTo(1);
-
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
-
         softAssertions.assertAll();
         log.info("Filter doktora po specijalizaciji radi ispravno te se kartica doktora ispravno prikazuje");
     }
@@ -76,16 +72,12 @@ public class LijecniciPacijentTests extends SeleniumTestWrapper {
     @Description("Pretrazi doktora po imenu")
     @Test
     public void Pretrazi_Doktora_Po_Imenu() throws ClassNotFoundException, InterruptedException {
-        izbornikPage.klikniIzbornikLijecnici();
         lijecniciPage.otvoriFilterPretraziDoktore();
-
         softAssertions.assertThat(lijecniciPage.vratiNazivLjecnika()).isEqualTo(healthElements.vratiPuniNazivDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratiSpecijalizacijuDoktora()).isEqualTo(healthElements.vratiSpecijalzacijuDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratiAdresuDoktora()).isEqualTo(healthElements.vratiPunuAdresuDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratBrojKarticaDoktora()).isEqualTo(1);
-
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
-
         softAssertions.assertAll();
         log.info("Filter doktora po imenu radi ispravno te se kartica doktora ispravno prikazuje");
     }
@@ -93,17 +85,13 @@ public class LijecniciPacijentTests extends SeleniumTestWrapper {
     @Description("Provjera općih podataka doktora")
     @Test
     public void Provjera_Opcih_Podataka_Doktora() throws ClassNotFoundException {
-        izbornikPage.klikniIzbornikLijecnici();
         lijecniciPage.otvoriFilterOdaberiSpacijalzaciju(MojProfilContent.PROFIL_SPECIJALIZACIJA);
         lijecniciPage.klikniNaKarticuDoktora();
-
         softAssertions.assertThat(lijecniciPage.vratiNazivDoktora()).isEqualTo(healthElements.vratiPuniNazivDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratiSpecijalizacijuDoktora2()).isEqualTo(healthElements.vratiSpecijalzacijuDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratiAdresuDoktora2()).isEqualTo(healthElements.vratiPunuAdresuDoktora(PrijavaContent.ID_DOKTOR));
         softAssertions.assertThat(lijecniciPage.vratiEmailDoktora()).isEqualTo(healthElements.vratiEmailDoktora(PrijavaContent.ID_DOKTOR));
-
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
-
         softAssertions.assertAll();
         log.info("Ispravno se prikazuju opci podaci doktora");
     }
@@ -112,17 +100,12 @@ public class LijecniciPacijentTests extends SeleniumTestWrapper {
     @Test
     public void Provjeri_Djelatnosti_Doktora() throws ClassNotFoundException, InterruptedException {
         int nIDUsluge = healthElements.dodajUslugu();
-        izbornikPage.klikniIzbornikLijecnici();
         lijecniciPage.otvoriFilterOdaberiSpacijalzaciju(MojProfilContent.PROFIL_SPECIJALIZACIJA);
         lijecniciPage.klikniNaKarticuDoktora();
-
         lijecniciPage.klikniNaDjelatnosti();
-
         Thread.sleep(3000);
-
         healthElements.obrisiUslugu();
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
-
         assertArrayEquals(lijecniciPage.vratiListuVrijednostiUslugeIzSadrzaja().toArray(),
                 lijecniciPage.vratiListuVrijednostiUslugeIzTabliceUsluga().toArray());
         log.info("Usluga se ispravno prikazuje.");
@@ -133,37 +116,35 @@ public class LijecniciPacijentTests extends SeleniumTestWrapper {
     public void Provjeri_Radno_Vrijeme_Doktora() throws ClassNotFoundException {
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
         healthElements.dodajDoktoraSaRadnimVremenom();
-        izbornikPage.klikniIzbornikLijecnici();
         lijecniciPage.otvoriFilterOdaberiSpacijalzaciju(MojProfilContent.PROFIL_SPECIJALIZACIJA);
         lijecniciPage.klikniNaKarticuDoktora();
-
         lijecniciPage.klikniNaRadnoVrijeme();
-
         String sRadnoVrijemePrijepodne = MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_OD_PACIJENT+"-"+MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_DO_PACIJENT;
-
         softAssertions.assertThat(lijecniciPage.vratiRadnoVrijemeZaPonedjeljakNakonUnosa()).isEqualTo(sRadnoVrijemePrijepodne);
-
         softAssertions.assertThat(lijecniciPage.vratiRadnoVrijemeZaUtorakNakonUnosa()).isEqualTo(sRadnoVrijemePrijepodne);
-
         String sRadnoVrijemePoslijepodne = MojProfilContent.RADNO_VRIJEME_PRIJEPODNE_DO_PACIJENT+"-"+MojProfilContent.RADNO_VRIJEME_POSLIJEPODNE_DO_PACIJENT;
-
-
         softAssertions.assertThat(lijecniciPage.vratiRadnoVrijemeZaSrijedaNakonUnosa()).isEqualTo(sRadnoVrijemePoslijepodne);
-
         softAssertions.assertThat(lijecniciPage.vratiRadnoVrijemeZaCetvrtakNakonUnosa()).isEqualTo(sRadnoVrijemePoslijepodne);
-
-        softAssertions.assertThat(lijecniciPage.vratiRadnoVrijemeZaPetakNakonUnosa()).isEqualTo(sRadnoVrijemePoslijepodne);
-
+        softAssertions.assertThat(lijecniciPage.vratiRadnoVrijemeZaPetakNakonUnosa()).isEqualTo(sRadnoVrijemePrijepodne);
         softAssertions.assertThat(lijecniciPage.vratiBrojRedovaTabliceRadnoVrijeme()).isEqualTo(7);
-
         healthElements.obrisiDoktora(PrijavaContent.ID_DOKTOR);
-
         softAssertions.assertAll();
-
         log.info("Radno vrijeme se ispravno prikazuje u tablici 'Radno vrijeme'");
     }
 
-    @Description("Dodaj termin i provjeri ispravnost prikaza u tablicama")
+    @Description("Ocijeni liječnika")
+    @Test
+    public void Ocijeni_Lijecnika() throws ClassNotFoundException {
+        izbornikPage.klikniIzbornikLijecnici();
+        lijecniciPage.otvoriFilterOdaberiSpacijalzaciju(MojProfilContent.PROFIL_SPECIJALIZACIJA);
+        lijecniciPage.klikniNaKarticuDoktora();
+        lijecniciPage.ocijeniLijecnika(PacijentContent.OSVRT_LIJECNIKA);
+        softAssertions.assertThat(lijecniciPage.brojZvjezdicaCheck()).isEqualTo(5);
+        softAssertions.assertThat(lijecniciPage.sadrzajOsvrta()).isEqualTo(PacijentContent.OSVRT_LIJECNIKA);
+        softAssertions.assertAll();
+    }
+
+    /*@Description("Dodaj termin i provjeri ispravnost prikaza u tablicama")
     @Test
     public void Dodaj_Termin_Pacijentu() throws ClassNotFoundException {
         healthElements.obrisiTermin(PacijentContent.PACIJENT_ID, PacijentContent.DOKTOR_ID);
@@ -171,7 +152,7 @@ public class LijecniciPacijentTests extends SeleniumTestWrapper {
         lijecniciPage.otvoriFilterOdaberiSpacijalzaciju(MojProfilContent.PROFIL_SPECIJALIZACIJA);
         lijecniciPage.odaberiDoktoraZaRezervacijuTermina();
 
-        lijecniciPage.odaberiTerminPregleda(PacijentContent.OPIS_TERMINA, PacijentContent.RAZLOG_TERMINA);
+        lijecniciPage.odaberiTerminPregleda(PacijentContent.PREDMET_TERMINA, PacijentContent.OPIS_TERMINA);
 
         softAssertions.assertThat(lijecniciPage.vratiVrijednostOpisPregledaTablica())
                 .isEqualTo(healthElements.vratiOpisPregledaZaTermin(PacijentContent.PACIJENT_ID, PacijentContent.DOKTOR_ID));
@@ -191,7 +172,7 @@ public class LijecniciPacijentTests extends SeleniumTestWrapper {
         softAssertions.assertAll();
 
         log.info("Termin je uspješno dodan i isparavno se prikazuje u obe tablice");
-    }
+    }*/
 
     @AfterEach
     public void testEnd() {

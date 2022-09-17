@@ -23,16 +23,17 @@ public class LijecniciBezRolePage extends Pages {
 
     private CommonHealthElements healthElements = new CommonHealthElements(driver);
 
-    @FindBy(xpath = "//div[@id='accordionExample']//div")
-    private WebElement accFilter;
-
-    @FindBy(xpath = "//div[@id='collapseTwo']//div//div//div[2]//span")
+    @FindBy(xpath = "//label[normalize-space()='Specijalizacija']//following::span")
     private WebElement ddOdaberiSpecijalizaciju;
 
     @Step("Otvori filter i odaberi specijalizaciju")
     public void otvoriFilterOdaberiSpacijalzaciju(String sSpecijalzacija) {
-        healthElements.waitForElementToBeClickable(accFilter);
         healthElements.waitForElementToBeClickable(ddOdaberiSpecijalizaciju);
+        try {
+            Thread.sleep(3000);
+        }catch (InterruptedException e) {
+
+        }
         healthElements.selectFromUlLiDropdown(sSpecijalzacija);
         try {
             Thread.sleep(3000);
@@ -45,7 +46,7 @@ public class LijecniciBezRolePage extends Pages {
      * Filter doktora po imenu
      * */
 
-    @FindBy(css = "input[placeholder='Pretražite doktore...']")
+    @FindBy(css = "input[placeholder='Pretražite liječnike...']")
     private WebElement txtPetraziDoktore;
 
     @FindBy(xpath = "//button[normalize-space()='Traži']")
@@ -53,35 +54,34 @@ public class LijecniciBezRolePage extends Pages {
 
     @Step("Otvori filter i odaberi specijalizaciju")
     public void otvoriFilterPretraziDoktore() {
-        healthElements.waitForElementToBeClickable(accFilter);
         healthElements.waitForElementToBeClickable(txtPetraziDoktore);
         healthElements.insertText(txtPetraziDoktore, PrijavaContent.IME_DOKTOR);
         healthElements.waitForElementToBeClickable(btnTrazi);
     }
 
 
-    @FindBy(css = "div[class='specialist-display']")
+    @FindBy(xpath = "div[class='specialist-display']")
     private WebElement cardsLijecnici;
 
-    @FindBy(css = "div[class='specialist-display'] > div[id*='Specialist']")
+    @FindBy(xpath = "//div[@class='card-body']")
     private WebElement cardLijecnik;
 
-    @FindBy(css = "div[class='specialist-display'] > div[id*='Specialist'] > div > div:nth-child(2) > div > h5")
+    @FindBy(xpath = "//div[contains(@id, 'Specialist')]//following::h5[@class='card-title']")
     private WebElement txtTitulaImeDoktora;
 
-    @FindBy(xpath = "//div[@class='specialization']//span[@class='specialization-text']")
+    @FindBy(xpath = "//div[contains(@id, 'Specialist')]//following::div[@class='specialization']//span[contains(@class, 'specialization')]")
     private WebElement txtSpecijalizacijaDoktora;
 
     @FindBy(xpath = "//div[@class='location']//span")
     private WebElement txtAdresaDoktora;
 
-    /*
-     *  Opci podaci doktora
-     * */
-
     public void klikniNaKarticuDoktora() {
         healthElements.waitForElementToBeClickable(cardLijecnik);
     }
+
+    /*
+     *  Opci podaci doktora
+     * */
 
     @FindBy(xpath = "//div[@id='collapseOne']//h5")
     private WebElement txtSpecijalizacija;
@@ -118,7 +118,7 @@ public class LijecniciBezRolePage extends Pages {
     }
 
     public int vratBrojKarticaDoktora() {
-        List<WebElement> lBrojKarticaDoktora = cardsLijecnici.findElements(By.cssSelector("div[id*='Specialist']"));
+        List<WebElement> lBrojKarticaDoktora = driver.findElements(By.xpath("//div[@class='card-wrap']"));
         return lBrojKarticaDoktora.size();
     }
 

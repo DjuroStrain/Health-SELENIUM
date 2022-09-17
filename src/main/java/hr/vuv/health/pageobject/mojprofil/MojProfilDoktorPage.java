@@ -98,31 +98,36 @@ public class MojProfilDoktorPage extends Pages {
         healthElements.waitForElementToBeClickable(accRadnoVrijeme);
         lTablicaUslugaPrije = driver.findElements(By.xpath("//div[@id = 'collapseThree']//following::table[2]//tbody//tr"));
     }
+    /*healthElements.waitForElementToBeClickable(accDjelatnosti);
+    prikazTabliceUslugaPrije();
+    prikazTabliceRadnoVrijemePrije();
+    try {
+        Thread.sleep(2000);
+    }catch (InterruptedException e){
 
+    }*/
     @Step("Unesi dodatne obavezne podatke o doktoru (titula, specijalizacija i adresa)")
     public void unesiDodatneObaveznePodatkeODoktoru(String sTitula, String sUlica, String sKucniBroj, String sPostanskiBroj,
                                                     String sGradMjesto, String sDrzava) {
-        healthElements.waitForElementToBeClickable(accDjelatnosti);
-        prikazTabliceUslugaPrije();
-        prikazTabliceRadnoVrijemePrije();
-        try {
-            Thread.sleep(2000);
-        }catch (InterruptedException e){
-
-        }
-        healthElements.insertTextScrollTo(txtTitula, sTitula);
+        healthElements.scrollToInsertText(txtTitula, sTitula);
         healthElements.waitForElementToBeClickable(ddSpecijalizacija);
         healthElements.waitForElementToBeClickable(selectFizioterapija);
-        healthElements.insertTextScrollTo(txtUlica, sUlica);
-        healthElements.insertTextScrollTo(txtKucniBroj, sKucniBroj);
-        healthElements.insertTextScrollTo(txtPostanskiBroj, sPostanskiBroj);
-        healthElements.insertTextScrollTo(txtGradMjesto, sGradMjesto);
-        healthElements.insertTextScrollTo(txtDrzava, sDrzava);
-        healthElements.waitForElementToBeClickable(btnSpremiProfil);
-        healthElements.waitForElementToBeClickable(accDjelatnosti);
-        prikazTabliceUslugaPoslije();
-        prikazTabliceRadnoVrijemePoslije();
+        healthElements.scrollToInsertText(txtUlica, sUlica);
+        healthElements.scrollToInsertText(txtKucniBroj, sKucniBroj);
+        healthElements.scrollToInsertText(txtPostanskiBroj, sPostanskiBroj);
+        healthElements.scrollToInsertText(txtGradMjesto, sGradMjesto);
+        healthElements.scrollToInsertText(txtDrzava, sDrzava);
     }
+
+    @Step("Klikni na gumb 'Spremi profil'")
+    public void klikniNaGumbSpremiProfil() {
+        healthElements.waitForElementToBeClickable(btnSpremiProfil);
+    }
+
+    /*
+    healthElements.waitForElementToBeClickable(accDjelatnosti);
+    prikazTabliceUslugaPoslije();
+    prikazTabliceRadnoVrijemePoslije();*/
 
     public Boolean vratiPrikazTabliceUslugaPrije() {
         return lTablicaUslugaPrije.size() > 0;
@@ -147,7 +152,11 @@ public class MojProfilDoktorPage extends Pages {
     public String vratiVrijednostPoljaIme() {
         healthElements.fluentWaitForElement(txtIme);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until((ExpectedCondition<Boolean>) driver -> (txtIme.getAttribute("value").length() > 0));
+        try {
+            wait.until((ExpectedCondition<Boolean>) driver -> (txtIme.getAttribute("value").length() > 0));
+        }catch (StaleElementReferenceException se){
+            wait.until((ExpectedCondition<Boolean>) driver -> (txtIme.getAttribute("value").length() > 0));
+        }
         return txtIme.getAttribute("value");
     }
 
@@ -320,6 +329,7 @@ public class MojProfilDoktorPage extends Pages {
 
     @Step("Dohvati validaciju za obavezno polje 'Email'")
     public String vratiValidacijuZaObaveznoPoljeEmail() {
+        healthElements.scrollToElement(txtValidacijaZaObaveznoPoljeEmail);
         healthElements.waitForElementToBeVisible(txtValidacijaZaObaveznoPoljeEmail);
         return txtValidacijaZaObaveznoPoljeEmail.getText();
     }

@@ -56,12 +56,12 @@ public class RegistracijaPage extends Pages {
     public void registracijaKorisnikaKaoPacijenta(String sPacijent, String sKorisnickoIme, String sIme, String sPrezime, String sEmail,
                                                   String sMobitel, String sLozinka) throws InterruptedException {
         healthElements.selectFromDropdown(ddVrstaKorisnika, sPacijent);
-        healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
-        healthElements.insertTextScrollTo(txtIme, sIme);
-        healthElements.insertTextScrollTo(txtPrezime, sPrezime);
-        healthElements.insertTextScrollTo(txtEmail, sEmail);
-        healthElements.insertTextScrollTo(txtMobitel, sMobitel);
-        healthElements.insertTextScrollTo(txtLozinka, sLozinka);
+        healthElements.scrollToInsertText(txtKorisnickoIme, sKorisnickoIme);
+        healthElements.scrollToInsertText(txtIme, sIme);
+        healthElements.scrollToInsertText(txtPrezime, sPrezime);
+        healthElements.scrollToInsertText(txtEmail, sEmail);
+        healthElements.scrollToInsertText(txtMobitel, sMobitel);
+        healthElements.scrollToInsertText(txtLozinka, sLozinka);
         healthElements.scroll();
         healthElements.waitForElementToBeVisible(btnPrijava2);
         healthElements.waitForElementToBeClickable(btnKreirajRacun);
@@ -76,12 +76,12 @@ public class RegistracijaPage extends Pages {
     public void registracijaKorisnikaKaoDoktora(String sDoktor, String sKorisnickoIme, String sIme, String sPrezime, String sEmail, String sMobitel,
                                                 String sLozinka) throws InterruptedException {
         healthElements.selectFromDropdown(ddVrstaKorisnika, sDoktor);
-        healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
-        healthElements.insertTextScrollTo(txtIme, sIme);
-        healthElements.insertTextScrollTo(txtPrezime, sPrezime);
-        healthElements.insertTextScrollTo(txtEmail, sEmail);
-        healthElements.insertTextScrollTo(txtMobitel, sMobitel);
-        healthElements.insertTextScrollTo(txtLozinka, sLozinka);
+        healthElements.scrollToInsertText(txtKorisnickoIme, sKorisnickoIme);
+        healthElements.scrollToInsertText(txtIme, sIme);
+        healthElements.scrollToInsertText(txtPrezime, sPrezime);
+        healthElements.scrollToInsertText(txtEmail, sEmail);
+        healthElements.scrollToInsertText(txtMobitel, sMobitel);
+        healthElements.scrollToInsertText(txtLozinka, sLozinka);
         healthElements.scroll();
         healthElements.waitForElementToBeVisible(btnPrijava2);
         Thread.sleep(1000);

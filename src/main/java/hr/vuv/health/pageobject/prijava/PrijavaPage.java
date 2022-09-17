@@ -1,6 +1,7 @@
 package hr.vuv.health.pageobject.prijava;
 
 import hr.vuv.health.pageobject.commonelements.CommonHealthElements;
+import hr.vuv.health.pageobject.izbornik.IzbornikPage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,8 @@ public class PrijavaPage extends Pages {
 
     private CommonHealthElements healthElements = new CommonHealthElements(driver);
 
+    private IzbornikPage izbornikPage = new IzbornikPage(driver);
+
     @FindBy(id = "username")
     private WebElement txtKorisnickoIme;
 
@@ -30,22 +33,16 @@ public class PrijavaPage extends Pages {
     @FindBy(xpath = "//a[normalize-space()='Moj profil']")
     private WebElement tabMojProfil;
 
-    @FindBy(xpath = "//a[normalize-space()='Moj profil']")
-    private WebElement tabMojProfil2;
-
     @Step("Prijava doktora u aplikaciju i provjera je li se uspješno prijavio.")
     public void prijavaKorisnika(String sKorisnickoIme, String sLozinka) {
-        healthElements.insertTextScrollTo(txtKorisnickoIme, sKorisnickoIme);
-        healthElements.insertTextScrollTo(txtLozinka, sLozinka);
+        healthElements.scrollToInsertText(txtKorisnickoIme, sKorisnickoIme);
+        healthElements.scrollToInsertText(txtLozinka, sLozinka);
         healthElements.waitForElementToBeClickable(btnPrijaviSe);
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.invisibilityOf(btnPrijaviSe));
     }
 
     public boolean tabMojProfilIsDisplayed() {
         healthElements.waitForElementToBeVisible(tabMojProfil);
-        return tabMojProfil2.isDisplayed();
+        return tabMojProfil.isDisplayed();
     }
 
     @FindBy(xpath = "//a[normalize-space()='Moji termini']")
@@ -90,5 +87,11 @@ public class PrijavaPage extends Pages {
     @Step("Dohvati validaciju za obavezno polje 'Lozinka'")
     public String vratiValidacijuZaObaveznoPoljeLozinka() {
         return txtValidacijaZaObaveznoPoljeLozinka.getText();
+    }
+
+    //Prijava u aplikaciju
+    public void prijavaUAplikaciju(String sKorisnickoIme, String sLozinka) {
+        izbornikPage.klikniIzbornikPrijava();
+        prijavaKorisnika(sKorisnickoIme, sLozinka);
     }
 }
