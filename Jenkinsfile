@@ -11,7 +11,7 @@ pipeline {
             steps {
                 //bat "rmdir  /s /q Health-SELENIUM"
                 //bat "git clone https://github.com/DjuroStrain/Health-SELENIUM"
-                //sayxxybbb
+                //sayxxy
                 bat "mvn clean"
             }
         }
