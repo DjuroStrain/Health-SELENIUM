@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Run tests') {
         steps{
-    			bat "mvn test -Dtest=OdjavaTests"
+    			bat "mvn test -Dtest=PrijavaTests"
     		  }
         }
         stage('Allure Report') {
